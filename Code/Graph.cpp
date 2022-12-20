@@ -11,6 +11,7 @@ Graph::Graph() {
     ifstream in("flights.csv");
     getline(in, temp);
 
+
     while (getline(in, temp)) {
         //string source; Target t;
         Flight f = Flight(temp);
@@ -18,6 +19,7 @@ Graph::Graph() {
         //Help::getFlight(source, t, temp);
         g[f.getSource()].push_back(f.getTarget());
     }
+
 
     in.close(); in.open("airports.csv");
     getline(in, temp);
@@ -27,7 +29,7 @@ Graph::Graph() {
         string code = temp.substr(0, 3);
         airports[code] = a;
         cities[a.getCity()].insert(code);
-        // countries["country"].push_back("city")
+        countries[a.getCountry()].insert(a.getCity());
     }
 }
 
@@ -37,7 +39,7 @@ unordered_map<string, Airport> Graph::getAirports() {return airports;}
 
 unordered_map<string, unordered_set<string>> Graph::getCities() {return cities;}
 
-unordered_map<string, vector<string>> Graph::getCountries() {return countries;}
+unordered_map<string, unordered_set<string>> Graph::getCountries() {return countries;}
 
 vector<string> Graph::getPath(std::string from, std::string to) {
     unordered_map <string, bool> used;
@@ -57,7 +59,6 @@ vector<string> Graph::getPath(std::string from, std::string to) {
                 p[target] = cur;
             }
         }
-
     }
     if (used[to] == false)
         return {"No path exists"};
@@ -83,8 +84,43 @@ vector<string> Graph::getPathCities(std::string from, std::string to) {
     for(auto i : cities[from]) fromV.push_back(i);
     for(auto i : cities[to]) toV.push_back(i);
 
-    for (int i = 0; i < cities[from].size(); i++)
-        for (int j = 0; j < cities[to].size(); j++) {
+    for (int i = 0; i < fromV.size(); i++)
+        for (int j = 0; j < toV.size(); j++) {
+
+            string from = fromV[i];
+            string to = toV[j];
+
+            vector <string> temp = getPath(from , to );
+
+            if (temp.size() != 1 && (best == -1 || best > temp.size())) {
+                best = temp.size();
+                ans = temp;
+            }
+        }
+    return ans;
+}
+
+vector<string> Graph::getPathCountries(std::string from, std::string to) {
+    int best = -1;
+    vector <string> ans;
+    vector <string> fromV;
+    vector <string> toV;
+
+    for(auto city : countries[from]){
+        for(auto airport : cities[city]){
+            fromV.push_back(airport);
+        }
+    }
+
+    for(auto city : countries[to]){
+        for(auto airport : cities[city]){
+            toV.push_back(airport);
+        }
+    }
+
+
+    for (int i = 0; i < fromV.size(); i++)
+        for (int j = 0; j < toV.size(); j++) {
 
             string from = fromV[i];
             string to = toV[j];
@@ -126,3 +162,4 @@ vector<string> Graph::targetAirports(std::string from, int num) {
 
     return ans;
 }
+

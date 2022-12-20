@@ -8,12 +8,11 @@ using namespace std;
 int main() {
 
     Graph g;
-    vector <string> ans = g.getPathCities("New York", "Madang");
+    vector <string> ans = g.getPathCountries("United States", "Papua New Guinea");
 
     for (int i = 0; i < ans.size(); i++) {
         cout << ' ' << ans[i];
         if (i != ans.size() - 1) cout << endl;
     }
-
     return 0;
 }

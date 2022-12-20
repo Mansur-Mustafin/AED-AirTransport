@@ -22,12 +22,15 @@ private:
     unordered_map <string, vector <Target> > g; // ["asd"] = {"qwe", "sdf"}   g["any airport"].size() = количество вылетов из аэропорт
     unordered_map <string, Airport> airports; // g["any airport"]  for => set (airline)
     unordered_map <string, unordered_set<string> > cities;
-    unordered_map <string, vector <string> > countries;
+    unordered_map <string, unordered_set<string> > countries;
+
 
 public:
     Graph();
 
     vector <string> getPathCities(string from, string to);
+
+    vector <string> getPathCountries(string from, string to);
 
     vector <string> getPath(string from, string to);
 
@@ -39,7 +42,7 @@ public:
 
     unordered_map <string, unordered_set<string> > getCities();
 
-    unordered_map <string, vector <string> > getCountries();
+    unordered_map <string, unordered_set<string> > getCountries();
 };
 
 
