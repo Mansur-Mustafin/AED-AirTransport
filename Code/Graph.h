@@ -21,7 +21,7 @@ class Graph {
 private:
     unordered_map <string, vector <Target> > g; // ["asd"] = {"qwe", "sdf"}   g["any airport"].size() = количество вылетов из аэропорт
     unordered_map <string, Airport> airports; // g["any airport"]  for => set (airline)
-    unordered_map <string, vector <string> > cities;
+    unordered_map <string, unordered_set<string> > cities;
     unordered_map <string, vector <string> > countries;
 
 public:
@@ -37,7 +37,7 @@ public:
 
     unordered_map <string, Airport> getAirports();
 
-    unordered_map <string, vector <string> > getCities();
+    unordered_map <string, unordered_set<string> > getCities();
 
     unordered_map <string, vector <string> > getCountries();
 };

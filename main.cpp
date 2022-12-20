@@ -8,7 +8,7 @@ using namespace std;
 int main() {
 
     Graph g;
-    vector <string> ans = g.getPath("JFK", "MAG");
+    vector <string> ans = g.getPathCities("New York", "Madang");
 
     for (int i = 0; i < ans.size(); i++) {
         cout << ' ' << ans[i];

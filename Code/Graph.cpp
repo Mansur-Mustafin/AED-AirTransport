@@ -26,7 +26,7 @@ Graph::Graph() {
         Airport a(temp);
         string code = temp.substr(0, 3);
         airports[code] = a;
-        cities[a.getCity()].push_back(code);
+        cities[a.getCity()].insert(code);
         // countries["country"].push_back("city")
     }
 }
@@ -35,7 +35,7 @@ unordered_map<string, vector<Target>> Graph::getG() {return g;}
 
 unordered_map<string, Airport> Graph::getAirports() {return airports;}
 
-unordered_map<string, vector<string>> Graph::getCities() {return cities;}
+unordered_map<string, unordered_set<string>> Graph::getCities() {return cities;}
 
 unordered_map<string, vector<string>> Graph::getCountries() {return countries;}
 
@@ -78,9 +78,19 @@ vector<string> Graph::getPath(std::string from, std::string to) {
 vector<string> Graph::getPathCities(std::string from, std::string to) {
     int best = -1;
     vector <string> ans;
+    vector <string> fromV;
+    vector <string> toV;
+    for(auto i : cities[from]) fromV.push_back(i);
+    for(auto i : cities[to]) toV.push_back(i);
+
     for (int i = 0; i < cities[from].size(); i++)
         for (int j = 0; j < cities[to].size(); j++) {
-            vector <string> temp = getPath(cities[from][i], cities[to][j]);
+
+            string from = fromV[i];
+            string to = toV[j];
+
+            vector <string> temp = getPath(from , to );
+
             if (temp.size() != 1 && (best == -1 || best > temp.size())) {
                 best = temp.size();
                 ans = temp;
