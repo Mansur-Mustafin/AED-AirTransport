@@ -9,14 +9,8 @@
 
 using namespace std;
 
-class Flight{
-    string target, airline, source;
-};
-
 class Target {
-
-    string target, airline, source;
-
+    string target, airline;
 public:
     Target() : target(""), airline("") {}
     Target(string target_, string airline_) : target(target_), airline(airline_) {}
@@ -30,6 +24,36 @@ public:
     }
 };
 
+
+class Flight{
+private:
+    string  source;
+    Target target;
+public:
+
+    Flight() : target(Target()), source("") {}
+
+    Flight(string in){
+        string feel, feel2;
+        istringstream input(in);
+        getline(input, feel, ','); // name
+        source = feel;
+        getline(input, feel, ','); // name
+        getline(input, feel2, ','); // name
+        target = Target(feel, feel2);
+
+    }
+
+    Target getTarget() {
+        return target;
+    }
+
+    string getSource(){
+        return source;
+    }
+};
+
+/*
 class Help {
 
 public:
@@ -50,7 +74,7 @@ public:
         return ans;
     }
 };
-
+*/
 
 class Graph {
 
@@ -68,11 +92,12 @@ public:
         getline(in, temp);
 
         while (getline(in, temp)) {
-            string source; Target t;
+            //string source; Target t;
+            Flight f = Flight(temp);
 
-            Help::getFlight(source, t, temp);
+            //Help::getFlight(source, t, temp);
 
-            g[source].push_back(t);
+            g[f.getSource()].push_back(f.getTarget());
         }
 
         in.close(); in.open("airports.csv");
