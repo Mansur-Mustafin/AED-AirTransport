@@ -1,14 +1,11 @@
 #include <vector>
 #include <string>
-#include <algorithm>
-#include <unordered_set>
-#include <unordered_map>
-#include <queue>
 #include <iostream>
-#include "Code/Airport.h"
+#include "Code/Graph.h"
 
 using namespace std;
 
+/*
 class Target {
     string target, airline;
 public:
@@ -23,8 +20,8 @@ public:
         return airline;
     }
 };
-
-
+*/
+/*
 class Flight{
 private:
     string  source;
@@ -52,7 +49,7 @@ public:
         return source;
     }
 };
-
+*/
 /*
 class Help {
 
@@ -75,7 +72,7 @@ public:
     }
 };
 */
-
+/*
 class Graph {
 
 public:
@@ -96,7 +93,6 @@ public:
             Flight f = Flight(temp);
 
             //Help::getFlight(source, t, temp);
-
             g[f.getSource()].push_back(f.getTarget());
         }
 
@@ -195,6 +191,7 @@ public:
     }
 };
 
+*/
 
 int main() {
 
