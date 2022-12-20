@@ -9,21 +9,24 @@
 
 using namespace std;
 
+class Flight{
+    string target, airline, source;
+};
 
 class Target {
 
-    string target, airlane;
+    string target, airline, source;
 
 public:
-    Target() : target(""), airlane("") {}
-    Target(string target_, string airlane_) : target(target_), airlane(airlane_) {}
+    Target() : target(""), airline("") {}
+    Target(string target_, string airline_) : target(target_), airline(airline_) {}
 
     string getTarget() {
         return target;
     }
 
-    string getAirlane() {
-        return airlane;
+    string getAirline() {
+        return airline;
     }
 };
 
@@ -46,7 +49,6 @@ public:
             }
         return ans;
     }
-
 };
 
 
@@ -60,13 +62,16 @@ public:
 public:
 
     Graph() {
-        ifstream in("flights.csv");
         string temp;
+
+        ifstream in("flights.csv");
         getline(in, temp);
 
         while (getline(in, temp)) {
             string source; Target t;
+
             Help::getFlight(source, t, temp);
+
             g[source].push_back(t);
         }
 
@@ -74,7 +79,7 @@ public:
         getline(in, temp);
 
         while (getline(in, temp)) {
-            Airport a(temp.substr(4, temp.length() - 4));
+            Airport a(temp);
             string code = temp.substr(0, 3);
             Airports[code] = a;
             cities[a.getCity()].push_back(code);
@@ -169,7 +174,7 @@ public:
 int main() {
 
     Graph g;
-    vector <string> ans = g.getPathCities("London", "Rio De Janeiro");
+    vector <string> ans = g.getPath("JFK", "MAG");
 
     for (int i = 0; i < ans.size(); i++) {
         cout << ' ' << ans[i];

@@ -12,6 +12,8 @@ Airport::Airport(const string& in) {
     string feel;
     istringstream input(in);
     getline(input, feel, ','); // name
+    code = feel;
+    getline(input, feel, ','); // name
     name = feel;
     getline(input, feel, ','); // city
     city = feel;
