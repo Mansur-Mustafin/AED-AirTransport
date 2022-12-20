@@ -37,6 +37,8 @@ unordered_map<string, Airport> Graph::getAirports() {return airports;}
 
 unordered_map<string, vector<string>> Graph::getCities() {return cities;}
 
+unordered_map<string, vector<string>> Graph::getCountries() {return countries;}
+
 vector<string> Graph::getPath(std::string from, std::string to) {
     unordered_map <string, bool> used;
     unordered_map <string, string> p; // p["asd"] = "qwe"
