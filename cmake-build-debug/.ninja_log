@@ -1,0 +1,8 @@
+# ninja log v5
+3	1102	6932697667007032	CMakeFiles/Project_2.dir/main.cpp.obj	d76a512bac9813ff
+1102	1912	6932697675088919	Project_2.exe	680e937d9ae35904
+4	478	6932707291543204	CMakeFiles/Project_2.dir/Code/Airport.cpp.obj	6118f802d23bf5cd
+8	1255	6932707299295027	CMakeFiles/Project_2.dir/main.cpp.obj	d76a512bac9813ff
+1255	2052	6932707307246806	Project_2.exe	d74847dae189fa56
+3	1169	6932707923713580	CMakeFiles/Project_2.dir/main.cpp.obj	d76a512bac9813ff
+1170	1456	6932707926574242	Project_2.exe	d74847dae189fa56

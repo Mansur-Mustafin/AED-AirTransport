@@ -1,15 +1,14 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <fstream>
 #include <unordered_set>
 #include <unordered_map>
 #include <queue>
+#include <iostream>
+#include "Code/Airport.h"
 
 using namespace std;
-typedef long long ll;
 
-ofstream cout("output.txt");
 
 class Target {
 
@@ -26,7 +25,6 @@ public:
     string getAirlane() {
         return airlane;
     }
-
 };
 
 class Help {
@@ -51,20 +49,6 @@ public:
 
 };
 
-class Airport {
-
-public:
-    string name, code, city, country, latitude, longitude;
-
-    Airport() : name(""), code(""), city(""), country(""), latitude(""), longitude("") {}
-
-    Airport(string in) {
-        vector <string> temp = Help::Split(in);
-        name = temp[0], city = temp[1], country = temp[2];
-        latitude = temp[3], longitude = temp[4];
-    }
-
-};
 
 class Graph {
 
@@ -79,6 +63,7 @@ public:
         ifstream in("flights.csv");
         string temp;
         getline(in, temp);
+
         while (getline(in, temp)) {
             string source; Target t;
             Help::getFlight(source, t, temp);
@@ -87,15 +72,16 @@ public:
 
         in.close(); in.open("airports.csv");
         getline(in, temp);
+
         while (getline(in, temp)) {
             Airport a(temp.substr(4, temp.length() - 4));
             string code = temp.substr(0, 3);
             Airports[code] = a;
-            cities[a.city].push_back(code);
+            cities[a.getCity()].push_back(code);
             // countries["country"].push_back("city")
         }
-
     }
+
 
     vector <string> getPathCities(string from, string to) {
         int best = -1;
@@ -113,12 +99,10 @@ public:
 
 
     vector <string> getPath(string from, string to) {
-
         unordered_map <string, bool> used;
         unordered_map <string, string> p; // p["asd"] = "qwe"
         queue <string> q;
         q.push(from);
-
         while (!q.empty()) {
 
             string cur = q.front();
@@ -134,25 +118,23 @@ public:
             }
 
         }
-
         if (used[to] == false)
             return {"No path exists"};
-
         string pass = to;
         vector <string> ans;
         while (pass != from) {
             ans.push_back(pass);
-            ans.back() = Airports[ans.back()].name;
+            ans.back() = Airports[ans.back()].getName();
             pass = p[pass];
         }
 
-        ans.push_back(Airports[from].name);
+        ans.push_back(Airports[from].getName());
         reverse(ans.begin(), ans.end());
 
         return ans;
     }
 
-    vector <string> targetAirports(string from, int num) {
+    vector <string> targetAirports(string from, int num) {                // todos aeroportos que podemos ir de um aeroporto para outro por n passos
 
         unordered_set <string> t;
         unordered_map <string, bool> used;
@@ -175,8 +157,8 @@ public:
         }
 
         vector <string> ans;
-        for (auto i = t.begin(); i != t.end(); i++)
-            ans.push_back(*i);
+        for (const auto & i : t)
+            ans.push_back(i);
 
         return ans;
 
@@ -187,12 +169,10 @@ public:
 int main() {
 
     Graph g;
-    vector <string> ans = g.targetAirports("IOS", 1);
-
-    cout << g.g["IOS"].size() << endl;
+    vector <string> ans = g.getPathCities("London", "Rio De Janeiro");
 
     for (int i = 0; i < ans.size(); i++) {
-        cout << i + 1 << ' ' << ans[i];
+        cout << ' ' << ans[i];
         if (i != ans.size() - 1) cout << endl;
     }
 
