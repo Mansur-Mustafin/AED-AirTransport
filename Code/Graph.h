@@ -28,13 +28,21 @@ private:
 public:
     Graph();
 
-    vector <string> getPathCities(string from, string to);
+    bool isCity(const string& name);
 
-    vector <string> getPathCountries(string from, string to);
+    bool isCountry(const string& name);
 
-    vector <string> getPath(string from, string to);
+    vector <string> getPathCities(const string& from, const string& to);
 
-    vector <string> targetAirports(string from, int num);                // todos aeroportos que podemos ir de um aeroporto para outro por n passos
+    vector <string> getPathCountries(const string& from, const string& to);
+
+    vector <string> getPathAirports(const string& from, const string& to);
+
+    vector <string> getUltimatePath(string from, string to);
+
+    vector <string> getPathByVectors(vector <string> from, vector <string> to);
+
+    vector <string> targetAirports(const string& from, int num);                // todos aeroportos que podemos ir de um aeroporto para outro por n passos
 
     unordered_map <string, vector <Target> > getG();
 
