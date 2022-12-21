@@ -19,7 +19,11 @@ using namespace std;
 
 class Airline {
 private:
+
+    /// @brief Airline information
     string code,name,callsign,country;
+
+    /// @brief Set with airports the airline operates
     unordered_set<string> targetsAirports;
 public:
 
