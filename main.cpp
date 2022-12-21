@@ -9,11 +9,11 @@ int main() {
 
     Graph g;
 
-    vector <string> ans = g.getUltimatePath("RDC", "FLW");
+    vector <string> ans = g.getUltimatePath("CMP", "Russia");
     //vector <string> ans = g.getPathAirports("RDC", "FLW");
     //vector <string> ans = g.getPathCities("Kazan", "Moscow");
     //vector <string> ans = g.getPathCountries("Brazil","Portugal");
-    //vector <string> ans = g.targetAirports("RDC", 10);
+    //vector <string> ans = g.targetAirports("CMP", 10);
     //unordered_set<string> ans = g.getAirlinesFromAirport("IOS");
     //auto ans = g.getAirlines();
     //for(auto i : ans) cout << g.getAirlines()[i.first] << endl;
