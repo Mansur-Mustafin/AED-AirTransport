@@ -9,16 +9,30 @@ int main() {
 
     Graph g;
 
-    //vector <string> ans = g.getUltimatePath("OPO", "Russia");
-    vector <string> ans = g.getPathAirports("PNZ", "LIS");
-    //vector <string> ans = g.getPathCities("Green Bay", "Recife");
-    //vector <string> ans = g.getPathCountries("United States","United Kingdom");
+
+    //vector <string> ans = g.getUltimatePath("Brazil", "LIS");
+    //vector <string> ans = g.getPathAirports("IOS", "HNL");
+    //vector <string> ans = g.getPathCities("Kazan", "Moscow");
+    //vector <string> ans = g.getPathCountries("Brazil","Portugal");
     //vector <string> ans = g.targetAirports("IOS", 1);
     //unordered_set<string> ans = g.getAirlinesFromAirport("IOS");
     //auto ans = g.getAirlines();
     //for(auto i : ans) cout << g.getAirlines()[i.first] << endl;
+    //unordered_map <string, Airport> ans = g.getAirports();
+    unordered_map <string, unordered_set<string> > ans = g.getCountries();
 
-    for (auto i : ans) cout << i << endl;
+    for (auto i : ans) {
+
+        cout << i.first << endl;
+
+        for (auto j : i.second) {
+            cout << j << endl;
+        }
+
+        cout << endl;
+        cout << endl;
+
+    }
 
     //cout << g.isCity("Porto");
 

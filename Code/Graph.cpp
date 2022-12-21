@@ -180,6 +180,7 @@ vector<string> Graph::getPathCountries(const string& from, const string& to) {
             toV.push_back(airport);
         }
     }
+
     vector <string> ans = getPathByVectors(fromV, toV);
 
     return ans;
@@ -230,7 +231,7 @@ vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to
                 best = temp.size();
                 ans = temp;
             }
-            if(temp.size() == 1){
+            if(temp.size() == 1 && temp[0][1] != 'o'){
                 return temp;
             }
         }
