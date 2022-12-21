@@ -28,21 +28,63 @@ private:
     unordered_map<string, Airline> airlines;
 
 public:
+    ///@brief Empty Constructor
     Graph();
 
+    /**
+     * @brief Checks if city is in city list
+     * @param name -> Name of the city
+     * @return Bool value
+     */
     bool isCity(const string& name);
 
+    /**
+     * @brief Checks if country is in country list
+     * @param name -> Name of the Country
+     * @return Bool value
+     */
     bool isCountry(const string& name);
 
+    /**
+     * @brief Gets path with lowest flight number between cities
+     * @param from -> Name of origin city
+     * @param to -> Name of destination city
+     * @return Vector with airports names as strings
+     */
     vector <string> getPathCities(const string& from, const string& to);
 
+    /**
+     * @brief Gets path with lowest flight number between countries
+     * @param from -> Name of origin country
+     * @param to -> Name of destination country
+     * @return Vector with airports names as strings
+     */
     vector <string> getPathCountries(const string& from, const string& to);
 
+    /**
+     * @brief Gets path with lowest flight number between coordinates
+     * @param from -> Origin coordinate
+     * @param to -> Destination coordinate
+     * @return Vector with airports names as strings
+     */
     vector <string> getPathByPoint(double lat, double lon, double dist);  // FALTA AQUIIIIIIIIIIIIIIIIIIII
 
+    /**
+     * @brief Gets path with lowest flight number between airports
+     * @param from -> Origin airport code
+     * @param to -> Destination airport code
+     * @return Vector with airports names as strings
+     */
     vector <string> getPathAirports(const string& from, const string& to);
 
+    /**
+     * @brief Gets path with lowest flight number between places
+     * @param from -> Origin reference(can be name, airport code, coordinate)
+     * @param to -> Destination reference(can be name, airport code, coordinate)
+     * @return Vector with airports names as strings
+     */
     vector <string> getUltimatePath(string from, string to);
+
 
     vector <string> getPathByVectors(vector <string> from, vector <string> to);
 
