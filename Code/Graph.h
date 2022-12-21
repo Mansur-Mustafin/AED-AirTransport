@@ -13,6 +13,7 @@
 #include <iostream>
 #include "Target.h"
 #include "Airport.h"
+#include "Airline.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ private:
     unordered_map <string, Airport> airports; // g["any airport"]  for => set (airline)
     unordered_map <string, unordered_set<string> > cities;
     unordered_map <string, unordered_set<string> > countries;
-
+    unordered_map<string, Airline> airlines;
 
 public:
     Graph();
@@ -49,6 +50,8 @@ public:
     unordered_map <string, vector <Target> > getG();
 
     unordered_map <string, Airport> getAirports();
+
+    unordered_map<string, Airline> getAirlines();
 
     unordered_map <string, unordered_set<string> > getCities();
 

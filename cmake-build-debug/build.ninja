@@ -79,6 +79,12 @@ build CMakeFiles/Project_2.dir/Code/Flight.cpp.obj: CXX_COMPILER__Project_2_Debu
   OBJECT_DIR = CMakeFiles\Project_2.dir
   OBJECT_FILE_DIR = CMakeFiles\Project_2.dir\Code
 
+build CMakeFiles/Project_2.dir/Code/Airline.cpp.obj: CXX_COMPILER__Project_2_Debug C$:/FEUP/AED/Project$ 2/Code/Airline.cpp || cmake_object_order_depends_target_Project_2
+  DEP_FILE = CMakeFiles\Project_2.dir\Code\Airline.cpp.obj.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles\Project_2.dir
+  OBJECT_FILE_DIR = CMakeFiles\Project_2.dir\Code
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Project_2
@@ -87,7 +93,7 @@ build CMakeFiles/Project_2.dir/Code/Flight.cpp.obj: CXX_COMPILER__Project_2_Debu
 #############################################
 # Link the executable Project_2.exe
 
-build Project_2.exe: CXX_EXECUTABLE_LINKER__Project_2_Debug CMakeFiles/Project_2.dir/main.cpp.obj CMakeFiles/Project_2.dir/Code/Airport.cpp.obj CMakeFiles/Project_2.dir/Code/Graph.cpp.obj CMakeFiles/Project_2.dir/Code/Target.cpp.obj CMakeFiles/Project_2.dir/Code/Flight.cpp.obj
+build Project_2.exe: CXX_EXECUTABLE_LINKER__Project_2_Debug CMakeFiles/Project_2.dir/main.cpp.obj CMakeFiles/Project_2.dir/Code/Airport.cpp.obj CMakeFiles/Project_2.dir/Code/Graph.cpp.obj CMakeFiles/Project_2.dir/Code/Target.cpp.obj CMakeFiles/Project_2.dir/Code/Flight.cpp.obj CMakeFiles/Project_2.dir/Code/Airline.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Project_2.dir

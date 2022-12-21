@@ -16,8 +16,6 @@
 #include <map>
 #include <sstream>
 
-
-
 using namespace std;
 
 class Airport {

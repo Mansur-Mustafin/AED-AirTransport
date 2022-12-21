@@ -9,6 +9,7 @@ Graph::Graph() {
     string temp;
 
     ifstream in("flights.csv");
+
     getline(in, temp);
 
     while (getline(in, temp)) {
@@ -29,6 +30,17 @@ Graph::Graph() {
         cities[a.getCity()].insert(code);
         countries[a.getCountry()].insert(a.getCity());
     }
+
+    in.close(); in.open("airlines.csv");
+    getline(in, temp);
+
+    while (getline(in, temp)) {
+        Airline a(temp);
+        string code = temp.substr(0, 3);
+        airlines[code] = a;
+
+    }
+
 }
 
 
@@ -47,6 +59,8 @@ bool Graph::isCountry(const string& name) {
     }
     return true;
 }
+
+unordered_map<string, Airline> Graph::getAirlines() {return airlines;}
 
 unordered_map<string, vector<Target>> Graph::getG() {return g;}
 
@@ -231,8 +245,7 @@ vector<string> Graph::getPathByPoint(double lat, double lon, double dist) /* FAL
             toV.push_back(e.first);
         }
     }
-
-
+    return {};
 }
 
 unsigned int Graph::getNumberOfFlights(const std::string &Airport) {
