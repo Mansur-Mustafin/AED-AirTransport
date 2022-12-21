@@ -1,3 +1,0 @@
-C:/Users/ianbe/Documents/AED/AED_Proj2/AED-AirTransport/cmake-build-debug/CMakeFiles/Project_2.dir
-C:/Users/ianbe/Documents/AED/AED_Proj2/AED-AirTransport/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/ianbe/Documents/AED/AED_Proj2/AED-AirTransport/cmake-build-debug/CMakeFiles/rebuild_cache.dir
