@@ -20,6 +20,7 @@ using namespace std;
 class Graph {
 
 private:
+
     unordered_map <string, vector <Target> > g; // ["asd"] = {"qwe", "sdf"}   g["any airport"].size() = количество вылетов из аэропорт
     unordered_map <string, Airport> airports; // g["any airport"]  for => set (airline)
     unordered_map <string, unordered_set<string> > cities;
@@ -37,7 +38,7 @@ public:
 
     vector <string> getPathCountries(const string& from, const string& to);
 
-    vector <string> getPathByPoint(double lat, double lon, double dist);
+    vector <string> getPathByPoint(double lat, double lon, double dist);  // FALTA AQUIIIIIIIIIIIIIIIIIIII
 
     vector <string> getPathAirports(const string& from, const string& to);
 
@@ -45,7 +46,7 @@ public:
 
     vector <string> getPathByVectors(vector <string> from, vector <string> to);
 
-    vector <string> targetAirports(const string& from, int num);                // todos aeroportos que podemos ir de um aeroporto para outro por n passos
+    vector <string> targetAirports(const string& from, int num);   // todos aeroportos que podemos ir de um aeroporto para outro por n passos
 
     unordered_map <string, vector <Target> > getG();
 
@@ -57,10 +58,9 @@ public:
 
     unordered_map <string, unordered_set<string> > getCountries();
 
-    unsigned getNumberOfFlights(const string& Airport);
+    unsigned getNumberOfFlights(const string& Airport);      // info about Airport number of flights
 
-    unordered_set<string> getAirlinesFromAirport(const string& Airport);
+    unordered_set<string> getAirlinesFromAirport(const string& Airport);    // info Airport all companies
 };
-
 
 #endif //PROJECT_2_GRAPH_H

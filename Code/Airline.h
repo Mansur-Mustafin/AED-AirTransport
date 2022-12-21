@@ -20,6 +20,7 @@ using namespace std;
 class Airline {
 private:
     string code,name,callsign,country;
+    unordered_set<string> targetsAirports;
 public:
     Airline();
     explicit Airline(const string& in);
