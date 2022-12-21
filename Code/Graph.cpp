@@ -11,7 +11,6 @@ Graph::Graph() {
     ifstream in("flights.csv");
     getline(in, temp);
 
-
     while (getline(in, temp)) {
         //string source; Target t;
         Flight f = Flight(temp);
@@ -19,7 +18,6 @@ Graph::Graph() {
         //Help::getFlight(source, t, temp);
         g[f.getSource()].push_back(f.getTarget());
     }
-
 
     in.close(); in.open("airports.csv");
     getline(in, temp);
@@ -32,6 +30,7 @@ Graph::Graph() {
         countries[a.getCountry()].insert(a.getCity());
     }
 }
+
 
 bool Graph::isCity(const string& name) {
     auto p = cities.find(name);
@@ -224,3 +223,27 @@ vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to
     return ans;
 }
 
+vector<string> Graph::getPathByPoint(double lat, double lon, double dist) /* FALTA ACABAR AQUIIIIIIIIIIIIIIIIIIIIIIII */   {
+
+    vector <string> toV;
+    for(auto e : airports){
+        if(e.second.getDistanceTo(lat,lon) < dist){
+            toV.push_back(e.first);
+        }
+    }
+
+
+}
+
+unsigned int Graph::getNumberOfFlights(const std::string &Airport) {
+    return g[Airport].size();
+}
+
+unordered_set<string> Graph::getAirlinesFromAirport(const std::string &Airport) {
+    unordered_set<string> res;
+    vector<Target> targets = g[Airport];
+    for(auto t : targets){
+        res.insert(t.getAirline());
+    }
+    return res;
+}

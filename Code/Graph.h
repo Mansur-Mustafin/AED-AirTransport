@@ -36,6 +36,8 @@ public:
 
     vector <string> getPathCountries(const string& from, const string& to);
 
+    vector <string> getPathByPoint(double lat, double lon, double dist);
+
     vector <string> getPathAirports(const string& from, const string& to);
 
     vector <string> getUltimatePath(string from, string to);
@@ -51,6 +53,10 @@ public:
     unordered_map <string, unordered_set<string> > getCities();
 
     unordered_map <string, unordered_set<string> > getCountries();
+
+    unsigned getNumberOfFlights(const string& Airport);
+
+    unordered_set<string> getAirlinesFromAirport(const string& Airport);
 };
 
 

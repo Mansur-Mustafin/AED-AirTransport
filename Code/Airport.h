@@ -29,10 +29,13 @@ public:
     string getCode() const;
     string getCity() const;
     string getCountry() const;
-    string getLatitude() const;
-    string getLongitude() const;
+    double getLatitude() const;
+    double getLongitude() const;
+    double getDistanceTo(double lat2, double lon2) const;
+    friend ostream& operator<< (ostream& out, const Airport& s1);
 private:
-    string name, code, city, country, latitude, longitude;
+    string name, code, city, country;
+    double latitude, longitude;
 };
 
 
