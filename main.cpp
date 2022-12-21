@@ -15,8 +15,8 @@ int main() {
     //vector <string> ans = g.getPathCountries("Kyrgyzstan","Kyrgyzstan");
     //vector <string> ans = g.targetAirports("IOS", 1);
     //unordered_set<string> ans = g.getAirlinesFromAirport("IOS");
-    auto ans = g.getAirlines();
-    for(auto i : ans) cout << g.getAirlines()[i.first] << endl;
+    //auto ans = g.getAirlines();
+    //for(auto i : ans) cout << g.getAirlines()[i.first] << endl;
 
 
     //for (int i = 0; i < ans.size(); i++) {  cout << ' ' << ans[i];  if (i != ans.size() - 1) cout << endl; }

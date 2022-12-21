@@ -1,3 +1,0 @@
-C:/FEUP/AED/Project 2/cmake-build-debug/CMakeFiles/Project_2.dir
-C:/FEUP/AED/Project 2/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/FEUP/AED/Project 2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
