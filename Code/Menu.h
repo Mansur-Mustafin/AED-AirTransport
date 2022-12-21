@@ -11,7 +11,10 @@
 class Menu {
 public:
 
+
 void main_menu();
+
+void get_path_flight();
 
 private:
     Graph g;

@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include "Code/Graph.h"
+#include "Code/Menu.h"
 
 using namespace std;
 
@@ -22,9 +23,9 @@ int main() {
     //auto ans = g.getAirlines();
     //for(auto i : ans) cout << g.getAirlines()[i.first] << endl;
     //unordered_map <string, Airport> ans = g.getAirports();
-    unordered_map <string, unordered_set<string> > ans = g.getCountries();
+    //unordered_map <string, unordered_set<string> > ans = g.getCountries();
 
-    for (auto i : ans) {
+    /*for (auto i : ans) {
 
         cout << i.first << endl;
 
@@ -35,7 +36,10 @@ int main() {
         cout << endl;
         cout << endl;
 
-    }
+    }*/
+
+    Menu menu;
+    menu.main_menu();
 
     //cout << g.isCity("Porto");
 
