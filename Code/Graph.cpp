@@ -218,6 +218,7 @@ vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to
 
     int best = -1;
     vector <string> ans;
+    vector <string> temp;
 
     for (int i = 0; i < from.size(); i++)
         for (int j = 0; j < to.size(); j++) {
@@ -225,7 +226,7 @@ vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to
             string fromA = from[i];
             string toA = to[j];
 
-            vector <string> temp = getPathAirports(fromA , toA );
+            temp = getPathAirports(fromA , toA );
 
             if (temp.size() != 1 && (best == -1 || best > temp.size())) {
                 best = temp.size();
@@ -235,6 +236,9 @@ vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to
                 return temp;
             }
         }
+    if(temp[0][1] == 'o' && ans.empty()){
+        return temp;
+    }
     return ans;
 }
 
