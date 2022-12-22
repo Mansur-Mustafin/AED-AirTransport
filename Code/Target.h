@@ -18,11 +18,28 @@ using namespace std;
 
 class Target {
 private:
-    string target, airline;
+
+    /// @brief Flight destination
+    string target;
+
+    /// @brief Airline operating the flight
+    string airline;
 public:
+
+    /// @brief Empty constructor
     Target() : target(""), airline("") {}
+
+    /**
+     * @brief Constructor
+     * @param target_ -> Flight destination
+     * @param airline_ -> Airline operating the flight
+     */
     Target(string target_, string airline_) : target(target_), airline(airline_) {}
+
+    /// @brief Gets flight destination
     string getTarget();
+
+    /// @brief Gets flight airline
     string getAirline();
 };
 
