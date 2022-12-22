@@ -91,7 +91,7 @@ public:
     /**
      * @brief Gets path with lowest flight number between places
      * @param from -> Origin reference(can be name, airport code, coordinate)
-     * @param to -> Destination reference(can be name, airport code, coordinate)
+     * @param to -> Destination reference(can be name or airport code)
      * @return Vector with airports names as strings
      */
     vector <string> getUltimatePath(string from, string to);

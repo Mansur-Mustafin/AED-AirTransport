@@ -16,14 +16,16 @@ int main() {
     //vector <string> ans = g.getPathAirports("IOS", "HNL");
     //vector <string> ans = g.getUltimatePath("RDC", "FLW");
     //vector <string> ans = g.getPathAirports("RDC", "FLW");
-    //vector <string> ans = g.getPathCities("Kazan", "Moscow");
+    //vector <string> ans = g.getPathCities("Recife", "London");
     //vector <string> ans = g.getPathCountries("Brazil","Portugal");
-    //vector <string> ans = g.targetAirports("RDC", 10);
+    //vector <string> ans = g.targetAirports("REC", 1);
     //unordered_set<string> ans = g.getAirlinesFromAirport("IOS");
     //auto ans = g.getAirlines();
     //for(auto i : ans) cout << g.getAirlines()[i.first] << endl;
     //unordered_map <string, Airport> ans = g.getAirports();
     //unordered_map <string, unordered_set<string> > ans = g.getCountries();
+
+    //for (auto i : ans) cout << i << endl;
 
     /*for (auto i : ans) {
 

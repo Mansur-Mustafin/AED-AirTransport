@@ -16,6 +16,8 @@ void main_menu();
 
 void get_path_flight();
 
+void get_airport_info();
+
 private:
     Graph g;
 
