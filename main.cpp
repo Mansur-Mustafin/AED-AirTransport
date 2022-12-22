@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include "Code/Graph.h"
+#include "Code/Menu.h"
 
 using namespace std;
 
@@ -16,16 +17,18 @@ int main() {
     //vector <string> ans = g.getPathAirports("IOS", "HNL");
     //vector <string> ans = g.getUltimatePath("RDC", "FLW");
     //vector <string> ans = g.getPathAirports("RDC", "FLW");
-    //vector <string> ans = g.getPathCities("Kazan", "Moscow");
+    //vector <string> ans = g.getPathCities("Recife", "London");
     //vector <string> ans = g.getPathCountries("Brazil","Portugal");
-    //vector <string> ans = g.targetAirports("CMP", 10);
+
     //unordered_set<string> ans = g.getAirlinesFromAirport("IOS");
     //auto ans = g.getAirlines();
     //for(auto i : ans) cout << g.getAirlines()[i.first] << endl;
     //unordered_map <string, Airport> ans = g.getAirports();
-    unordered_map <string, unordered_set<string> > ans = g.getCountries();
+    //unordered_map <string, unordered_set<string> > ans = g.getCountries();
 
-    for (auto i : ans) {
+    //for (auto i : ans) cout << i << endl;
+
+    /*for (auto i : ans) {
 
         cout << i.first << endl;
 
@@ -36,7 +39,10 @@ int main() {
         cout << endl;
         cout << endl;
 
-    }
+    }*/
+
+    Menu menu;
+    menu.main_menu();
 
     //cout << g.isCity("Porto");
 
