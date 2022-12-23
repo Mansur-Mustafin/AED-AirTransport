@@ -128,7 +128,7 @@ void Menu::get_airport_info() {
         case 2:
             cout << "Flights:" << endl;
             for (auto i : a[code]) {
-                cout << code << "-" << i.getTarget() << " operated by: " << i.getAirline() << endl;
+                cout << code << "-" << i.getTarget() << " operated by: " << g.getAirlines()[i.getAirline()].getName() << endl;
             }
             break;
         case 3:
