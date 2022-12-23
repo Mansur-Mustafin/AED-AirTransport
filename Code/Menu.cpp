@@ -154,7 +154,7 @@ void Menu::get_airport_info() {
 
             cout << endl << "Different destinations:" << endl;
             for (auto i : g.targetAirports(code, flight_n)) {
-                cout << g.getAirports()[i].getCity() << endl;
+                cout << g.getAirports()[i] << endl;
             }
             break;
 
