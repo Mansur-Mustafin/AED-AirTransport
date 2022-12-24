@@ -10,6 +10,16 @@ int main() {
 
     Graph g;
 
+    auto l = g.getArticulationPoints();
+    //cout << "------------" << endl;
+    //for(auto e : l) cout << e << endl;
+
+    //for(auto e : g.getG()){
+        //cout << e.first << endl;
+      //  break;
+    //}
+
+
     //vector <string> ans = g.getUltimatePath("CMP", "Russia");
 
 
@@ -42,7 +52,7 @@ int main() {
     }*/
 
     Menu menu;
-    menu.main_menu();
+    //menu.main_menu();
 
     //cout << g.isCity("Porto");
 

@@ -265,3 +265,43 @@ unordered_set<string> Graph::getAirlinesFromAirport(const std::string &Airport) 
     }
     return res;
 }
+
+
+
+list<string> Graph::getArticulationPoints() {
+    unordered_map <string, bool> used;
+    unordered_map <string, int> num;
+    unordered_map <string, int> low;
+    int index = 1;
+    list<string> res;
+    for(const auto& a : g){
+        if(!used[a.first]){
+            dfsArtificialP(a.first, num, low, index, used, res);
+        }
+    }
+    return res;
+}
+
+void Graph::dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& used, list<string>& res) {
+    bool a = false;
+    int children = 0;
+    num[airport] = low[airport] = index++; used[airport] = true;
+
+    for(auto e : g[airport]){
+        string w = e.getTarget();
+        if(!used[w]){
+            children++;
+            dfsArtificialP(w, num, low, index, used, res);
+            low[airport] = min(low[airport], low[w]);
+            if(low[w] >= num[airport] && num[airport] > 1){
+                a = true;
+            }
+        }else{
+            low[airport] = min(low[airport], num[w]);
+        }
+    }
+    if((num[airport] == 1 && children > 1) || (num[airport] > 1 && a)){
+        res.push_back(airport);
+    }
+
+}

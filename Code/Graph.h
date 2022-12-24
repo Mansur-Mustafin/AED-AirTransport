@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <queue>
 #include <iostream>
+#include <list>
 #include "Target.h"
 #include "Airport.h"
 #include "Airline.h"
@@ -140,6 +141,10 @@ public:
      * @return Set of airlines as strings
      */
     unordered_set<string> getAirlinesFromAirport(const string& Airport);    // info Airport all companies
+
+    void dfsArtificialP(const string& airport, unordered_map <string, int> &num, unordered_map <string, int> &low, int &index, unordered_map<string, bool> &used, list<string>& res);
+
+    list<string> getArticulationPoints();
 };
 
 #endif //PROJECT_2_GRAPH_H
