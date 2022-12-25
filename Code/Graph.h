@@ -16,17 +16,14 @@
 #include "Target.h"
 #include "Airport.h"
 #include "Airline.h"
+#include "Airlines.h"
 
 using namespace std;
 
 
-
-static set <string> comp;
-
 class Graph {
 
 private:
-
 
     /// @brief Map with an airport as key and vector with all possible flights from it
     unordered_map <string, vector<Target>> g;
@@ -43,7 +40,7 @@ private:
     unordered_map <string, unordered_set<string> > countries;
 
     /// @brief Map with airline code as key and it Airline object
-    unordered_map<string, Airline> airlines;
+    static Airlines airlines;
 
 
 public:
@@ -78,7 +75,7 @@ public:
      * @param to -> Destination airport code
      * @return Vector with airports names as strings
      */
-    vector <string> getPathAirports(const string& from, const string& to, set <string> Comp = comp, vector <vector <string> >* others = nullptr);
+    vector <string> getPathAirports(const string& from, const string& to,  unordered_set <string> comp = airlines.getCompanies(), vector <vector <string> >* others = nullptr);
 
     /**
      * @brief Gets path with lowest flight number between places
@@ -86,7 +83,7 @@ public:
      * @param to -> Destination reference(can be name or airport code)
      * @return Vector with airports names as strings
      */
-    vector <string> getUltimatePath(string from, string to);
+    vector <string> getUltimatePath(const string& from, const string& to,  unordered_set <string> comp = airlines.getCompanies(), vector <vector <string> >* others = nullptr);
 
     /**
      * @brief Gets path with lowest flight number between airports
@@ -94,7 +91,7 @@ public:
      * @param to -> Vector with destination airports
      * @return Vector with airports names as strings
      */
-    vector <string> getPathByVectors(vector <string> from, vector <string> to);
+    vector <string> getPathByVectors(vector <string> from, vector <string> to,  unordered_set <string> comp = airlines.getCompanies(), vector <vector <string> >* others = nullptr);
 
     /**
      * @brief Gets all airports you can go to with n flight number
@@ -111,7 +108,7 @@ public:
     unordered_map <string, Airport> getAirports();
 
     /// @brief Gets airline list
-    unordered_map<string, Airline> getAirlines();
+    Airlines getAirlines();
 
     /// @brief Gets city list
     unordered_map <string, unordered_set<string> > getCities();

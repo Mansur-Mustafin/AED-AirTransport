@@ -9,16 +9,16 @@ int main() {
 
     Graph g;
 
-    set <string> t;
+    unordered_set <string> t;
     vector <vector <string> > qwe;
     t.insert("TOK");
     vector <string> zxc = g.getPathAirports("HGU", "TBG",  t,&qwe);
 
 
 
-    for (int i = 0; i < qwe.size(); i++) {
-        for (int j = 0; j < qwe[i].size(); j++)
-            cout << qwe[i][j] << "->";
+    for (auto & i : qwe) {
+        for (auto & j : i)
+            cout << j << "->";
         cout << endl;
     }
 
