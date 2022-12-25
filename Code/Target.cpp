@@ -4,8 +4,8 @@
 
 #include "Target.h"
 
-string Target::getTarget() {
-    return target;
+string Target::getAirport() {
+    return airport;
 }
 
 string Target::getAirline() {

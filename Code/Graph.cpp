@@ -8,17 +8,26 @@
 Graph::Graph() {
     string temp;
 
-    ifstream in("flights.csv");
 
+    ifstream in("airlines.csv");
     getline(in, temp);
 
     while (getline(in, temp)) {
-        //string source; Target t;
-        Flight f = Flight(temp);
-
-        //Help::getFlight(source, t, temp);
-        g[f.getSource()].push_back(f.getTarget());
+        Airline a(temp);
+        string code = temp.substr(0, 3);
+        airlines[code] = a;
     }
+
+
+    in.close(); in.open("flights.csv");
+    getline(in, temp);
+
+    while (getline(in, temp)) {
+        Flight f = Flight(temp);
+        g[f.getSource()].push_back(f.getTarget());
+        airlines[f.getTarget().getAirline()].addAirport(f.getTarget().getAirport());
+    }
+
 
     in.close(); in.open("airports.csv");
     getline(in, temp);
@@ -29,16 +38,6 @@ Graph::Graph() {
         airports[code] = a;
         cities[a.getCity()].insert(code);
         countries[a.getCountry()].insert(a.getCity());
-    }
-
-    in.close(); in.open("airlines.csv");
-    getline(in, temp);
-
-    while (getline(in, temp)) {
-        Airline a(temp);
-        string code = temp.substr(0, 3);
-        airlines[code] = a;
-
     }
 
 }
@@ -128,7 +127,7 @@ vector<string> Graph::getPathAirports(const string& from, const string& to) {
         q.pop();
 
         for (auto i = 0; i < g[cur].size(); i++) {
-            string target = g[cur][i].getTarget();
+            string target = g[cur][i].getAirport();
             if (!used[target]) {
                 q.push(target);
                 used[target] = true;
@@ -198,7 +197,7 @@ vector<string> Graph::targetAirports(const string& from, int num) {
         q.pop();
 
         for (auto i = 0; i < g[cur.first].size(); i++) {
-            string target = g[cur.first][i].getTarget();
+            string target = g[cur.first][i].getAirport();
             if (!used[target] && cur.second < num) {
                 t.insert(target);
                 q.push({ target, cur.second + 1 });
@@ -266,8 +265,6 @@ unordered_set<string> Graph::getAirlinesFromAirport(const std::string &Airport) 
     return res;
 }
 
-
-
 list<string> Graph::getArticulationPoints() {
     unordered_map <string, bool> used;
     unordered_map <string, int> num;
@@ -288,7 +285,7 @@ void Graph::dfsArtificialP(const string& airport, unordered_map <string, int>& n
     num[airport] = low[airport] = index++; used[airport] = true;
 
     for(auto e : g[airport]){
-        string w = e.getTarget();
+        string w = e.getAirport();
         if(!used[w]){
             children++;
             dfsArtificialP(w, num, low, index, used, res);

@@ -48,6 +48,10 @@ public:
     /// @brief Gets airline country
     string getCountry() const;
 
+    unordered_set<string> getAirlineairports();
+
+    void addAirport(const string& airportCode);
+
     /// @brief Overload of <em>operator<< </em>
     friend ostream& operator<< (ostream& out, const Airline& s1);
 };

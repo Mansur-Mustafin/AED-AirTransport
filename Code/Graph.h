@@ -23,7 +23,7 @@ class Graph {
 private:
 
     /// @brief Map with an airport as key and vector with all possible flights from it
-    unordered_map <string, vector <Target> > g;
+    unordered_map <string, vector<Target>> g;
     // ["asd"] = {"qwe", "sdf"}   g["any airport"].size() = количество вылетов из аэропорт
 
     /// @brief Map with airport code as key and its Airport object

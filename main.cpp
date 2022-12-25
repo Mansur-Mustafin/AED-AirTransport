@@ -1,4 +1,3 @@
-#include <vector>
 #include <string>
 #include <iostream>
 #include "Code/Graph.h"
@@ -10,7 +9,11 @@ int main() {
 
     Graph g;
 
-    auto l = g.getArticulationPoints();
+    for(const auto& a : g.getAirlines()["KLM"].getAirlineairports()){
+        cout << a << endl;
+    }
+
+    //auto l = g.getArticulationPoints();
     //cout << "------------" << endl;
     //for(auto e : l) cout << e << endl;
 
@@ -63,7 +66,3 @@ int main() {
     return 0;
 
 }
-
-/*
- *
- */

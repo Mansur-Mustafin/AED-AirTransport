@@ -43,3 +43,12 @@ ostream& operator<< (ostream& out, const Airline& s1){
     out << s1.code << ' ' << s1.name << ' ' << s1.callsign << ' ' << s1.country;
     return out;
 }
+
+unordered_set<string> Airline::getAirlineairports(){
+    return targetsAirports;
+}
+
+void Airline::addAirport(const string& airportCode) {
+    targetsAirports.insert(airportCode);
+}
+

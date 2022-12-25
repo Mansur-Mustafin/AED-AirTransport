@@ -20,24 +20,24 @@ class Target {
 private:
 
     /// @brief Flight destination
-    string target;
+    string airport;
 
     /// @brief Airline operating the flight
     string airline;
 public:
 
     /// @brief Empty constructor
-    Target() : target(""), airline("") {}
+    Target() : airport(""), airline("") {}
 
     /**
      * @brief Constructor
      * @param target_ -> Flight destination
      * @param airline_ -> Airline operating the flight
      */
-    Target(string target_, string airline_) : target(target_), airline(airline_) {}
+    Target(string airport_, string airline_) : airport(airport_), airline(airline_) {}
 
     /// @brief Gets flight destination
-    string getTarget();
+    string getAirport();
 
     /// @brief Gets flight airline
     string getAirline();
