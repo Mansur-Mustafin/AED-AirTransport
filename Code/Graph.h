@@ -12,15 +12,21 @@
 #include <queue>
 #include <iostream>
 #include <list>
+#include <set>
 #include "Target.h"
 #include "Airport.h"
 #include "Airline.h"
 
 using namespace std;
 
+
+
+static set <string> comp;
+
 class Graph {
 
 private:
+
 
     /// @brief Map with an airport as key and vector with all possible flights from it
     unordered_map <string, vector<Target>> g;
@@ -38,6 +44,7 @@ private:
 
     /// @brief Map with airline code as key and it Airline object
     unordered_map<string, Airline> airlines;
+
 
 public:
     ///@brief Empty Constructor
@@ -58,22 +65,6 @@ public:
     bool isCountry(const string& name);
 
     /**
-     * @brief Gets path with lowest flight number between cities
-     * @param from -> Name of origin city
-     * @param to -> Name of destination city
-     * @return Vector with airports names as strings
-     */
-    vector <string> getPathCities(const string& from, const string& to);
-
-    /**
-     * @brief Gets path with lowest flight number between countries
-     * @param from -> Name of origin country
-     * @param to -> Name of destination country
-     * @return Vector with airports names as strings
-     */
-    vector <string> getPathCountries(const string& from, const string& to);
-
-    /**
      * @brief Gets path with lowest flight number between coordinates
      * @param from -> Origin coordinate
      * @param to -> Destination coordinate
@@ -87,7 +78,7 @@ public:
      * @param to -> Destination airport code
      * @return Vector with airports names as strings
      */
-    vector <string> getPathAirports(const string& from, const string& to);
+    vector <string> getPathAirports(const string& from, const string& to, set <string> Comp = comp, vector <vector <string> >* others = nullptr);
 
     /**
      * @brief Gets path with lowest flight number between places
@@ -142,7 +133,7 @@ public:
      */
     unordered_set<string> getAirlinesFromAirport(const string& Airport);    // info Airport all companies
 
-    void dfsArtificialP(const string& airport, unordered_map <string, int> &num, unordered_map <string, int> &low, int &index, unordered_map<string, bool> &used, list<string>& res);
+    void dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, list<string>& res);
 
     list<string> getArticulationPoints();
 };

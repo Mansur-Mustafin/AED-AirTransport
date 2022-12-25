@@ -34,7 +34,7 @@ void Menu::get_path_flight() {
             cout << "Please enter destination city name:";
             cin >> dest;
 
-            output = g.getPathCities(origin, dest);
+            //output = g.getPathCities(origin, dest);
             break;
 
         case 2:
@@ -45,7 +45,7 @@ void Menu::get_path_flight() {
             cin >> dest;
             cout << endl;
 
-            output = g.getPathCountries(origin, dest);
+            //output = g.getPathCountries(origin, dest);
             break;
 
         case 3:

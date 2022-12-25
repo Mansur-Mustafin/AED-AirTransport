@@ -9,9 +9,20 @@ int main() {
 
     Graph g;
 
-    for(const auto& a : g.getAirlines()["KLM"].getAirlineairports()){
-        cout << a << endl;
+    set <string> t;
+    vector <vector <string> > qwe;
+    t.insert("TOK");
+    vector <string> zxc = g.getPathAirports("HGU", "TBG",  t,&qwe);
+
+
+
+    for (int i = 0; i < qwe.size(); i++) {
+        for (int j = 0; j < qwe[i].size(); j++)
+            cout << qwe[i][j] << "->";
+        cout << endl;
     }
+
+    cout << endl;
 
     //auto l = g.getArticulationPoints();
     //cout << "------------" << endl;
@@ -54,7 +65,7 @@ int main() {
 
     }*/
 
-    Menu menu;
+    //Menu menu;
     //menu.main_menu();
 
     //cout << g.isCity("Porto");

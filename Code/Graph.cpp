@@ -16,6 +16,7 @@ Graph::Graph() {
         Airline a(temp);
         string code = temp.substr(0, 3);
         airlines[code] = a;
+        comp.insert(a.getCode());
     }
 
 
@@ -40,12 +41,13 @@ Graph::Graph() {
         countries[a.getCountry()].insert(a.getCity());
     }
 
+
 }
 
 
 bool Graph::isCity(const string& name) {
     auto p = cities.find(name);
-    if(p == cities.end()){
+    if (p == cities.end()) {
         return false;
     }
     return true;
@@ -53,23 +55,23 @@ bool Graph::isCity(const string& name) {
 
 bool Graph::isCountry(const string& name) {
     auto p = countries.find(name);
-    if(p == countries.end()){
+    if (p == countries.end()) {
         return false;
     }
     return true;
 }
 
-unordered_map<string, Airline> Graph::getAirlines() {return airlines;}
+unordered_map<string, Airline> Graph::getAirlines() { return airlines; }
 
-unordered_map<string, vector<Target>> Graph::getG() {return g;}
+unordered_map<string, vector<Target>> Graph::getG() { return g; }
 
-unordered_map<string, Airport> Graph::getAirports() {return airports;}
+unordered_map<string, Airport> Graph::getAirports() { return airports; }
 
-unordered_map<string, unordered_set<string>> Graph::getCities() {return cities;}
+unordered_map<string, unordered_set<string>> Graph::getCities() { return cities; }
 
-unordered_map<string, unordered_set<string>> Graph::getCountries() {return countries;}
+unordered_map<string, unordered_set<string>> Graph::getCountries() { return countries; }
 
-vector<string> Graph::getUltimatePath(string from, string to){
+vector<string> Graph::getUltimatePath(string from, string to) {
 
     vector <string> fromV;
     vector <string> toV;
@@ -78,34 +80,34 @@ vector<string> Graph::getUltimatePath(string from, string to){
     bool isCityF = isCity(from);
     bool isCityT = isCity(to);
 
-    if(isCountryF){
-        for(auto city : countries[from]){
-            for(auto airport : cities[city]){
+    if (isCountryF) {
+        for (auto city : countries[from]) {
+            for (auto airport : cities[city]) {
                 fromV.push_back(airport);
             }
         }
     }
 
-    if(isCountryT){
-        for(auto city : countries[to]){
-            for(auto airport : cities[city]){
+    if (isCountryT) {
+        for (auto city : countries[to]) {
+            for (auto airport : cities[city]) {
                 toV.push_back(airport);
             }
         }
     }
 
-    if(isCityF){
-        for(auto i : cities[from]) fromV.push_back(i);
+    if (isCityF) {
+        for (auto i : cities[from]) fromV.push_back(i);
     }
 
-    if(isCityT){
-        for(auto i : cities[to]) toV.push_back(i);
+    if (isCityT) {
+        for (auto i : cities[to]) toV.push_back(i);
     }
 
-    if(!isCityF && !isCountryF){
+    if (!isCityF && !isCountryF) {
         fromV.push_back(from);
     }
-    if(!isCityT && !isCountryT){
+    if (!isCityT && !isCountryT) {
         toV.push_back(to);
     }
 
@@ -115,75 +117,72 @@ vector<string> Graph::getUltimatePath(string from, string to){
 
 }
 
-vector<string> Graph::getPathAirports(const string& from, const string& to) {
+vector <vector <string> > fill(const string& from, const string& to, unordered_map <string, vector <string> >& p, int d) {
+
+    vector <vector <string> > ans = { {to} };
+    for (int i = 0; i < d; i++) {
+        vector <vector <string> > temp;
+        for (auto elem : ans)
+            for (auto path : p[elem.back()]) {
+                vector <string> tt = elem;
+                tt.push_back(path);
+                temp.push_back(tt);
+            }
+        ans = temp;
+    }
+
+    return ans;
+
+}
+
+
+vector<string> Graph::getPathAirports(const string& from, const string& to, set <string> Comp, vector < vector<string> >* others) {
 
     unordered_map <string, bool> used;
-    unordered_map <string, string> p; // p["asd"] = "qwe"
+    unordered_map <string, vector <string > > p;
+    unordered_map <string, int> d;
     queue <string> q;
     q.push(from);
+    d[q.front()] = 0;
+
     while (!q.empty()) {
 
         string cur = q.front();
         q.pop();
 
         for (auto i = 0; i < g[cur].size(); i++) {
-            string target = g[cur][i].getAirport();
-            if (!used[target]) {
-                q.push(target);
+            string target = g[cur][i].getAirport(), air = g[cur][i].getAirline();
+            if ((!used[target] || d[cur] + 1 == d[target]) && Comp.find(air) != Comp.end()) {
+                if (!used[target])
+                    q.push(target);
+                d[target] = d[cur] + 1;
+                p[target].push_back(cur);
                 used[target] = true;
-                p[target] = cur;
             }
         }
     }
+
     if (used[to] == false)
-        return {"No path exists"};
+        return { "No path exists" };
     string pass = to;
     vector <string> ans;
     while (pass != from) {
         ans.push_back(pass);
         ans.back() = airports[ans.back()].getName();
-        pass = p[pass];
+        pass = p[pass][0];
     }
 
     ans.push_back(airports[from].getName());
     reverse(ans.begin(), ans.end());
 
-    return ans;
-}
-
-vector<string> Graph::getPathCities(const string& from, const string& to) {
-
-    vector <string> fromV;
-    vector <string> toV;
-    for(auto i : cities[from]) fromV.push_back(i);
-    for(auto i : cities[to]) toV.push_back(i);
-
-    vector <string> ans = getPathByVectors(fromV, toV);
-    return ans;
-}
-
-vector<string> Graph::getPathCountries(const string& from, const string& to) {
-    int best = -1;
-
-    vector <string> fromV;
-    vector <string> toV;
-
-    for(auto city : countries[from]){
-        for(auto airport : cities[city]){
-            fromV.push_back(airport);
-        }
-    }
-
-    for(auto city : countries[to]){
-        for(auto airport : cities[city]){
-            toV.push_back(airport);
-        }
-    }
-
-    vector <string> ans = getPathByVectors(fromV, toV);
+    if (others != NULL)
+        *others = fill(from, to, p, d[to]);
 
     return ans;
 }
+
+
+
 
 vector<string> Graph::targetAirports(const string& from, int num) {
     unordered_set <string> t;
@@ -207,13 +206,13 @@ vector<string> Graph::targetAirports(const string& from, int num) {
     }
 
     vector <string> ans;
-    for (const auto & i : t)
+    for (const auto& i : t)
         ans.push_back(i);
 
     return ans;
 }
 
-vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to){
+vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to) {
 
     int best = -1;
     vector <string> ans;
@@ -225,41 +224,41 @@ vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to
             string fromA = from[i];
             string toA = to[j];
 
-            temp = getPathAirports(fromA , toA );
+            temp = getPathAirports(fromA, toA);
 
             if (temp.size() != 1 && (best == -1 || best > temp.size())) {
                 best = temp.size();
                 ans = temp;
             }
-            if(temp.size() == 1 && temp[0][1] != 'o'){
+            if (temp.size() == 1 && temp[0][1] != 'o') {
                 return temp;
             }
         }
-    if(temp[0][1] == 'o' && ans.empty()){
+    if (temp[0][1] == 'o' && ans.empty()) {
         return temp;
     }
     return ans;
 }
 
-vector<string> Graph::getPathByPoint(double lat, double lon, double dist) /* FALTA ACABAR AQUIIIIIIIIIIIIIIIIIIIIIIII */   {
+vector<string> Graph::getPathByPoint(double lat, double lon, double dist) /* FALTA ACABAR AQUIIIIIIIIIIIIIIIIIIIIIIII */ {
 
     vector <string> toV;
-    for(auto e : airports){
-        if(e.second.getDistanceTo(lat,lon) < dist){
+    for (auto e : airports) {
+        if (e.second.getDistanceTo(lat, lon) < dist) {
             toV.push_back(e.first);
         }
     }
     return {};
 }
 
-unsigned int Graph::getNumberOfFlights(const std::string &Airport) {
+unsigned int Graph::getNumberOfFlights(const std::string& Airport) {
     return g[Airport].size();
 }
 
-unordered_set<string> Graph::getAirlinesFromAirport(const std::string &Airport) {
+unordered_set<string> Graph::getAirlinesFromAirport(const std::string& Airport) {
     unordered_set<string> res;
     vector<Target> targets = g[Airport];
-    for(auto t : targets){
+    for (auto t : targets) {
         res.insert(t.getAirline());
     }
     return res;
@@ -271,8 +270,8 @@ list<string> Graph::getArticulationPoints() {
     unordered_map <string, int> low;
     int index = 1;
     list<string> res;
-    for(const auto& a : g){
-        if(!used[a.first]){
+    for (const auto& a : g) {
+        if (!used[a.first]) {
             dfsArtificialP(a.first, num, low, index, used, res);
         }
     }
@@ -284,20 +283,21 @@ void Graph::dfsArtificialP(const string& airport, unordered_map <string, int>& n
     int children = 0;
     num[airport] = low[airport] = index++; used[airport] = true;
 
-    for(auto e : g[airport]){
+    for (auto e : g[airport]) {
         string w = e.getAirport();
-        if(!used[w]){
+        if (!used[w]) {
             children++;
             dfsArtificialP(w, num, low, index, used, res);
             low[airport] = min(low[airport], low[w]);
-            if(low[w] >= num[airport] && num[airport] > 1){
+            if (low[w] >= num[airport] && num[airport] > 1) {
                 a = true;
             }
-        }else{
+        }
+        else {
             low[airport] = min(low[airport], num[w]);
         }
     }
-    if((num[airport] == 1 && children > 1) || (num[airport] > 1 && a)){
+    if ((num[airport] == 1 && children > 1) || (num[airport] > 1 && a)) {
         res.push_back(airport);
     }
 
