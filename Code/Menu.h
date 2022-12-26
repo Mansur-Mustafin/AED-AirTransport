@@ -18,6 +18,8 @@ void get_path_flight();
 
 void get_airport_info();
 
+void printAirport(vector <string> airports);
+
 private:
     Graph g;
 

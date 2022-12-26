@@ -4,6 +4,32 @@
 
 #include "Menu.h"
 
+void Menu::printAirport(vector <string> airports) {
+    unordered_map <string, vector<Airport>> by_country;
+
+    for (auto i : airports) {
+        Airport a = g.getAirports()[i];
+
+
+        if (by_country.find(a.getCountry()) == by_country.end()) {
+            by_country[a.getCountry()] = vector<Airport>();
+        }
+
+        by_country[a.getCountry()].push_back(a);
+    }
+
+
+    for (auto i : by_country) {
+        cout << i.first << endl;
+        cout << " | " << endl;
+
+        for (auto j : i.second) {
+            cout << " |-----" << j.getName() << endl;
+        }
+        cout << endl;
+    }
+}
+
 void Menu::get_path_flight() {
 
     string airline_choice;
@@ -180,9 +206,12 @@ void Menu::get_airport_info() {
             cin >> flight_n;
 
             cout << endl << "Different destinations:" << endl;
-            for (auto i : g.targetAirports(code, flight_n)) {
-                cout << g.getAirports()[i] << endl;
-            }
+            /*for (auto i : g.targetAirports(code, flight_n)) {
+                cout << i << endl;
+                //cout << g.getAirports()[i] << endl;
+            }*/
+
+            printAirport(g.targetAirports(code, flight_n));
             break;
 
         default:
@@ -232,6 +261,10 @@ void Menu::main_menu() {
 
            case 21:
                get_airport_info();
+               break;
+
+           case 22:
+               printAirport(g.targetAirports("REC", 1));
                break;
 
             default: cout << "Invalid input" << endl;
