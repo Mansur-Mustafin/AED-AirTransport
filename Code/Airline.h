@@ -54,6 +54,8 @@ public:
 
     /// @brief Overload of <em>operator<< </em>
     friend ostream& operator<< (ostream& out, const Airline& s1);
+
+
 };
 
 

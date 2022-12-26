@@ -66,6 +66,8 @@ private:
 
     /// @brief Airport coordinate
     double latitude, longitude;
+
+
 };
 
 

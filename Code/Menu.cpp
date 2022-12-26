@@ -5,26 +5,27 @@
 #include "Menu.h"
 
 void Menu::printAirport(vector <string> airports) {
-    unordered_map <string, vector<Airport>> by_country;
+    unordered_map <string, unordered_map <string, vector<Airport>>> by_country;
 
     for (auto i : airports) {
         Airport a = g.getAirports()[i];
 
-
-        if (by_country.find(a.getCountry()) == by_country.end()) {
-            by_country[a.getCountry()] = vector<Airport>();
-        }
-
-        by_country[a.getCountry()].push_back(a);
+        by_country[a.getCountry()][a.getCity()].push_back(a);
     }
 
 
     for (auto i : by_country) {
         cout << i.first << endl;
         cout << " | " << endl;
-
         for (auto j : i.second) {
-            cout << " |-----" << j.getName() << endl;
+            cout << " |-----" << j.first << endl;
+            for (auto c : j.second) {
+                if (c.getName() == j.second[j.second.size()-1].getName()) {
+                    cout << "         |-----" << c.getName() << endl;
+                } else {
+                    cout << " |       |-----" << c.getName() << endl;
+                }
+            }
         }
         cout << endl;
     }
