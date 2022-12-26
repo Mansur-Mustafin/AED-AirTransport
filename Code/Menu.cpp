@@ -16,15 +16,11 @@ void Menu::printAirport(vector <string> airports) {
 
     for (auto i : by_country) {
         cout << i.first << endl;
-        cout << " | " << endl;
+        //cout << " | " << endl;
         for (auto j : i.second) {
             cout << " |-----" << j.first << endl;
             for (auto c : j.second) {
-                if (c.getName() == j.second[j.second.size()-1].getName()) {
-                    cout << "         |-----" << c.getName() << endl;
-                } else {
-                    cout << " |       |-----" << c.getName() << endl;
-                }
+                cout << "         |-----" << c.getName()<< ": ("  << c.getCode() << ')' << endl;
             }
         }
         cout << endl;
