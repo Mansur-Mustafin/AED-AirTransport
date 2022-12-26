@@ -71,8 +71,10 @@ unordered_map<string, unordered_set<string>> Graph::getCities() { return cities;
 
 unordered_map<string, unordered_set<string>> Graph::getCountries() { return countries; }
 
-vector<string> Graph::getUltimatePath(string from, string to) {
-
+vector<string> Graph::getUltimatePath(string from, string to, set <string> Comp, vector < vector<string> >* others) {
+    if(Comp.empty()){
+        Comp = comp;
+    }
     vector <string> fromV;
     vector <string> toV;
     bool isCountryF = isCountry(from);
@@ -81,27 +83,27 @@ vector<string> Graph::getUltimatePath(string from, string to) {
     bool isCityT = isCity(to);
 
     if (isCountryF) {
-        for (auto city : countries[from]) {
-            for (auto airport : cities[city]) {
+        for (const auto& city : countries[from]) {
+            for (const auto& airport : cities[city]) {
                 fromV.push_back(airport);
             }
         }
     }
 
     if (isCountryT) {
-        for (auto city : countries[to]) {
-            for (auto airport : cities[city]) {
+        for (const auto& city : countries[to]) {
+            for (const auto& airport : cities[city]) {
                 toV.push_back(airport);
             }
         }
     }
 
     if (isCityF) {
-        for (auto i : cities[from]) fromV.push_back(i);
+        for (const auto& i : cities[from]) fromV.push_back(i);
     }
 
     if (isCityT) {
-        for (auto i : cities[to]) toV.push_back(i);
+        for (const auto& i : cities[to]) toV.push_back(i);
     }
 
     if (!isCityF && !isCountryF) {
@@ -111,7 +113,7 @@ vector<string> Graph::getUltimatePath(string from, string to) {
         toV.push_back(to);
     }
 
-    vector <string> ans = getPathByVectors(fromV, toV);
+    vector <string> ans = getPathByVectors(fromV, toV, comp, others);
 
     return ans;
 
@@ -137,7 +139,9 @@ vector <vector <string> > fill(const string& from, const string& to, unordered_m
 
 
 vector<string> Graph::getPathAirports(const string& from, const string& to, set <string> Comp, vector < vector<string> >* others) {
-
+    if(Comp.empty()){
+        Comp = comp;
+    }
     unordered_map <string, bool> used;
     unordered_map <string, vector <string > > p;
     unordered_map <string, int> d;
@@ -162,7 +166,7 @@ vector<string> Graph::getPathAirports(const string& from, const string& to, set 
         }
     }
 
-    if (used[to] == false)
+    if (!used[to])
         return { "No path exists" };
     string pass = to;
     vector <string> ans;
@@ -175,13 +179,11 @@ vector<string> Graph::getPathAirports(const string& from, const string& to, set 
     ans.push_back(airports[from].getName());
     reverse(ans.begin(), ans.end());
 
-    if (others != NULL)
+    if (others != nullptr)
         *others = fill(from, to, p, d[to]);
 
     return ans;
 }
-
-
 
 
 vector<string> Graph::targetAirports(const string& from, int num) {
@@ -212,7 +214,7 @@ vector<string> Graph::targetAirports(const string& from, int num) {
     return ans;
 }
 
-vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to) {
+vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to, set <string> Comp, vector < vector<string> >* others) {
 
     int best = -1;
     vector <string> ans;
@@ -224,7 +226,7 @@ vector <string> Graph::getPathByVectors(vector <string> from, vector <string> to
             string fromA = from[i];
             string toA = to[j];
 
-            temp = getPathAirports(fromA, toA);
+            temp = getPathAirports(fromA, toA, Comp, others);
 
             if (temp.size() != 1 && (best == -1 || best > temp.size())) {
                 best = temp.size();

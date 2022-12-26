@@ -21,13 +21,13 @@ using namespace std;
 
 
 
-static set <string> comp;
+
 
 class Graph {
 
 private:
 
-
+    set <string> comp;
     /// @brief Map with an airport as key and vector with all possible flights from it
     unordered_map <string, vector<Target>> g;
     // ["asd"] = {"qwe", "sdf"}   g["any airport"].size() = количество вылетов из аэропорт
@@ -78,7 +78,7 @@ public:
      * @param to -> Destination airport code
      * @return Vector with airports names as strings
      */
-    vector <string> getPathAirports(const string& from, const string& to, set <string> Comp = comp, vector <vector <string> >* others = nullptr);
+    vector <string> getPathAirports(const string& from, const string& to, set <string> Comp = {}, vector <vector <string> >* others = nullptr);
 
     /**
      * @brief Gets path with lowest flight number between places
@@ -86,7 +86,7 @@ public:
      * @param to -> Destination reference(can be name or airport code)
      * @return Vector with airports names as strings
      */
-    vector <string> getUltimatePath(string from, string to);
+    vector <string> getUltimatePath(string from, string to, set <string> Comp = {}, vector <vector <string> >* others = nullptr);
 
     /**
      * @brief Gets path with lowest flight number between airports
@@ -94,7 +94,7 @@ public:
      * @param to -> Vector with destination airports
      * @return Vector with airports names as strings
      */
-    vector <string> getPathByVectors(vector <string> from, vector <string> to);
+    vector <string> getPathByVectors(vector <string> from, vector <string> to, set <string> Comp = {}, vector <vector <string> >* others = nullptr);
 
     /**
      * @brief Gets all airports you can go to with n flight number

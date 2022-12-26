@@ -11,14 +11,13 @@ int main() {
 
     set <string> t;
     vector <vector <string> > qwe;
-    t.insert("TOK");
-    vector <string> zxc = g.getPathAirports("HGU", "TBG",  t,&qwe);
+    vector <string> zxc = g.getPathAirports("REC", "OPO");
 
+    for(auto i : zxc) cout << i << "-->";
 
-
-    for (int i = 0; i < qwe.size(); i++) {
-        for (int j = 0; j < qwe[i].size(); j++)
-            cout << qwe[i][j] << "->";
+    for (auto & i : qwe) {
+        for (int j = 0; j < i.size(); j++)
+            cout << i[j] << "->";
         cout << endl;
     }
 
