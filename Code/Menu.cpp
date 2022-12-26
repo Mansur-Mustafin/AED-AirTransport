@@ -26,7 +26,7 @@ void Menu::get_path_flight() {
         for (int i = 0; i < n_airlines; i++) {
             string al;
 
-            cout << i+1 << "Please enter an airline code:" << endl;
+            cout << i+1 << " - " << "Please enter an airline code:" << endl;
 
             cin >> al;
 
@@ -37,11 +37,9 @@ void Menu::get_path_flight() {
     }
 
     cout << "Wich kind of data do you have?" << endl;
-    cout << "1 - City names" << endl;
-    cout << "2 - Country names" << endl;
-    cout << "3 - Coordinates " << endl;
-    cout << "4 - Airport codes" << endl;
-    cout << "5 - Mix of data (not coordinates)" << endl;
+    cout << "1 - City and/or country names" << endl;
+    cout << "2 - Coordinates " << endl;
+    cout << "3 - Airport codes" << endl;
 
     cout << "Please enter your choice:" << endl;
 
@@ -55,6 +53,8 @@ void Menu::get_path_flight() {
 
     vector<string> output;
 
+    vector <vector <string>> others;
+
     switch (choice) {
         case 1:
             cout << "Please enter the origin city name:";
@@ -64,21 +64,11 @@ void Menu::get_path_flight() {
             cout << "Please enter destination city name:";
             cin >> dest;
 
-            output = g.getUltimatePath(origin, dest, airlines);
+            output = g.getUltimatePath(origin, dest, airlines, &others);
             break;
+
 
         case 2:
-            cout << "Please enter the origin country name:";
-            cin >> origin;
-            cout << endl;
-            cout << "Please enter destination country name:";
-            cin >> dest;
-            cout << endl;
-
-            output = g.getUltimatePath(origin, dest, airlines);
-            break;
-
-        case 3:
             cout << "Please enter the origin coordinates:";
             cin >> lat;
             cout << endl;
@@ -91,7 +81,7 @@ void Menu::get_path_flight() {
             output = g.getPathByPoint(lat, lon, dist);
             break;
 
-        case 4:
+        case 3:
             cout << "Please enter the origin airport code:";
             cin >> origin;
             cout << endl;
@@ -99,29 +89,36 @@ void Menu::get_path_flight() {
             cin >> dest;
             cout << endl;
 
-            output = g.getPathAirports(origin, dest, airlines);
+            output = g.getPathAirports(origin, dest, airlines, &others);
             break;
 
-        case 5:
-            cout << "Please enter the data from origin:";
-            cin >> origin;
-            cout << endl;
-            cout << "Please enter data from destination:";
-            cin >> dest;
-            cout << endl;
-
-            output = g.getUltimatePath(origin, dest, airlines);
-            break;
 
         default:
             get_path_flight();
             break;
     }
 
-    cout << endl << "Your path is:" << endl;
+    cout << "Would you like to see all possible paths with the lowest flight number? (y/n)" << endl;
 
-    for (auto i : output) {
-        cout << i << endl;
+    string print_choice;
+    cin >> print_choice;
+
+    if (print_choice == "Y" || print_choice == "y") {
+        cout << endl << "Your path is:" << endl;
+
+        for (auto i : others) {
+            for (int j = 0; j < i.size(); j++) {
+                cout << i[j];
+                if (j != i.size()-1) {
+                    cout << "->";
+                }
+            }
+            cout << endl;
+        }
+    }else {
+        for (auto i : output) {
+            cout << i << endl;
+        }
     }
 
 }
