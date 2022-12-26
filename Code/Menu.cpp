@@ -6,6 +6,36 @@
 
 void Menu::get_path_flight() {
 
+    string airline_choice;
+
+    set <string> airlines;
+
+    cout << "Do you want to use specific airlines? (y/n)" << endl;
+
+    cin >> airline_choice;
+
+    if (airline_choice == "Y" || airline_choice == "y") {
+        int n_airlines;
+
+        cout << "How many airlines do you want to use?" << endl;
+
+        cin >> n_airlines;
+
+        cout << endl;
+
+        for (int i = 0; i < n_airlines; i++) {
+            string al;
+
+            cout << i+1 << "Please enter an airline code:" << endl;
+
+            cin >> al;
+
+            cout << endl;
+
+            airlines.insert(al);
+        }
+    }
+
     cout << "Wich kind of data do you have?" << endl;
     cout << "1 - City names" << endl;
     cout << "2 - Country names" << endl;
@@ -34,7 +64,7 @@ void Menu::get_path_flight() {
             cout << "Please enter destination city name:";
             cin >> dest;
 
-            //output = g.getPathCities(origin, dest);
+            output = g.getUltimatePath(origin, dest, airlines);
             break;
 
         case 2:
@@ -45,7 +75,7 @@ void Menu::get_path_flight() {
             cin >> dest;
             cout << endl;
 
-            //output = g.getPathCountries(origin, dest);
+            output = g.getUltimatePath(origin, dest, airlines);
             break;
 
         case 3:
@@ -69,7 +99,7 @@ void Menu::get_path_flight() {
             cin >> dest;
             cout << endl;
 
-            output = g.getPathAirports(origin, dest);
+            output = g.getPathAirports(origin, dest, airlines);
             break;
 
         case 5:
@@ -80,7 +110,7 @@ void Menu::get_path_flight() {
             cin >> dest;
             cout << endl;
 
-            output = g.getUltimatePath(origin, dest);
+            output = g.getUltimatePath(origin, dest, airlines);
             break;
 
         default:

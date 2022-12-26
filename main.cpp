@@ -9,11 +9,11 @@ int main() {
 
     Graph g;
 
-    set <string> t;
+    /*set <string> t;
     vector <vector <string> > qwe;
-    vector <string> zxc = g.getPathAirports("REC", "OPO");
+    vector <string> zxc = g.getPathAirports("REC", "OPO", t, &qwe);
 
-    for(auto i : zxc) cout << i << "-->";
+    //for(auto i : zxc) cout << i << "-->";
 
     for (auto & i : qwe) {
         for (int j = 0; j < i.size(); j++)
@@ -21,7 +21,7 @@ int main() {
         cout << endl;
     }
 
-    cout << endl;
+    cout << endl;*/
 
     //auto l = g.getArticulationPoints();
     //cout << "------------" << endl;
@@ -64,8 +64,8 @@ int main() {
 
     }*/
 
-    //Menu menu;
-    //menu.main_menu();
+    Menu menu;
+    menu.main_menu();
 
     //cout << g.isCity("Porto");
 

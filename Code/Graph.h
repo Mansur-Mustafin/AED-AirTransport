@@ -73,10 +73,12 @@ public:
     vector <string> getPathByPoint(double lat, double lon, double dist);  // FALTA AQUIIIIIIIIIIIIIIIIIIII
 
     /**
-     * @brief Gets path with lowest flight number between airports
-     * @param from -> Origin airport code
-     * @param to -> Destination airport code
-     * @return Vector with airports names as strings
+     * @brief Gets path with lowest flight number between two airports.
+     * @param from -> Origin airport
+     * @param to -> Destination airport
+     * @param Comp -> Airline companies to use
+     * @param others -> Pointer to empty list vector that stores all other options with same flight number
+     * @return -> Vector with airport codes
      */
     vector <string> getPathAirports(const string& from, const string& to, set <string> Comp = {}, vector <vector <string> >* others = nullptr);
 
@@ -84,6 +86,8 @@ public:
      * @brief Gets path with lowest flight number between places
      * @param from -> Origin reference(can be name, airport code, coordinate)
      * @param to -> Destination reference(can be name or airport code)
+     * @param Comp -> Airline companies to use
+     * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
      */
     vector <string> getUltimatePath(string from, string to, set <string> Comp = {}, vector <vector <string> >* others = nullptr);
@@ -92,6 +96,8 @@ public:
      * @brief Gets path with lowest flight number between airports
      * @param from -> Vector with origin airports
      * @param to -> Vector with destination airports
+     * @param Comp -> Airline companies to use
+     * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
      */
     vector <string> getPathByVectors(vector <string> from, vector <string> to, set <string> Comp = {}, vector <vector <string> >* others = nullptr);
