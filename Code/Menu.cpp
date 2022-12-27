@@ -202,7 +202,7 @@ void Menu::get_airport_info() {
             cout << "Number of Airlines:" << g.getAirlinesFromAirport(code).size() << endl;
             cout << "Airlines:" << endl;
             for (auto i : g.getAirlinesFromAirport(code)) {
-                cout << i << endl;
+                cout << i << " - " << g.getAirlines()[i].getName() << endl;
             }
             break;
         case 3:
@@ -247,7 +247,16 @@ void Menu::get_airline_info() {
     }
 }
 
+void Menu::get_articulation_points(){
 
+    cout << "Number of Articulation points: " << g.getArticulationPoints().size() << endl;
+
+    cout << "Articulation Points:" << endl;
+
+    for (auto i : g.getArticulationPoints()) {
+        cout << i << endl;
+    }
+}
 
 void Menu::main_menu() {
 
@@ -259,9 +268,9 @@ void Menu::main_menu() {
                 "| Get path with lowest flight number     [11] | Get information from specific Airport  [21] |\n"
                 "|                                             |                                             |\n"
                 "|=============================================|=============================================|\n"
-                "|                 Airlines                    |                                             |\n"
+                "|                 Airlines                    |                   Network                   |\n"
                 "|=============================================|=============================================|\n"
-                "| Get Airline information                [31] |                                             |\n"
+                "| Get Airline information                [31] | Get articulation points                [41] |\n"
                 "|                                             |                                             |\n"
                 "|=============================================|=============================================|\n"
                 "|               Other operations              |                                              \n"
@@ -292,14 +301,14 @@ void Menu::main_menu() {
                get_airport_info();
                break;
 
-           case 22:
-               //printAirport(g.targetAirports("REC", 2), "REC");
-               break;
 
            case 31:
                get_airline_info();
                break;
 
+           case 41:
+               get_articulation_points();
+               break;
 
             default: cout << "Invalid input" << endl;
 

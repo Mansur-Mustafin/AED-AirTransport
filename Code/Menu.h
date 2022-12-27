@@ -24,6 +24,8 @@ void printAirport(unordered_set<string> airports);
 
 void get_airline_info();
 
+void get_articulation_points();
+
 private:
     Graph g;
 
