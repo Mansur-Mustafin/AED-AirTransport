@@ -4,7 +4,40 @@
 
 #include "Menu.h"
 
-void Menu::printAirport(vector <string> airports) {
+
+
+void Menu::printAirport_flightN(vector <string> airports, string origin) {
+    unordered_map <string, unordered_map <string, map<int, vector<Airport>>>> by_country;
+
+    for (auto i : airports) {
+        Airport a = g.getAirports()[i];
+
+        by_country[a.getCountry()][a.getCity()][g.getPathAirports(origin ,a.getCode()).size()-1].push_back(a);
+    }
+
+    int city_n = 0;
+
+    for (auto i : by_country) {
+        cout << i.first << endl;
+        //cout << " | " << endl;
+        city_n += i.second.size();
+        for (auto j : i.second) {
+            cout << " |-----" << j.first << endl;
+            for (auto f : j.second) {
+                for (auto c: f.second) {
+                    cout << "         |-----" << c.getName() << ": (" << c.getCode() << ") | " << f.first << " flights to get there" << endl;
+                }
+            }
+        }
+        cout << endl;
+    }
+    cout << "Number of Airports: " << airports.size() << endl;
+    cout << "Number of countries: " << by_country.size() << endl;
+    cout << "Number of cities: " << city_n << endl;
+
+}
+
+void Menu::printAirport(unordered_set<string> airports) {
     unordered_map <string, unordered_map <string, vector<Airport>>> by_country;
 
     for (auto i : airports) {
@@ -12,10 +45,11 @@ void Menu::printAirport(vector <string> airports) {
         by_country[a.getCountry()][a.getCity()].push_back(a);
     }
 
+    int city_n = 0;
 
     for (auto i : by_country) {
         cout << i.first << endl;
-        //cout << " | " << endl;
+        city_n += i.second.size();
         for (auto j : i.second) {
             cout << " |-----" << j.first << endl;
             for (auto c : j.second) {
@@ -24,6 +58,10 @@ void Menu::printAirport(vector <string> airports) {
         }
         cout << endl;
     }
+
+    cout << "Number of Airports: " << airports.size() << endl;
+    cout << "Number of countries: " << by_country.size() << endl;
+    cout << "Number of cities: " << city_n << endl;
 }
 
 void Menu::get_path_flight() {
@@ -142,12 +180,9 @@ void Menu::get_airport_info() {
     unordered_map<string, vector<Target>> a = g.getG();
 
     cout << endl << "What information do you want?" << endl;
-    cout << "1 - Number of flights from the airport" << endl;
-    cout << "2 - Flights from the airport" << endl;
-    cout << "3 - Number of airlines operating in the airport" << endl;
-    cout << "4 - Airlines operating in the airport" << endl;
-    cout << "5 - Number of different destinations with max flight number" << endl;
-    cout << "6 - Different destinations with max flight number" << endl;
+    cout << "1 - Flights from the airport" << endl;
+    cout << "2 - Airlines operating in the airport" << endl;
+    cout << "3 - Different destinations with max flight number" << endl;
 
     cout << "Please enter your choice:" << endl;
 
@@ -157,44 +192,26 @@ void Menu::get_airport_info() {
 
     switch (choice) {
         case 1:
-            cout << "Number of flights:" << endl;
-            cout << a[code].size() << endl;
-            break;
-
-        case 2:
+            cout << "Number of flights:" << a[code].size() << endl;
             cout << "Flights:" << endl;
             for (auto i : a[code]) {
                 cout << code << "-" << i.getAirport() << " operated by: " << g.getAirlines()[i.getAirline()].getName() << endl;
             }
             break;
-        case 3:
-            cout << "Number of Airlines:" << endl;
-            cout << g.getAirlinesFromAirport(code).size() << endl;
-            break;
-        case 4:
+        case 2:
+            cout << "Number of Airlines:" << g.getAirlinesFromAirport(code).size() << endl;
             cout << "Airlines:" << endl;
             for (auto i : g.getAirlinesFromAirport(code)) {
                 cout << i << endl;
             }
             break;
-        case 5:
-            cout << "Please enter max flight number:";
-            cin >> flight_n;
-
-            cout << endl << "Number of different destinations:" << endl;
-            cout << g.targetAirports(code, flight_n).size() << endl;
-            break;
-        case 6:
+        case 3:
             cout << "Please enter max flight number:";
             cin >> flight_n;
 
             cout << endl << "Different destinations:" << endl;
-            /*for (auto i : g.targetAirports(code, flight_n)) {
-                cout << i << endl;
-                //cout << g.getAirports()[i] << endl;
-            }*/
 
-            printAirport(g.targetAirports(code, flight_n));
+            printAirport_flightN(g.targetAirports(code, flight_n), code);
             break;
 
         default:
@@ -202,6 +219,34 @@ void Menu::get_airport_info() {
             break;
     }
 }
+
+void Menu::get_airline_info() {
+
+    string airline_code;
+
+    cout << "Please enter an airline code:";
+
+    cin >> airline_code;
+    cout << endl;
+
+    Airline airline = g.getAirlines()[airline_code];
+
+    cout << "Wich information do you want?" << endl;
+
+    cout << "1 - Get all Airports an airline operates" << endl;
+
+    cout << "Please enter your choice:" << endl;
+
+    int choice;
+    cin >> choice;
+    cout << endl;
+
+    switch (choice) {
+        case 1:
+            printAirport(airline.getAirlineairports());
+    }
+}
+
 
 
 void Menu::main_menu() {
@@ -216,6 +261,7 @@ void Menu::main_menu() {
                 "|=============================================|=============================================|\n"
                 "|                 Airlines                    |                                             |\n"
                 "|=============================================|=============================================|\n"
+                "| Get Airline information                [31] |                                             |\n"
                 "|                                             |                                             |\n"
                 "|=============================================|=============================================|\n"
                 "|               Other operations              |                                              \n"
@@ -247,8 +293,13 @@ void Menu::main_menu() {
                break;
 
            case 22:
-               printAirport(g.targetAirports("REC", 1));
+               //printAirport(g.targetAirports("REC", 2), "REC");
                break;
+
+           case 31:
+               get_airline_info();
+               break;
+
 
             default: cout << "Invalid input" << endl;
 
