@@ -9,7 +9,6 @@ void Menu::printAirport(vector <string> airports) {
 
     for (auto i : airports) {
         Airport a = g.getAirports()[i];
-
         by_country[a.getCountry()][a.getCity()].push_back(a);
     }
 
