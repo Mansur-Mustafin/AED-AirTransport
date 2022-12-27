@@ -59,9 +59,8 @@ void Menu::get_path_flight() {
     }
 
     cout << "Wich kind of data do you have?" << endl;
-    cout << "1 - City and/or country names" << endl;
+    cout << "1 - City and/or country names or Airport code" << endl;
     cout << "2 - Coordinates " << endl;
-    cout << "3 - Airport codes" << endl;
 
     cout << "Please enter your choice:" << endl;
 
@@ -102,18 +101,6 @@ void Menu::get_path_flight() {
 
             output = g.getPathByPoint(lat, lon, dist);
             break;
-
-        case 3:
-            cout << "Please enter the origin airport code:";
-            cin >> origin;
-            cout << endl;
-            cout << "Please enter destination airport code:";
-            cin >> dest;
-            cout << endl;
-
-            output = g.getPathAirports(origin, dest, airlines, &others);
-            break;
-
 
         default:
             get_path_flight();
