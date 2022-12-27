@@ -186,7 +186,10 @@ vector<string> Graph::getPathAirports(const string& from, const string& to, set 
 }
 
 
-vector<string> Graph::targetAirports(const string& from, int num) {
+vector<string> Graph::targetAirports(const string& from, int num,  set <string> Comp) {
+    if(Comp.empty()){
+        Comp = comp;
+    }
     unordered_set <string> t;
     unordered_map <string, bool> used;
     queue <pair <string, int> > q;
@@ -198,8 +201,8 @@ vector<string> Graph::targetAirports(const string& from, int num) {
         q.pop();
 
         for (auto i = 0; i < g[cur.first].size(); i++) {
-            string target = g[cur.first][i].getAirport();
-            if (!used[target] && cur.second < num) {
+            string target = g[cur.first][i].getAirport(), air = g[cur.first][i].getAirline();
+            if (!used[target] && cur.second < num && Comp.find(air) != Comp.end()) {
                 t.insert(target);
                 q.push({ target, cur.second + 1 });
                 used[target] = true;
@@ -210,7 +213,6 @@ vector<string> Graph::targetAirports(const string& from, int num) {
     vector <string> ans;
     for (const auto& i : t)
         ans.push_back(i);
-
     return ans;
 }
 
@@ -266,7 +268,10 @@ unordered_set<string> Graph::getAirlinesFromAirport(const std::string& Airport) 
     return res;
 }
 
-list<string> Graph::getArticulationPoints() {
+list<string> Graph::getArticulationPoints(set <string> Comp) {
+    if(Comp.empty()){
+        Comp = comp;
+    }
     unordered_map <string, bool> used;
     unordered_map <string, int> num;
     unordered_map <string, int> low;
@@ -274,22 +279,23 @@ list<string> Graph::getArticulationPoints() {
     list<string> res;
     for (const auto& a : g) {
         if (!used[a.first]) {
-            dfsArtificialP(a.first, num, low, index, used, res);
+            dfsArtificialP(a.first, num, low, index, used, res, Comp);
         }
     }
     return res;
 }
 
-void Graph::dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& used, list<string>& res) {
+void Graph::dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& used, list<string>& res, const set <string>& Comp) {
+
     bool a = false;
     int children = 0;
     num[airport] = low[airport] = index++; used[airport] = true;
 
     for (auto e : g[airport]) {
-        string w = e.getAirport();
-        if (!used[w]) {
+        string w = e.getAirport(), air = e.getAirline();
+        if (!used[w] && Comp.find(air) != Comp.end()) {
             children++;
-            dfsArtificialP(w, num, low, index, used, res);
+            dfsArtificialP(w, num, low, index, used, res, Comp);
             low[airport] = min(low[airport], low[w]);
             if (low[w] >= num[airport] && num[airport] > 1) {
                 a = true;

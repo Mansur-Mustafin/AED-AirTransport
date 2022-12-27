@@ -6,33 +6,53 @@
 
 
 
-void Menu::printAirport_flightN(vector <string> airports, string origin) {
-    unordered_map <string, unordered_map <string, map<int, vector<Airport>>>> by_country;
+void Menu::printAirport_flightN(vector <string> airports) {
+
+
+    sort(airports.begin(), airports.end(), [this](const string& a1, const string& a2) -> bool
+    {
+        return g.getNumberOfFlights(a1) > g.getNumberOfFlights(a2);
+    });
+
+
+    unordered_map<string, list<string>> countries2cities;
+    unordered_map<string, list<Airport>> cities2airports;
+    list<Airport> listOfAiports;
 
     for (auto i : airports) {
         Airport a = g.getAirports()[i];
-
-        by_country[a.getCountry()][a.getCity()][g.getPathAirports(origin ,a.getCode()).size()-1].push_back(a);
+        countries2cities[a.getCountry()].push_back(a.getCity());
+        cities2airports[a.getCity()].push_back(a);
+        listOfAiports.push_back(a);
     }
 
     int city_n = 0;
+    int countries_n = countries2cities.size();
 
-    for (auto i : by_country) {
-        cout << i.first << endl;
-        //cout << " | " << endl;
-        city_n += i.second.size();
-        for (auto j : i.second) {
-            cout << " |-----" << j.first << endl;
-            for (auto f : j.second) {
-                for (auto c: f.second) {
-                    cout << "         |-----" << c.getName() << ": (" << c.getCode() << ") | " << f.first << " flights to get there" << endl;
-                }
+    for(const auto& airport : listOfAiports){
+        auto it = countries2cities.find(airport.getCountry());
+        if(it == countries2cities.end()) continue;
+
+
+        cout << airport.getCountry() << endl;
+        for(auto city : countries2cities[airport.getCountry()]){
+
+            if(cities2airports.find(city) == cities2airports.end()) continue;
+            city_n++;
+            cout << " |-----" << city << endl;
+            for(auto air: cities2airports[city]){
+                cout << "         |-----" << air.getName() << ": (" << air.getCode() << ')'<< endl;
             }
+            cities2airports.erase(city);
         }
-        cout << endl;
+        countries2cities.erase(airport.getCountry());
     }
+
+
+
+
     cout << "Number of Airports: " << airports.size() << endl;
-    cout << "Number of countries: " << by_country.size() << endl;
+    cout << "Number of countries: " << countries_n  << " (incluindo o pais de aeroporto de pesquisa) "<< endl;
     cout << "Number of cities: " << city_n << endl;
 
 }
@@ -211,7 +231,7 @@ void Menu::get_airport_info() {
 
             cout << endl << "Different destinations:" << endl;
 
-            printAirport_flightN(g.targetAirports(code, flight_n), code);
+            printAirport_flightN(g.targetAirports(code, flight_n));
             break;
 
         default:

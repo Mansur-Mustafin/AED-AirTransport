@@ -18,7 +18,7 @@ void get_path_flight();
 
 void get_airport_info();
 
-void printAirport_flightN(vector <string> airports, string origin);
+void printAirport_flightN(vector <string> airports);
 
 void printAirport(unordered_set<string> airports);
 
@@ -28,7 +28,6 @@ void get_articulation_points();
 
 private:
     Graph g;
-
 };
 
 

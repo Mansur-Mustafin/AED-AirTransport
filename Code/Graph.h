@@ -108,7 +108,7 @@ public:
      * @param num -> number of flights
      * @return Vector with airport names as strings
      */
-    vector <string> targetAirports(const string& from, int num);   // todos aeroportos que podemos ir de um aeroporto para outro por n passos
+    vector <string> targetAirports(const string& from, int num, set <string> Comp = {});   // todos aeroportos que podemos ir de um aeroporto para outro por n passos
 
     /// @brief Gets map with an airport as key and vector with all possible flights
     unordered_map <string, vector <Target> > getG();
@@ -139,9 +139,9 @@ public:
      */
     unordered_set<string> getAirlinesFromAirport(const string& Airport);    // info Airport all companies
 
-    void dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, list<string>& res);
+    void dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, list<string>& res,const set <string>& Comp);
 
-    list<string> getArticulationPoints();
+    list<string> getArticulationPoints(set <string> Comp = {});
 };
 
 #endif //PROJECT_2_GRAPH_H
