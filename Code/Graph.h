@@ -142,6 +142,9 @@ public:
     void dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, list<string>& res,const set <string>& Comp);
 
     list<string> getArticulationPoints(set <string> Comp = {});
+
+    int getDiameter( set <string> Comp = {});
+    int diameterBFS(string airport, set<string> Comp);
 };
 
 #endif //PROJECT_2_GRAPH_H
