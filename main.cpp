@@ -23,6 +23,7 @@ int main() {
       cout << asd.first[i]  << "--(" << asd.second[i]<< ")-->" ;
 
 
+
     cout<< endl << "------------------------------------------" << endl;
 
     for (int i = 0; i < qwe.size(); i++) {
@@ -86,6 +87,7 @@ int main() {
     }*/
 
     // PERGUNTAR AQUI
+
     //try {
     //    Menu menu;
     //    //menu.main_menu();
@@ -93,6 +95,7 @@ int main() {
     //catch (exception& e) {
     //    cout << e.what() << '\n';
     //}
+
 
 
     //cout << g.isCity("Porto");

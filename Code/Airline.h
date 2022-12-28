@@ -48,8 +48,10 @@ public:
     /// @brief Gets airline country
     string getCountry() const;
 
+    /// @brief Gets all aiport codes that an specific airline operates
     unordered_set<string> getAirlineairports();
 
+    /// @brief Adds an airport to tha target airport list
     void addAirport(const string& airportCode);
 
     /// @brief Overload of <em>operator<< </em>

@@ -64,10 +64,11 @@ public:
     bool isCountry(const string& name);
 
     /**
-     * @brief Gets path with lowest flight number between coordinates
-     * @param from -> Origin coordinate
-     * @param to -> Destination coordinate
-     * @return Vector with airports names as strings
+     * @brief Gets path with lowest flight n between two coordinates
+     * @param lat -> Latitude
+     * @param lon -> Longitude
+     * @param dist -> Distance between points
+     * @return Vector with airport codes as strings
      */
     vector <string> getPathByPoint(string from, double lat, double lon, double dist);  // FALTA AQUIIIIIIIIIIIIIIIIIIII
 
@@ -77,7 +78,7 @@ public:
      * @param to -> Destination airport
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
-     * @return -> Vector with airport codes
+     * @return -> Vector with airport codes as strings
      */
     ss getPathAirports(const string& from, const string& to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -103,9 +104,10 @@ public:
 
     /**
      * @brief Gets all airports you can go to with n flight number
-     * @param from -> Origin airport code
-     * @param num -> number of flights
-     * @return Vector with airport names as strings
+     * @param from -> Origin Airport
+     * @param num -> Max flight number
+     * @param Comp -> Set of airline codes to use as strings
+     * @return Vector of airport codes as strings
      */
     vector <string> targetAirports(const string& from, int num, set <string> Comp = {});   // todos aeroportos que podemos ir de um aeroporto para outro por n passos
 
@@ -138,11 +140,39 @@ public:
      */
     unordered_set<string> getAirlinesFromAirport(const string& Airport);    // info Airport all companies
 
+    /**
+     * @brief
+     * @param airport ->
+     * @param num ->
+     * @param low ->
+     * @param index ->
+     * @param used ->
+     * @param res ->
+     * @param Comp ->
+     */
     void dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, list<string>& res,const set <string>& Comp);
 
+    /**
+     * @brief Gets the network's articulation points
+     * @param Comp -> Set of airlines to compose the network
+     * @return List of articulation points(airport codes) as strings
+     */
     list<string> getArticulationPoints(set <string> Comp = {});
 
-    int getDiameter(set <string> Comp = {});
+
+    /**
+     * @brief Gets the network diameter
+     * @param Comp -> Set of airlines to compose the network
+     * @return Integer number
+     */
+    int getDiameter( set <string> Comp = {});
+
+    /**
+     * @brief
+     * @param airport ->
+     * @param Comp ->
+     * @return
+     */
     int diameterBFS(string airport, set<string> Comp);
 };
 
