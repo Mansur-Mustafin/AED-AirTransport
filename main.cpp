@@ -7,21 +7,23 @@ using namespace std;
 
 int main() {
 
-    //Graph g;
-
     /*
+    Graph g;
+
+    set<string> t ;
     vector <vector <string> > qwe;
-    vector <string> zxc = g.getPathAirports("REC", "OPO", t, &qwe);
+    vector <string> zxc = g.getPathAirports("KZN", "THU", t, &qwe);
 
-    //for(auto i : zxc) cout << i << "-->";
-
+    for(auto i : zxc) cout << i << "-->";
+    cout << endl;
     for (auto & i : qwe) {
         for (int j = 0; j < i.size(); j++)
             cout << i[j] << "->";
         cout << endl;
     }
 
-    cout << endl;*/
+    cout << endl;
+*/
 
     //auto l = g.getArticulationPoints();
     //cout << "------------" << endl;
@@ -33,7 +35,7 @@ int main() {
     //}
 
 
-    //vector <string> ans = g.getUltimatePath("CMP", "Russia");
+    //vector <string> ans = g.getUltimatePath("KZN", "THU");
     //vector <string> ans = g.getUltimatePath("Brazil", "LIS");
     //vector <string> ans = g.getPathAirports("IOS", "HNL");
     //vector <string> ans = g.getUltimatePath("RDC", "FLW");
@@ -61,8 +63,14 @@ int main() {
 
     }*/
 
-    Menu menu;
-    menu.main_menu();
+    // PERGUNTAR AQUI
+    try{
+        Menu menu;
+        menu.main_menu();
+    }catch (exception& e){
+        cout << e.what() << '\n';
+    }
+
 
     //cout << g.isCity("Porto");
 
