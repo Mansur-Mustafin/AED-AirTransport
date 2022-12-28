@@ -102,7 +102,7 @@ void Menu::get_path_flight() {
             cout << "Please enter destination city name:";
             cin >> dest;
 
-            output = g.getUltimatePath(origin, dest, airlines, &others);
+            output = g.getUltimatePath(dest, origin, airlines, &others);
             break;
 
 
@@ -158,9 +158,10 @@ void Menu::get_airport_info() {
     unordered_map<string, vector<Target>> a = g.getG();
 
     cout << endl << "What information do you want?" << endl;
-    cout << "1 - Flights from the airport" << endl;
-    cout << "2 - Airlines operating in the airport" << endl;
-    cout << "3 - Different destinations with max flight number" << endl;
+    cout << "1 - Basic Airport information" << endl;
+    cout << "2 - Flights from the airport" << endl;
+    cout << "3 - Airlines operating in the airport" << endl;
+    cout << "4 - Different destinations with max flight number" << endl;
 
     cout << "Please enter your choice:" << endl;
 
@@ -168,22 +169,28 @@ void Menu::get_airport_info() {
     cin >> choice;
     cout << endl;
 
+    Airport airport = g.getAirports()[code];
+
     switch (choice) {
         case 1:
-            cout << "Number of flights:" << a[code].size() << endl;
-            cout << "Flights:" << endl;
+            cout << "Airport name - " << airport.getName() << endl;
+            cout << "Airport location - " << airport.getCity() << ", " << airport.getCountry() << endl;
+            break;
+        case 2:
+            cout << "Number of flights: " << a[code].size() << endl;
+            cout << endl << "Flights:" << endl;
             for (auto i : a[code]) {
                 cout << code << "-" << i.getAirport() << " operated by: " << g.getAirlines()[i.getAirline()].getName() << endl;
             }
             break;
-        case 2:
+        case 3:
             cout << "Number of Airlines:" << g.getAirlinesFromAirport(code).size() << endl;
             cout << "Airlines:" << endl;
             for (auto i : g.getAirlinesFromAirport(code)) {
                 cout << i << " - " << g.getAirlines()[i].getName() << endl;
             }
             break;
-        case 3:
+        case 4:
             cout << "Please enter max flight number:";
             cin >> flight_n;
 
@@ -210,7 +217,8 @@ void Menu::get_airline_info() {
 
     cout << "Wich information do you want?" << endl;
 
-    cout << "1 - Get all Airports an airline operates" << endl;
+    cout << "1 - Get basic Airline info" << endl;
+    cout << "2 - Get all Airports an airline operates" << endl;
 
     cout << "Please enter your choice:" << endl;
 
@@ -220,48 +228,16 @@ void Menu::get_airline_info() {
 
     switch (choice) {
         case 1:
+            cout << "Airline name: " << airline.getName() << endl;
+            cout << "Airline callsign: " << airline.getCallsign() << endl;
+            cout << "Airline country: " << airline.getCountry() << endl;
+            break;
+
+        case 2:
             printAirport(airline.getAirlineairports());
-    }
-}
 
-void Menu::get_articulation_points(){
-
-    string airline_choice;
-
-    set <string> airlines;
-
-    cout << "Do you want to use specific airlines? (y/n)" << endl;
-
-    cin >> airline_choice;
-
-    if (airline_choice == "Y" || airline_choice == "y") {
-        int n_airlines;
-
-        cout << "How many airlines do you want to use?" << endl;
-
-        cin >> n_airlines;
-
-        cout << endl;
-
-        for (int i = 0; i < n_airlines; i++) {
-            string al;
-
-            cout << i+1 << " - " << "Please enter an airline code:" << endl;
-
-            cin >> al;
-
-            cout << endl;
-
-            airlines.insert(al);
-        }
-    }
-
-    cout << "Number of Articulation points: " << g.getArticulationPoints().size() << endl;
-
-    cout << endl << "Articulation Points:" << endl;
-
-    for (auto i : g.getArticulationPoints(airlines)) {
-        cout << i << endl;
+        default:
+            get_airline_info();
     }
 }
 
