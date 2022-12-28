@@ -15,47 +15,9 @@ void Menu::printAirport_flightN(vector <string> airports) {
     });
 
 
-    unordered_map<string, list<string>> countries2cities;
-    unordered_map<string, list<Airport>> cities2airports;
-    list<Airport> listOfAiports;
-
-    for (auto i : airports) {
-        Airport a = g.getAirports()[i];
-        countries2cities[a.getCountry()].push_back(a.getCity());
-        cities2airports[a.getCity()].push_back(a);
-        listOfAiports.push_back(a);
-    }
-
-    int city_n = 0;
-    int countries_n = countries2cities.size();
-
-    for(const auto& airport : listOfAiports){
-        auto it = countries2cities.find(airport.getCountry());
-        if(it == countries2cities.end()) continue;
-
-
-        cout << airport.getCountry() << endl;
-        for(auto city : countries2cities[airport.getCountry()]){
-
-            if(cities2airports.find(city) == cities2airports.end()) continue;
-            city_n++;
-            cout << " |-----" << city << endl;
-            for(auto air: cities2airports[city]){
-                cout << "         |-----" << air.getName() << ": (" << air.getCode() << ')'<< endl;
-            }
-            cities2airports.erase(city);
-        }
-        countries2cities.erase(airport.getCountry());
-    }
-
-
-
-
-    cout << "Number of Airports: " << airports.size() << endl;
-    cout << "Number of countries: " << countries_n  << " (incluindo o pais de aeroporto de pesquisa) "<< endl;
-    cout << "Number of cities: " << city_n << endl;
 
 }
+
 
 void Menu::printAirport(unordered_set<string> airports) {
     unordered_map <string, unordered_map <string, vector<Airport>>> by_country;
