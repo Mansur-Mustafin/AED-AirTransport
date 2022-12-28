@@ -310,3 +310,50 @@ void Graph::dfsArtificialP(const string& airport, unordered_map <string, int>& n
     }
 
 }
+
+
+int Graph::diameterBFS(string airport, set<string> Comp){
+    int max = -1;
+    unordered_map <string, bool> used;
+    unordered_map <string, int> d;
+    queue <string> q;
+    q.push(airport);
+    d[airport] = 0;
+
+    while (!q.empty()) {
+
+        string cur = q.front(); q.pop();
+
+        for (auto i = 0; i < g[cur].size(); i++) {
+            string target = g[cur][i].getAirport(), air = g[cur][i].getAirline();
+            if ((!used[target] || d[cur] + 1 == d[target]) && Comp.find(air) != Comp.end()) {
+                if (!used[target]){
+                    q.push(target);
+                    d[target] = d[cur] + 1;
+                    if(d[target] > max){
+                        max = d[target];
+                    }
+                    used[target] = true;
+                }
+
+            }
+        }
+    }
+    return max; // temos que verificar se for -1???????????????????
+}
+
+// for(auto i : airports){ ou nao?                          perguntar
+int Graph::getDiameter( set<string> Comp) {
+    if(Comp.empty()){
+        Comp = comp;
+    }
+    int max = -1;
+    for(auto i : airports){
+        int temp = diameterBFS(i.first, Comp);
+        if(temp > max){
+            max = temp;
+        }
+    }
+    return max;
+}
+

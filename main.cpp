@@ -7,10 +7,15 @@ using namespace std;
 
 int main() {
 
-    /*
-    Graph g;
+    //set<string> t ;
+    //t.insert("KLM");
 
-    set<string> t ;
+    Graph g;
+    cout << g.getDiameter();
+
+
+/*
+
     vector <vector <string> > qwe;
     vector <string> zxc = g.getPathAirports("KZN", "THU", t, &qwe);
 
@@ -66,7 +71,7 @@ int main() {
     // PERGUNTAR AQUI
     try{
         Menu menu;
-        menu.main_menu();
+        //menu.main_menu();
     }catch (exception& e){
         cout << e.what() << '\n';
     }
