@@ -52,7 +52,7 @@ void Menu::printAirport_flightN(vector <string> airports) {
 
 
     cout << "Number of Airports: " << airports.size() << endl;
-    cout << "Number of countries: " << countries_n  << " (incluindo o pais de aeroporto de pesquisa) "<< endl;
+    cout << "Number of countries: " << countries_n  << " (Including the origin airport country) "<< endl;
     cout << "Number of cities: " << city_n << endl;
 
 }
@@ -269,11 +269,41 @@ void Menu::get_airline_info() {
 
 void Menu::get_articulation_points(){
 
+    string airline_choice;
+
+    set <string> airlines;
+
+    cout << "Do you want to use specific airlines? (y/n)" << endl;
+
+    cin >> airline_choice;
+
+    if (airline_choice == "Y" || airline_choice == "y") {
+        int n_airlines;
+
+        cout << "How many airlines do you want to use?" << endl;
+
+        cin >> n_airlines;
+
+        cout << endl;
+
+        for (int i = 0; i < n_airlines; i++) {
+            string al;
+
+            cout << i+1 << " - " << "Please enter an airline code:" << endl;
+
+            cin >> al;
+
+            cout << endl;
+
+            airlines.insert(al);
+        }
+    }
+
     cout << "Number of Articulation points: " << g.getArticulationPoints().size() << endl;
 
-    cout << "Articulation Points:" << endl;
+    cout << endl << "Articulation Points:" << endl;
 
-    for (auto i : g.getArticulationPoints()) {
+    for (auto i : g.getArticulationPoints(airlines)) {
         cout << i << endl;
     }
 }
