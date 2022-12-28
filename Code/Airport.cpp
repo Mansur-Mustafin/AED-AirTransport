@@ -5,6 +5,9 @@
 #include <valarray>
 #include "Airport.h"
 #include <iomanip>
+#include <cmath>
+
+//#define M_PI acos(-1)
 
 Airport::Airport() : name(""), code(""), city(""), country(""), latitude(0.0), longitude(0.0) {}
 

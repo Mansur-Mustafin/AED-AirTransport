@@ -2,41 +2,58 @@
 #include <iostream>
 #include "Code/Graph.h"
 #include "Code/Menu.h"
+#include <fstream>
 
 using namespace std;
 
+
 int main() {
 
+    //ofstream cout("output.txt");
     //set<string> t ;
     //t.insert("KLM");
 
     Graph g;
-    cout << g.getDiameter();
+
+    vector <vector <pss> > qwe;
+
+    //ss asd = g.getPathAirports("KZN", "REC", {}, &qwe);
+    ss asd = g.getUltimatePath("KZN", "REC", {}, &qwe);
+    for (int i = 0; i < asd.first.size(); i++)
+      cout << asd.first[i]  << "--(" << asd.second[i]<< ")-->" ;
 
 
-/*
+    cout<< endl << "------------------------------------------" << endl;
 
-    vector <vector <string> > qwe;
-    vector <string> zxc = g.getPathAirports("KZN", "THU", t, &qwe);
-
-    for(auto i : zxc) cout << i << "-->";
-    cout << endl;
-    for (auto & i : qwe) {
-        for (int j = 0; j < i.size(); j++)
-            cout << i[j] << "->";
+    for (int i = 0; i < qwe.size(); i++) {
+        for (int j = 0; j < qwe[i].size(); j++)
+            cout << qwe[i][j].first << "--(" << qwe[i][j].second << ")-->";
         cout << endl;
     }
 
-    cout << endl;
-*/
+    /*
+
+        vector <vector <string> > qwe;
+        vector <string> zxc = g.getPathAirports("KZN", "THU", t, &qwe);
+
+        for(auto i : zxc) cout << i << "-->";
+        cout << endl;
+        for (auto & i : qwe) {
+            for (int j = 0; j < i.size(); j++)
+                cout << i[j] << "->";
+            cout << endl;
+        }
+
+        cout << endl;
+    */
 
     //auto l = g.getArticulationPoints();
     //cout << "------------" << endl;
     //for(auto e : l) cout << e << endl;
 
     //for(auto e : g.getG()){
-        //cout << e.first << endl;
-      //  break;
+    //cout << e.first << endl;
+    //  break;
     //}
 
 
@@ -69,12 +86,13 @@ int main() {
     }*/
 
     // PERGUNTAR AQUI
-    try{
-        Menu menu;
-        //menu.main_menu();
-    }catch (exception& e){
-        cout << e.what() << '\n';
-    }
+    //try {
+    //    Menu menu;
+    //    //menu.main_menu();
+    //}
+    //catch (exception& e) {
+    //    cout << e.what() << '\n';
+    //}
 
 
     //cout << g.isCity("Porto");

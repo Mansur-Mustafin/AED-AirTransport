@@ -19,15 +19,13 @@
 
 using namespace std;
 
-
-
-
+typedef pair <vector <string>, vector<string> > ss;
+typedef pair <string, string> pss;
 
 class Graph {
 
 private:
 
-    set <string> comp;
     /// @brief Map with an airport as key and vector with all possible flights from it
     unordered_map <string, vector<Target>> g;
     // ["asd"] = {"qwe", "sdf"}   g["any airport"].size() = количество вылетов из аэропорт
@@ -45,6 +43,7 @@ private:
     /// @brief Map with airline code as key and it Airline object
     unordered_map<string, Airline> airlines;
 
+    set <string> t;
 
 public:
     ///@brief Empty Constructor
@@ -70,7 +69,7 @@ public:
      * @param to -> Destination coordinate
      * @return Vector with airports names as strings
      */
-    vector <string> getPathByPoint(double lat, double lon, double dist);  // FALTA AQUIIIIIIIIIIIIIIIIIIII
+    vector <string> getPathByPoint(string from, double lat, double lon, double dist);  // FALTA AQUIIIIIIIIIIIIIIIIIIII
 
     /**
      * @brief Gets path with lowest flight number between two airports.
@@ -80,7 +79,7 @@ public:
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return -> Vector with airport codes
      */
-    vector <string> getPathAirports(const string& from, const string& to, set <string> Comp = {}, vector <vector <string> >* others = nullptr);
+    ss getPathAirports(const string& from, const string& to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
     /**
      * @brief Gets path with lowest flight number between places
@@ -90,7 +89,7 @@ public:
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
      */
-    vector <string> getUltimatePath(string from, string to, set <string> Comp = {}, vector <vector <string> >* others = nullptr);
+    ss getUltimatePath(string from, string to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
     /**
      * @brief Gets path with lowest flight number between airports
@@ -100,7 +99,7 @@ public:
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
      */
-    vector <string> getPathByVectors(vector <string> from, vector <string> to, set <string> Comp = {}, vector <vector <string> >* others = nullptr);
+    ss getPathByVectors(vector <string> from, vector <string> to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
     /**
      * @brief Gets all airports you can go to with n flight number
@@ -143,8 +142,8 @@ public:
 
     list<string> getArticulationPoints(set <string> Comp = {});
 
-    int getDiameter( set <string> Comp = {});
+    int getDiameter(set <string> Comp = {});
     int diameterBFS(string airport, set<string> Comp);
 };
 
-#endif //PROJECT_2_GRAPH_H
+#endif // PROJECT_2_GRAPH_H
