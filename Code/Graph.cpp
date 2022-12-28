@@ -161,6 +161,7 @@ ss Graph::getPathAirports(const string& from, const string& to, set <string> Com
     queue <string> q;
     q.push(from);
     d[q.front()] = 0;
+    used[q.front()] = true;
 
     while (!q.empty()) {
 
@@ -193,13 +194,13 @@ ss Graph::getPathAirports(const string& from, const string& to, set <string> Com
     }
 
     ans.push_back(airports[from].getName());
-    ansAir.push_back("No airlane");
+
     reverse(ans.begin(), ans.end());
     reverse(ansAir.begin(), ansAir.end());
+    ansAir.push_back("No airlane");
 
     if (others != nullptr) 
         *others = fill(from, to, p, pAirlane, d[to]);
-
     return { ans, ansAir };
 }
 
@@ -238,26 +239,24 @@ ss Graph::getPathByVectors(vector <string> from, vector <string> to, set <string
     int best = -1;
     ss ans;
     ss temp;
+    vector < vector<pss> > tempOthers;
 
-    for (int i = 0; i < from.size(); i++)
+    for (int i = 0; i < from.size(); i++) {
         for (int j = 0; j < to.size(); j++) {
 
             string fromA = from[i];
             string toA = to[j];
 
-            temp = getPathAirports(fromA, toA, Comp, others);
+            temp = getPathAirports(fromA, toA, Comp, &tempOthers);
 
             if (temp.first.size() != 1 && (best == -1 || best > temp.first.size())) {
                 best = temp.first.size();
+                *others = tempOthers;
                 ans = temp;
             }
-            if (temp.first.size() == 1 && temp.first[0][1] != 'o') {
-                return temp;
-            }
         }
-    if (temp.first[0][1] == 'o' && ans.first.empty()) {
-        return temp;
     }
+
     return ans;
 }
 
