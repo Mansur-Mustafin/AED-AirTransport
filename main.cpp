@@ -10,8 +10,8 @@ int main() {
     //set<string> t ;
     //t.insert("KLM");
 
-    Graph g;
-    cout << g.getDiameter();
+    //Graph g;
+    //cout << g.getDiameter();
 
 
 /*
@@ -71,7 +71,7 @@ int main() {
     // PERGUNTAR AQUI
     try{
         Menu menu;
-        //menu.main_menu();
+        menu.main_menu();
     }catch (exception& e){
         cout << e.what() << '\n';
     }

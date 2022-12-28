@@ -121,7 +121,6 @@ void Menu::get_path_flight() {
 
         default:
             get_path_flight();
-            break;
     }
 
     cout << "Would you like to see all possible paths with the lowest flight number? (y/n)" << endl;
@@ -195,7 +194,6 @@ void Menu::get_airport_info() {
 
         default:
             get_airport_info();
-            break;
     }
 }
 
@@ -267,6 +265,68 @@ void Menu::get_articulation_points(){
     }
 }
 
+void Menu::get_network_info() {
+
+    string airline_choice;
+
+    set <string> airlines;
+
+    cout << "Do you want to use specific airlines to check the network? (y/n)" << endl;
+
+    cin >> airline_choice;
+
+    if (airline_choice == "Y" || airline_choice == "y") {
+        int n_airlines;
+
+        cout << "How many airlines do you want to use?" << endl;
+
+        cin >> n_airlines;
+
+        cout << endl;
+
+        for (int i = 0; i < n_airlines; i++) {
+            string al;
+
+            cout << i+1 << " - " << "Please enter an airline code:" << endl;
+
+            cin >> al;
+
+            cout << endl;
+
+            airlines.insert(al);
+        }
+    }
+
+
+    cout << "What information do you want?" << endl;
+
+    cout << "1 - Get articulation points" << endl;
+    cout << "2 - Get Network diameter" << endl;
+
+    cout << "Please enter your choice:" << endl;
+
+    int choice;
+    cin >> choice;
+    cout << endl;
+
+    switch (choice) {
+        case 1:
+            cout << "Number of Articulation points: " << g.getArticulationPoints().size() << endl;
+
+            cout << endl << "Articulation Points:" << endl;
+
+            for (auto i : g.getArticulationPoints(airlines)) {
+                cout << i << endl;
+            }
+            break;
+        case 2:
+            cout << g.getDiameter(airlines) << " is the network diameter" << endl;
+            break;
+        default:
+            get_network_info();
+    }
+}
+
 void Menu::main_menu() {
 
     while (true) {
@@ -316,7 +376,7 @@ void Menu::main_menu() {
                break;
 
            case 41:
-               get_articulation_points();
+               get_network_info();
                break;
 
             default: cout << "Invalid input" << endl;
