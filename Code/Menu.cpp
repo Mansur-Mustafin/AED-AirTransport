@@ -240,6 +240,7 @@ void Menu::get_airline_info() {
 
         case 2:
             printAirport(airline.getAirlineairports());
+            break;
 
         default:
             get_airline_info();
