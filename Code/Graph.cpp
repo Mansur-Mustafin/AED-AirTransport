@@ -197,7 +197,7 @@ ss Graph::getPathAirports(const string& from, const string& to, set <string> Com
 
     reverse(ans.begin(), ans.end());
     reverse(ansAir.begin(), ansAir.end());
-    ansAir.push_back("No airlane");
+    ansAir.push_back("No airline");
 
     if (others != nullptr) 
         *others = fill(from, to, p, pAirlane, d[to]);

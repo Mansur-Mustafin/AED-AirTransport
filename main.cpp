@@ -18,9 +18,9 @@ int main() {
     vector <vector <pss> > qwe;
 
     //ss asd = g.getPathAirports("KZN", "REC", {}, &qwe);
-    ss asd = g.getUltimatePath("RDC", "KZN", {}, &qwe);
+    //ss asd = g.getUltimatePath("REC", "OPO", {}, &qwe);
     //ss asd = g.getPathByVectors({"KZN"}, {"LIS", "OPO"}, {}, &qwe);
-    for (int i = 0; i < asd.first.size(); i++)
+    /*for (int i = 0; i < asd.first.size(); i++)
       cout << asd.first[i]  << "--(" << asd.second[i]<< ")-->" ;
 
     cout<< endl << "------------------------------------------" << endl;
@@ -29,7 +29,7 @@ int main() {
         for (int j = 0; j < qwe[i].size(); j++)
             cout << qwe[i][j].first << "--(" << qwe[i][j].second << ")-->";
         cout << endl;
-    }
+    }*/
 
     /*
 
@@ -87,13 +87,13 @@ int main() {
 
     // PERGUNTAR AQUI
 
-    //try {
-    //    Menu menu;
-    //    //menu.main_menu();
-    //}
-    //catch (exception& e) {
-    //    cout << e.what() << '\n';
-    //}
+    try {
+        Menu menu;
+        menu.main_menu();
+    }
+    catch (exception& e) {
+        cout << e.what() << '\n';
+    }
 
 
 
