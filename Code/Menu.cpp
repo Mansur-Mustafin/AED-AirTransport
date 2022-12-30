@@ -180,7 +180,7 @@ void Menu::get_path_flight() {
                     }
                 }
                 pair.first = x;
-                pair.second.first = airlines.size();
+                pair.second.first = airlines.size()-1;
                 pair.second.second = distance;
 
                 airline_dis.push_back(pair);
