@@ -8,6 +8,8 @@
 Graph::Graph() {
     string temp;
 
+    unordered_map<string, string> city2country;
+
 
     ifstream in("airlines.csv");
     getline(in, temp);
@@ -30,15 +32,37 @@ Graph::Graph() {
     }
 
 
+
     in.close(); in.open("airports.csv");
     getline(in, temp);
 
     while (getline(in, temp)) {
         Airport a(temp);
         string code = temp.substr(0, 3);
-        airports[code] = a;
-        cities[a.getCity()].insert(code);
-        countries[a.getCountry()].insert(a.getCity());
+        if(city2country.find(a.getCity()) != city2country.end()){
+            if(city2country[a.getCity()] != a.getCountry()){
+                strangeCities.insert(a.getCity());
+            }
+        }else{
+            city2country[a.getCity()] = a.getCountry();
+        }
+    }
+
+
+    in.close(); in.open("airports.csv");
+    getline(in, temp);
+
+    while (getline(in, temp)) {
+        Airport a(temp);
+        string code = temp.substr(0, 3);
+
+        if(strangeCities.find(a.getCity()) != strangeCities.end()){
+            dataForStrangeCities[a.getCountry()][a.getCity()].insert(code);
+        }else{
+            airports[code] = a;
+            cities[a.getCity()].insert(code);
+            countries[a.getCountry()].insert(a.getCity());
+        }
     }
 
 }
@@ -46,11 +70,13 @@ Graph::Graph() {
 
 bool Graph::isCity(const string& name) {
     auto p = cities.find(name);
-    if (p == cities.end()) {
-        return false;
+    auto p2 = strangeCities.find(name);
+    if (p != cities.end() || p2 != strangeCities.end()) {
+        return true;
     }
-    return true;
+    return false;
 }
+
 
 bool Graph::isCountry(const string& name) {
     auto p = countries.find(name);
@@ -83,26 +109,54 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
 
     if (isCountryF) {
         for (const auto& city : countries[from]) {
-            for (const auto& airport : cities[city]) {
-                fromV.push_back(airport);
+
+            if(isStarageCiti(city)){
+                for (const auto& airport : dataForStrangeCities[from][city]) {
+                    fromV.push_back(airport);
+                }
+            }else{
+                for (const auto& airport : cities[city]) {
+                    fromV.push_back(airport);
+                }
             }
         }
     }
 
     if (isCountryT) {
         for (const auto& city : countries[to]) {
-            for (const auto& airport : cities[city]) {
-                toV.push_back(airport);
+            if(isStarageCiti(city)){
+                for (const auto& airport : dataForStrangeCities[from][city]) {
+                    toV.push_back(airport);
+                }
+            }else{
+                for (const auto& airport : cities[city]) {
+                    toV.push_back(airport);
+                }
             }
+
         }
     }
 
     if (isCityF) {
-        for (const auto& i : cities[from]) fromV.push_back(i);
+        if(isStarageCiti(from)){
+            string countryF;
+            cout << "The city: " << from << "is ambigous in country\nPlease enter the Country:";
+            cin >> countryF;
+            for(auto i : dataForStrangeCities[countryF][from]) fromV.push_back(i);
+        }else{
+            for (const auto& i : cities[from]) fromV.push_back(i);
+        }
     }
 
     if (isCityT) {
-        for (const auto& i : cities[to]) toV.push_back(i);
+        if(isStarageCiti(to)){
+            string countryT;
+            cout << "The city: " << from << "is ambigous in country\nPlease enter the Country:";
+            cin >> countryT;
+            for(auto i : dataForStrangeCities[countryT][from]) fromV.push_back(i);
+        }else{
+            for (const auto& i : cities[to]) toV.push_back(i);
+        }
     }
 
     if (!isCityF && !isCountryF) {
@@ -365,5 +419,13 @@ int Graph::getDiameter( set<string> Comp) {
         }
     }
     return max;
+}
+
+unordered_set<string> Graph::getStranfeSities() {
+    return strangeCities;
+}
+
+bool Graph::isStarageCiti(string name) {
+    return not (strangeCities.find(name) == strangeCities.end());
 }
 

@@ -26,6 +26,7 @@ class Graph {
 
 private:
 
+    unordered_set<string> strangeCities;
     /// @brief Map with an airport as key and vector with all possible flights from it
     unordered_map <string, vector<Target>> g;
     // ["asd"] = {"qwe", "sdf"}   g["any airport"].size() = количество вылетов из аэропорт
@@ -40,6 +41,7 @@ private:
     /// @brief Map with country name as key and the name of all its cities in an unordered_set
     unordered_map <string, unordered_set<string> > countries;
 
+    unordered_map <string, unordered_map <string, unordered_set<string> > > dataForStrangeCities;
     /// @brief Map with airline code as key and it Airline object
     unordered_map<string, Airline> airlines;
 
@@ -125,6 +127,9 @@ public:
     /// @brief Gets city list
     unordered_map <string, unordered_set<string> > getCities();
 
+    unordered_set<string> getStranfeSities();
+
+    bool isStarageCiti(string name);
     /// @brief Gets country list
     unordered_map <string, unordered_set<string> > getCountries();
 
