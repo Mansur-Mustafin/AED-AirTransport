@@ -4,7 +4,9 @@
 
 #include "Menu.h"
 
-
+bool cmp(pair<string, int> p1, pair<string, int> p2) {
+    return p1.second < p2.second;
+}
 
 void Menu::printAirport_flightN(vector <string> airports) {
 
@@ -144,18 +146,38 @@ void Menu::get_path_flight() {
     string print_choice;
     cin >> print_choice;
 
+    vector<pair<string, int>> airline_change;
+
+    vector<pair<string, int>> by_distance;
+
     if (output.first.size() > 0) {
         if (print_choice == "Y" || print_choice == "y") {
             cout << endl << endl << "Your path is:" << endl;
 
             for (int i = 0; i < others.size(); i++) {
+                pair<string, int> pair;
+                list<string> airlines;
+                string x;
                 for (int j = 0; j < others[i].size(); j++) {
-                    cout << others[i][j].first;
+                    x += others[i][j].first;
                     if (j != others[i].size()-1) {
-                        cout << "--(" << g.getAirlines()[others[i][j].second].getName() << ")-->";
-                    }}
-                cout << endl;
+                        x += "--(" + g.getAirlines()[others[i][j].second].getName() + ")-->";
+                        if (others[i][j].second != airlines.back()) {
+                            airlines.push_back(others[i][j].second);
+                        }
+                    }
+                }
+                pair.first = x;
+                pair.second = airlines.size();
+                airline_change.push_back(pair);
             }
+
+            std::sort(airline_change.begin(), airline_change.end(), cmp);
+
+            for (auto i : airline_change) {
+                cout << i.first << " - " << i.second << " airline changes" << endl;
+            }
+
         }else {
             for (int i = 0; i < output.first.size(); i++) {
                 cout << output.first[i];
