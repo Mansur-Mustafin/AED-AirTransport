@@ -24,6 +24,7 @@ Graph::Graph() {
     getline(in, temp);
 
     while (getline(in, temp)) {
+        n_of_flights++;
         Flight f = Flight(temp);
         g[f.getSource()].push_back(f.getTarget());
         airlines[f.getTarget().getAirline()].addAirport(f.getTarget().getAirport());
@@ -60,6 +61,8 @@ bool Graph::isCountry(const string& name) {
     }
     return true;
 }
+
+int Graph::get_global_n_flight() { return n_of_flights;}
 
 unordered_map<string, Airline> Graph::getAirlines() { return airlines; }
 

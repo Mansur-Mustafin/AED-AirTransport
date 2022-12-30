@@ -60,6 +60,13 @@ void Menu::get_path_flight() {
 
         cin >> n_airlines;
 
+        if (n_airlines == 0) {
+
+            cout << "No path exists" << endl << endl;
+
+            main_menu();
+        }
+
         cout << endl;
 
         for (int i = 0; i < n_airlines; i++) {
@@ -85,6 +92,13 @@ void Menu::get_path_flight() {
     cin >> choice;
     cout << endl;
 
+    if (cin.fail() || cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input" << endl << endl;
+        get_path_flight();
+    }
+
     string origin, dest;
 
     double lat, lon, dist;
@@ -104,7 +118,7 @@ void Menu::get_path_flight() {
             cout << "Please enter destination data:";
             cin >> dest;
 
-            output = g.getUltimatePath(dest, origin, airlines, &others);
+            output = g.getUltimatePath(origin, dest, airlines, &others);
             break;
 
 
@@ -125,31 +139,35 @@ void Menu::get_path_flight() {
             get_path_flight();
     }
 
-    cout << "Would you like to see all possible paths with the lowest flight number? (y/n)" << endl;
+    cout << endl << "Would you like to see all possible paths with the lowest flight number? (y/n)" << endl;
 
     string print_choice;
     cin >> print_choice;
 
-    if (print_choice == "Y" || print_choice == "y") {
-        cout << endl << "Your path is:" << endl;
+    if (output.first.size() > 0) {
+        if (print_choice == "Y" || print_choice == "y") {
+            cout << endl << endl << "Your path is:" << endl;
 
-        for (int i = 0; i < others.size(); i++) {
-            for (int j = 0; j < others[i].size(); j++) {
-                cout << others[i][j].first;
-                if (j != others[i].size()-1) {
-                    cout << "--(" << others[i][j].second << ")-->";
-                }}
-            cout << endl;
-        }
-    }else {
-        for (int i = 0; i < output.first.size(); i++) {
-            cout << output.first[i];
-            if (i != output.first.size()-1) {
-                cout << "--(" << output.second[i]<< ")-->";
+            for (int i = 0; i < others.size(); i++) {
+                for (int j = 0; j < others[i].size(); j++) {
+                    cout << others[i][j].first;
+                    if (j != others[i].size()-1) {
+                        cout << "--(" << g.getAirlines()[others[i][j].second].getName() << ")-->";
+                    }}
+                cout << endl;
+            }
+        }else {
+            for (int i = 0; i < output.first.size(); i++) {
+                cout << output.first[i];
+                if (i != output.first.size()-1) {
+                    cout << "--(" << g.getAirlines()[output.second[i]].getName() << ")-->";
+                }
             }
         }
-        }
+    } else {
+        cout << "No path exists" << endl;
     }
+}
 
 
 
@@ -159,6 +177,11 @@ void Menu::get_airport_info() {
 
     string code;
     cin >> code;
+
+    if (g.getAirports().find(code) == g.getAirports().end()) {
+        cout << "Airport does not exist" << endl;
+        main_menu();
+    }
 
     unordered_map<string, vector<Target>> a = g.getG();
 
@@ -174,7 +197,16 @@ void Menu::get_airport_info() {
     cin >> choice;
     cout << endl;
 
+    if (cin.fail() || cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input" << endl << endl;
+        get_airport_info();
+    }
+
     Airport airport = g.getAirports()[code];
+
+    set<string> countries, cities;
 
     switch (choice) {
         case 1:
@@ -182,11 +214,16 @@ void Menu::get_airport_info() {
             cout << "Airport location - " << airport.getCity() << ", " << airport.getCountry() << endl;
             break;
         case 2:
-            cout << "Number of flights: " << a[code].size() << endl;
             cout << endl << "Flights:" << endl;
             for (auto i : a[code]) {
+                countries.insert(g.getAirports()[i.getAirport()].getCountry());
+                cities.insert(g.getAirports()[i.getAirport()].getCity());
+
                 cout << code << "-" << i.getAirport() << " operated by: " << g.getAirlines()[i.getAirline()].getName() << endl;
             }
+            cout << endl << "Number of flights: " << a[code].size() << endl;
+            cout << "Number of countries: " << countries.size() << endl;
+            cout << "Number of cities: " << cities.size() << endl;
             break;
         case 3:
             cout << "Number of Airlines:" << g.getAirlinesFromAirport(code).size() << endl;
@@ -220,6 +257,11 @@ void Menu::get_airline_info() {
 
     Airline airline = g.getAirlines()[airline_code];
 
+    if (g.getAirlines().find(airline_code) == g.getAirlines().end()) {
+        cout << "Airline does not exist" << endl;
+        main_menu();
+    }
+
     cout << "Wich information do you want?" << endl;
 
     cout << "1 - Get basic Airline info" << endl;
@@ -230,6 +272,13 @@ void Menu::get_airline_info() {
     int choice;
     cin >> choice;
     cout << endl;
+
+    if (cin.fail() || cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input" << endl << endl;
+        get_airline_info();
+    }
 
     switch (choice) {
         case 1:
@@ -266,6 +315,12 @@ void Menu::get_network_info() {
 
         cout << endl;
 
+        if (n_airlines == 0) {
+
+            cout << "Input error" << endl;
+            main_menu();
+        }
+
         for (int i = 0; i < n_airlines; i++) {
             string al;
 
@@ -282,8 +337,9 @@ void Menu::get_network_info() {
 
     cout << "What information do you want?" << endl;
 
-    cout << "1 - Get articulation points" << endl;
-    cout << "2 - Get Network diameter" << endl;
+    cout << "1 - Get global statistics" << endl;
+    cout << "2 - Get articulation points" << endl;
+    cout << "3 - Get Network diameter" << endl;
 
     cout << "Please enter your choice:" << endl;
 
@@ -291,8 +347,20 @@ void Menu::get_network_info() {
     cin >> choice;
     cout << endl;
 
+    if (cin.fail() || cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input" << endl << endl;
+        get_network_info();
+    }
+
     switch (choice) {
         case 1:
+            cout << "Global number of Airports: " << g.getAirports().size() << endl;
+            cout << "Global number of Airlines: " << g.getAirlines().size() << endl;
+            cout << "Global number of flights: " << g.get_global_n_flight() << endl;
+            break;
+        case 2:
             cout << "Number of Articulation points: " << g.getArticulationPoints().size() << endl;
 
             cout << endl << "Articulation Points:" << endl;
@@ -301,7 +369,7 @@ void Menu::get_network_info() {
                 cout << i << endl;
             }
             break;
-        case 2:
+        case 3:
             cout << g.getDiameter(airlines) << " is the network diameter" << endl;
             break;
         default:
@@ -321,7 +389,7 @@ void Menu::main_menu() {
                 "|=============================================|=============================================|\n"
                 "|                 Airlines                    |                   Network                   |\n"
                 "|=============================================|=============================================|\n"
-                "| Get Airline information                [31] | Get articulation points                [41] |\n"
+                "| Get Airline information                [31] | Get network info                       [41] |\n"
                 "|                                             |                                             |\n"
                 "|=============================================|=============================================|\n"
                 "|               Other operations              |                                              \n"
