@@ -43,6 +43,8 @@ private:
     /// @brief Map with airline code as key and it Airline object
     unordered_map<string, Airline> airlines;
 
+    int n_of_flights = 0;
+
     set <string> t;
 
     int NumberOFFlights;
@@ -127,6 +129,8 @@ public:
 
     /// @brief Gets country list
     unordered_map <string, unordered_set<string> > getCountries();
+
+    int get_global_n_flight();
 
     /**
      * @brief Gets number of flights in an airport

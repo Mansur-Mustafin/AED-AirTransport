@@ -28,6 +28,8 @@ void get_articulation_points();
 
 void get_network_info();
 
+void top_k_airports();
+
 private:
     Graph g;
 };
