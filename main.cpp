@@ -13,17 +13,17 @@ int main() {
     //set<string> t ;
     //t.insert("KLM");
 
-    //Graph g;
+    Graph g;
+    //cout << g.isStarageCiti("Kazan");
 
 
-    /*
     vector <vector <pss> > qwe;
 
-    ss asd = g.getPathAirports("RDC", "CMP", {}, &qwe);
-    //ss asd = g.getUltimatePath("REC", "OPO", {}, &qwe);
+    //ss asd = g.getPathAirports("RDC", "CMP", {}, &qwe);
+    ss asd = g.getUltimatePath("Russia", "REC", {}, &qwe);
     //ss asd = g.getPathByVectors({"KZN"}, {"LIS", "OPO"}, {}, &qwe);
-    for (int i = 0; i < asd.first.size(); i++)
-      cout << asd.first[i]  << "--(" << asd.second[i]<< ")-->" ;
+    //for (int i = 0; i < asd.first.size(); i++)
+    //cout << asd.first[i]  << "--(" << asd.second[i]<< ")-->" ;
 
     cout<< endl << "------------------------------------------" << endl;
 
@@ -32,7 +32,6 @@ int main() {
             cout << qwe[i][j].first << "--(" << qwe[i][j].second << ")-->";
         cout << endl;
     }
-*/
 
 
 
@@ -53,7 +52,7 @@ int main() {
 
     // PERGUNTAR AQUI
 
-
+/*
     try {
         Menu menu;
         menu.main_menu();
@@ -61,7 +60,7 @@ int main() {
     catch (exception& e) {
         cout << e.what() << '\n';
     }
-
+*/
 
     return 0;
 

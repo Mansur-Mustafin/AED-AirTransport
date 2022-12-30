@@ -255,6 +255,13 @@ ss Graph::getPathByVectors(vector <string> from, vector <string> to, set <string
                 *others = tempOthers;
                 ans = temp;
             }
+                                // WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW
+            if (best == temp.first.size()) {
+                for(auto i : tempOthers){
+                    others->push_back(i);
+                }
+                ans = temp;
+            }
         }
     }
 
