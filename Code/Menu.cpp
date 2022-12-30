@@ -4,6 +4,14 @@
 
 #include "Menu.h"
 
+bool top_airports_flight(pair<Airport, pair<int, int>> p1, pair<Airport, pair<int, int>> p2) {
+    return p1.second.first > p2.second.first;
+}
+
+bool top_airports_airline(pair<Airport, pair<int, int>> p1, pair<Airport, pair<int, int>> p2) {
+    return p1.second.second > p2.second.second;
+}
+
 bool cmp_airline(pair<string, pair<int, double>> p1, pair<string, pair<int, double>> p2) {
     return p1.second.first < p2.second.first;
 }
@@ -352,43 +360,64 @@ void Menu::get_airline_info() {
     }
 }
 
+void Menu::top_k_airports() {
+
+    cout << "How many airports would you like to see?";
+
+    int n;
+    cin >> n;
+
+    unordered_map<string, Airport> airports = g.getAirports();
+
+    vector<pair<Airport, pair<int, int>>> vector_p;
+
+    for (auto i : airports) {
+        pair<Airport, pair<int, int>> flight_airline_n;
+
+        flight_airline_n.first = i.second;
+        flight_airline_n.second.first = g.getNumberOfFlights(i.first);
+        flight_airline_n.second.second = g.getAirlinesFromAirport(i.first).size();
+
+        vector_p.push_back(flight_airline_n);
+    }
+
+    cout << "How would you like to sort the list?" << endl;
+
+    cout << "1 - Number of flights" << endl;
+    cout << "2 - Number of Airlines" << endl;
+
+    cout << "Please enter your choice:" << endl;
+
+    int choice;
+    cin >> choice;
+    cout << endl;
+
+    if (cin.fail() || cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input" << endl << endl;
+        get_airline_info();
+    }
+
+    if (choice == 2) {
+        std::sort(vector_p.begin(), vector_p.end(), top_airports_airline);
+    }else {
+        std::sort(vector_p.begin(), vector_p.end(), top_airports_flight);
+    }
+
+    for (int i = 0; i < n; i++) {
+        cout << i+1 << " - "<< vector_p[i].first.getName() << " | " << vector_p[i].second.first << " flights | " << vector_p[i].second.second << " airlines" << endl;
+    }
+
+
+
+}
+
 void Menu::get_network_info() {
 
     string airline_choice;
 
     set <string> airlines;
-
-    cout << "Do you want to use specific airlines to check the network? (y/n)" << endl;
-
-    cin >> airline_choice;
-
-    if (airline_choice == "Y" || airline_choice == "y") {
-        int n_airlines;
-
-        cout << "How many airlines do you want to use?" << endl;
-
-        cin >> n_airlines;
-
-        cout << endl;
-
-        if (n_airlines == 0) {
-
-            cout << "Input error" << endl;
-            main_menu();
-        }
-
-        for (int i = 0; i < n_airlines; i++) {
-            string al;
-
-            cout << i+1 << " - " << "Please enter an airline code:" << endl;
-
-            cin >> al;
-
-            cout << endl;
-
-            airlines.insert(al);
-        }
-    }
 
 
     cout << "What information do you want?" << endl;
@@ -396,6 +425,7 @@ void Menu::get_network_info() {
     cout << "1 - Get global statistics" << endl;
     cout << "2 - Get articulation points" << endl;
     cout << "3 - Get Network diameter" << endl;
+    cout << "4 - Get top K airports" << endl;
 
     cout << "Please enter your choice:" << endl;
 
@@ -408,6 +438,40 @@ void Menu::get_network_info() {
         cin.ignore(INT_MAX, '\n');
         cout << "Invalid input" << endl << endl;
         get_network_info();
+    }
+
+    if (choice == 2 || choice == 3) {
+        cout << "Do you want to use specific airlines to check the network? (y/n)" << endl;
+
+        cin >> airline_choice;
+
+        if (airline_choice == "Y" || airline_choice == "y") {
+            int n_airlines;
+
+            cout << "How many airlines do you want to use?" << endl;
+
+            cin >> n_airlines;
+
+            cout << endl;
+
+            if (n_airlines == 0) {
+
+                cout << "Input error" << endl;
+                main_menu();
+            }
+
+            for (int i = 0; i < n_airlines; i++) {
+                string al;
+
+                cout << i+1 << " - " << "Please enter an airline code:" << endl;
+
+                cin >> al;
+
+                cout << endl;
+
+                airlines.insert(al);
+            }
+        }
     }
 
     switch (choice) {
@@ -427,6 +491,9 @@ void Menu::get_network_info() {
             break;
         case 3:
             cout << g.getDiameter(airlines) << " is the network diameter" << endl;
+            break;
+        case 4:
+            top_k_airports();
             break;
         default:
             get_network_info();
