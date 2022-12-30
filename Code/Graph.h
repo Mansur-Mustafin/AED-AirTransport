@@ -45,6 +45,8 @@ private:
 
     set <string> t;
 
+    int NumberOFFlights;
+
 public:
     ///@brief Empty Constructor
     Graph();

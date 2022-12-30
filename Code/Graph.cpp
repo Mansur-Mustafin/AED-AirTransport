@@ -22,9 +22,10 @@ Graph::Graph() {
 
     in.close(); in.open("flights.csv");
     getline(in, temp);
-
+    NumberOFFlights = 0;
     while (getline(in, temp)) {
         Flight f = Flight(temp);
+        NumberOFFlights++;
         g[f.getSource()].push_back(f.getTarget());
         airlines[f.getTarget().getAirline()].addAirport(f.getTarget().getAirport());
     }
@@ -40,7 +41,6 @@ Graph::Graph() {
         cities[a.getCity()].insert(code);
         countries[a.getCountry()].insert(a.getCity());
     }
-
 
 }
 
@@ -285,6 +285,8 @@ unordered_set<string> Graph::getAirlinesFromAirport(const std::string& Airport) 
 }
 
 list<string> Graph::getArticulationPoints(set <string> Comp) {
+    Comp = Comp.empty() ? t : Comp;
+
     unordered_map <string, bool> used;
     unordered_map <string, int> num, low;
     int index = 1;
@@ -320,7 +322,6 @@ void Graph::dfsArtificialP(const string& airport, unordered_map <string, int>& n
     if ((num[airport] == 1 && children > 1) || (num[airport] > 1 && a)) {
         res.push_back(airport);
     }
-
 }
 
 int Graph::diameterBFS(string airport, set<string> Comp){
@@ -352,6 +353,9 @@ int Graph::diameterBFS(string airport, set<string> Comp){
 
 // for(auto i : airports){ ou nao?
 int Graph::getDiameter( set<string> Comp) {
+
+    Comp = Comp.empty() ? t : Comp;
+
     int max = -1;
     for(auto i : airports){
         int temp = diameterBFS(i.first, Comp);

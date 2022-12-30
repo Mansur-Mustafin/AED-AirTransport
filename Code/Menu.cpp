@@ -104,7 +104,7 @@ void Menu::get_path_flight() {
             cout << "Please enter destination data:";
             cin >> dest;
 
-            output = g.getUltimatePath(dest, origin, airlines, &others);
+            output = g.getUltimatePath(origin, dest, airlines, &others);
             break;
 
 
