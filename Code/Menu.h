@@ -18,7 +18,7 @@ void get_path_flight();
 
 void get_airport_info();
 
-void printAirport_flightN(vector <string> airports);
+void printAirport_flightN(const vector <string>& inputAirports);
 
 void printAirport(unordered_set<string> airports);
 

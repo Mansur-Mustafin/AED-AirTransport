@@ -47,8 +47,6 @@ private:
 
     set <string> t;
 
-    int NumberOFFlights;
-
 public:
     ///@brief Empty Constructor
     Graph();
@@ -156,7 +154,7 @@ public:
      * @param res ->
      * @param Comp ->
      */
-    void dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, list<string>& res,const set <string>& Comp);
+    void dfsArticulationP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, list<string>& res,const set <string>& Comp);
 
     /**
      * @brief Gets the network's articulation points

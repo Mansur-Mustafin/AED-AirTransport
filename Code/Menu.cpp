@@ -20,13 +20,69 @@ bool cmp_distance(pair<string, pair<int, double>> p1, pair<string, pair<int, dou
     return p1.second.second < p2.second.second;
 }
 
-void Menu::printAirport_flightN(vector <string> airports) {
+template <class T>
+T findFunc( T start, T end, const Airport& airport) {
+    while(start != end){
+        if(start->first == airport.getCountry()){
+            return start;
+        }
+        start++;
+    }
+    return end;
+}
 
+void Push(vector<string> &v, string s){
+    if(find(v.begin(), v.end(), s) == v.end()){
+        v.push_back(s);
+    }
+}
 
-    sort(airports.begin(), airports.end(), [this](const string& a1, const string& a2) -> bool
+void Menu::printAirport_flightN(const vector <string>& inputAirports) {
+
+    list<Airport> lstAirports;
+    for(auto a : inputAirports){
+        lstAirports.push_back(g.getAirports()[a]);
+    }
+
+    lstAirports.sort([this](Airport a1, const Airport& a2) -> bool
     {
-        return g.getNumberOfFlights(a1) > g.getNumberOfFlights(a2);
+        if(g.getNumberOfFlights(a1.getCode()) > g.getNumberOfFlights(a2.getCode())) return true;
+        else if(g.getNumberOfFlights(a1.getCode()) < g.getNumberOfFlights(a2.getCode())) return false;
+        else return a1.getCountry() < a2.getCountry();
     });
+
+
+    unordered_map<string, vector<string>> countries;
+    unordered_map<string, list<Airport>> cities;
+    list<string> restCountries;
+
+
+    for(auto a : lstAirports){
+        if(countries.find(a.getCountry()) == countries.end()){
+            restCountries.push_back(a.getCountry());
+        }
+        Push(countries[a.getCountry()], a.getCity());
+        cities[a.getCity()].push_back(a);
+    }
+
+    int n_cities = 0;
+
+    for(auto it = restCountries.begin(); it != restCountries.end(); it++){
+        cout << *it << endl;
+
+        for(auto city : countries[*it]){
+            cout << "|-----" << city << endl;
+            n_cities++;
+            for(auto air: cities[city]){
+                cout << "      |------" << air.getCode() << endl;
+            }
+        }
+        cout << endl;
+    }
+
+    cout << "Number of Airports: " << inputAirports.size() << endl;
+    cout << "Number of countries: " << restCountries.size() << endl;
+    cout << "Number of cities: " << n_cities << endl;
 
 }
 

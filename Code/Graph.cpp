@@ -22,11 +22,9 @@ Graph::Graph() {
 
     in.close(); in.open("flights.csv");
     getline(in, temp);
-    NumberOFFlights = 0;
     while (getline(in, temp)) {
         n_of_flights++;
         Flight f = Flight(temp);
-        NumberOFFlights++;
         g[f.getSource()].push_back(f.getTarget());
         airlines[f.getTarget().getAirline()].addAirport(f.getTarget().getAirport());
     }
@@ -296,13 +294,13 @@ list<string> Graph::getArticulationPoints(set <string> Comp) {
     list<string> res;
     for (const auto& a : g) {
         if (!used[a.first]) {
-            dfsArtificialP(a.first, num, low, index, used, res, Comp);
+            dfsArticulationP(a.first, num, low, index, used, res, Comp);
         }
     }
     return res;
 }
 
-void Graph::dfsArtificialP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& used, list<string>& res, const set <string>& Comp) {
+void Graph::dfsArticulationP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& used, list<string>& res, const set <string>& Comp) {
 
     bool a = false;
     int children = 0;
@@ -312,7 +310,7 @@ void Graph::dfsArtificialP(const string& airport, unordered_map <string, int>& n
         string w = e.getAirport(), air = e.getAirline();
         if (!used[w] && Comp.find(air) != Comp.end()) {
             children++;
-            dfsArtificialP(w, num, low, index, used, res, Comp);
+            dfsArticulationP(w, num, low, index, used, res, Comp);
             low[airport] = min(low[airport], low[w]);
             if (low[w] >= num[airport] && num[airport] > 1) {
                 a = true;
