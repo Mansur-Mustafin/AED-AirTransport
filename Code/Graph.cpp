@@ -77,7 +77,6 @@ bool Graph::isCity(const string& name) {
     return false;
 }
 
-
 bool Graph::isCountry(const string& name) {
     auto p = countries.find(name);
     if (p == countries.end()) {
@@ -141,7 +140,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
         if(isStarageCiti(from)){
             string countryF;
             cout << "The city: " << from << "is ambigous in country\nPlease enter the Country:";
-            cin >> countryF;
+            getline(cin, countryF);
             for(auto i : dataForStrangeCities[countryF][from]) fromV.push_back(i);
         }else{
             for (const auto& i : cities[from]) fromV.push_back(i);
@@ -152,7 +151,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
         if(isStarageCiti(to)){
             string countryT;
             cout << "The city: " << from << "is ambigous in country\nPlease enter the Country:";
-            cin >> countryT;
+            getline(cin, countryT);
             for(auto i : dataForStrangeCities[countryT][from]) fromV.push_back(i);
         }else{
             for (const auto& i : cities[to]) toV.push_back(i);
@@ -307,6 +306,13 @@ ss Graph::getPathByVectors(vector <string> from, vector <string> to, set <string
             if (temp.first.size() != 1 && (best == -1 || best > temp.first.size())) {
                 best = temp.first.size();
                 *others = tempOthers;
+                ans = temp;
+            }
+            // WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW
+            if (best == temp.first.size()) {
+                for(auto i : tempOthers){
+                    others->push_back(i);
+                }
                 ans = temp;
             }
         }
