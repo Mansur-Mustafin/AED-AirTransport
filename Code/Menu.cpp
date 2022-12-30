@@ -4,8 +4,12 @@
 
 #include "Menu.h"
 
-bool cmp(pair<string, int> p1, pair<string, int> p2) {
-    return p1.second < p2.second;
+bool cmp_airline(pair<string, pair<int, double>> p1, pair<string, pair<int, double>> p2) {
+    return p1.second.first < p2.second.first;
+}
+
+bool cmp_distance(pair<string, pair<int, double>> p1, pair<string, pair<int, double>> p2) {
+    return p1.second.second < p2.second.second;
 }
 
 void Menu::printAirport_flightN(vector <string> airports) {
@@ -146,37 +150,67 @@ void Menu::get_path_flight() {
     string print_choice;
     cin >> print_choice;
 
-    vector<pair<string, int>> airline_change;
+    vector<pair<string, pair<int, double>>> airline_dis;
 
-    vector<pair<string, int>> by_distance;
 
     if (output.first.size() > 0) {
         if (print_choice == "Y" || print_choice == "y") {
-            cout << endl << endl << "Your path is:" << endl;
 
             for (int i = 0; i < others.size(); i++) {
-                pair<string, int> pair;
+                double distance = 0.0;
+                pair<string, pair<int, double>> pair;
                 list<string> airlines;
                 string x;
                 for (int j = 0; j < others[i].size(); j++) {
                     x += others[i][j].first;
                     if (j != others[i].size()-1) {
-                        x += "--(" + g.getAirlines()[others[i][j].second].getName() + ")-->";
+                        distance += g.getAirports()[others[i][j].first].getDistanceTo(g.getAirports()[others[i][j+1].first].getLatitude(), g.getAirports()[others[i][j+1].first].getLongitude());
+                        x += "--(" + others[i][j].second + ")-->";
                         if (others[i][j].second != airlines.back()) {
                             airlines.push_back(others[i][j].second);
                         }
                     }
                 }
                 pair.first = x;
-                pair.second = airlines.size();
-                airline_change.push_back(pair);
+                pair.second.first = airlines.size();
+                pair.second.second = distance;
+
+                airline_dis.push_back(pair);
             }
 
-            std::sort(airline_change.begin(), airline_change.end(), cmp);
+            cout << "How would you like to sort the list?" << endl;
 
-            for (auto i : airline_change) {
-                cout << i.first << " - " << i.second << " airline changes" << endl;
+            cout << "1 - Sort by airline change" << endl;
+            cout << "2 - Sort by distance" << endl;
+
+            cout << "Please enter your choice:" << endl;
+
+            int choice_sort;
+            cin >> choice_sort;
+            cout << endl;
+
+            if (cin.fail() || cin.peek() != '\n') {
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+                cout << "Invalid input" << endl << endl;
+                get_path_flight();
             }
+
+            switch (choice_sort) {
+                case 1:
+                    std::sort(airline_dis.begin(), airline_dis.end(), cmp_airline);
+                    break;
+                case 2:
+                    std::sort(airline_dis.begin(), airline_dis.end(), cmp_distance);
+                    break;
+                default:
+                    break;
+            }
+
+            for (auto i : airline_dis) {
+                cout << i.first << " | " << i.second.second << " Km's total distance | " << i.second.first << " airline changes" << endl;
+            }
+
 
         }else {
             for (int i = 0; i < output.first.size(); i++) {
