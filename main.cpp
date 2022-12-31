@@ -6,17 +6,14 @@
 
 using namespace std;
 
-
 int main() {
-
     //ofstream cout("output.txt");
     //set<string> t ;
     //t.insert("KLM");
-
+    /*
     Graph g;
 
     //cout << g.isStarageCiti("Kazan");
-
 
     vector <vector <pss> > qwe;
 
@@ -34,27 +31,12 @@ int main() {
         cout << endl;
     }
 
+    */
 
 
 
-    //for (auto i : ans) cout << i << endl;
-
-    /*for (auto i : ans) {
-
-        cout << i.first << endl;
-
-        for (auto j : i.second) {
-            cout << j << endl;
-        }
-
-        cout << endl;
-        cout << endl;
-
-    }*/
 
     // PERGUNTAR AQUI
-
-/*
     try {
         Menu menu;
         menu.main_menu();
@@ -62,7 +44,7 @@ int main() {
     catch (exception& e) {
         cout << e.what() << '\n';
     }
-*/
+
 
     return 0;
 

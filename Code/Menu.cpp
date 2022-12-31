@@ -20,16 +20,6 @@ bool cmp_distance(pair<string, pair<int, double>> p1, pair<string, pair<int, dou
     return p1.second.second < p2.second.second;
 }
 
-template <class T>
-T findFunc( T start, T end, const Airport& airport) {
-    while(start != end){
-        if(start->first == airport.getCountry()){
-            return start;
-        }
-        start++;
-    }
-    return end;
-}
 
 void Push(vector<string> &v, string s){
     if(find(v.begin(), v.end(), s) == v.end()){

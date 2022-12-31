@@ -32,7 +32,6 @@ Graph::Graph() {
     }
 
 
-
     in.close(); in.open("airports.csv");
     getline(in, temp);
 
@@ -57,6 +56,7 @@ Graph::Graph() {
         string code = temp.substr(0, 3);
 
         if(strangeCities.find(a.getCity()) != strangeCities.end()){
+            airports[code] = a;
             dataForStrangeCities[a.getCountry()][a.getCity()].insert(code);
         }else{
             airports[code] = a;
@@ -138,10 +138,13 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
 
     if (isCityF) {
         if(isStarageCiti(from)){
+            string countryF1;
             string countryF;
-            cout << "The city: " << from << "is ambigous in country\nPlease enter the Country:";
+            cout << "The Arrive city: " << from << " is ambigous in country\nPlease enter the Country:";
+            cin >> countryF1;
             getline(cin, countryF);
-            for(auto i : dataForStrangeCities[countryF][from]) fromV.push_back(i);
+            countryF1 +=  countryF;
+            for(auto i : dataForStrangeCities[countryF1][from]) fromV.push_back(i);
         }else{
             for (const auto& i : cities[from]) fromV.push_back(i);
         }
@@ -149,10 +152,13 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
 
     if (isCityT) {
         if(isStarageCiti(to)){
+            string countryT1;
             string countryT;
-            cout << "The city: " << from << "is ambigous in country\nPlease enter the Country:";
+            cout << "The Destination city: " << to << " is ambigous in country\nPlease enter the Country:";
+            cin >> countryT1;
             getline(cin, countryT);
-            for(auto i : dataForStrangeCities[countryT][from]) fromV.push_back(i);
+            countryT1 += countryT;
+            for(auto i : dataForStrangeCities[countryT1][to]) toV.push_back(i);
         }else{
             for (const auto& i : cities[to]) toV.push_back(i);
         }
@@ -308,10 +314,10 @@ ss Graph::getPathByVectors(vector <string> from, vector <string> to, set <string
                 *others = tempOthers;
                 ans = temp;
             }
-            // WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW
+            // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             if (best == temp.first.size()) {
-                for(auto i : tempOthers){
-                    others->push_back(i);
+                for(const auto& item : tempOthers){
+                    others->push_back(item);
                 }
                 ans = temp;
             }
@@ -324,7 +330,7 @@ ss Graph::getPathByVectors(vector <string> from, vector <string> to, set <string
 vector<string> Graph::getPathByPoint(string from, double lat, double lon, double dist) /* FALTA ACABAR AQUIIIIIIIIIIIIIIIIIIIIIIII */ {
 
     vector <string> toV;
-    for (auto e : airports) {
+    for (const auto& e : airports) {
         if (e.second.getDistanceTo(lat, lon) < dist) {
             toV.push_back(e.first);
         }
