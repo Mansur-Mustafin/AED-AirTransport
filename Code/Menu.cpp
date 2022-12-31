@@ -20,6 +20,16 @@ bool cmp_distance(pair<string, pair<int, double>> p1, pair<string, pair<int, dou
     return p1.second.second < p2.second.second;
 }
 
+template <class T>
+T findFunc( T start, T end, const Airport& airport) {
+    while(start != end){
+        if(start->first == airport.getCountry()){
+            return start;
+        }
+        start++;
+    }
+    return end;
+}
 
 void Push(vector<string> &v, string s){
     if(find(v.begin(), v.end(), s) == v.end()){
@@ -70,6 +80,8 @@ void Menu::printAirport_flightN(const vector <string>& inputAirports) {
         cout << endl;
     }
 
+
+
     cout << "Number of Airports: " << inputAirports.size() << endl;
     cout << "Number of countries: " << restCountries.size() << endl;
     cout << "Number of cities: " << n_cities << endl;
@@ -87,16 +99,17 @@ void Menu::printAirport(unordered_set<string> airports) {
     int city_n = 0;
 
     for (auto i : by_country) {
-        cout << i.first << endl;
-        city_n += i.second.size();
-        for (auto j : i.second) {
-            cout << " |-----" << j.first << endl;
-            for (auto c : j.second) {
-                cout << "         |-----" << c.getName()<< ": ("  << c.getCode() << ')' << endl;
+        if (i.first.size() != 0) {
+            cout << i.first << endl;
+            city_n += i.second.size();
+            for (auto j : i.second) {
+                cout << " |-----" << j.first << endl;
+                for (auto c : j.second) {
+                    cout << "         |-----" << c.getName()<< ": ("  << c.getCode() << ')' << endl;
             }
         }
         cout << endl;
-    }
+    }}
 
     cout << "Number of Airports: " << airports.size() << endl;
     cout << "Number of countries: " << by_country.size() << endl;
