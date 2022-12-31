@@ -139,8 +139,8 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     if (isCityF) {
         if(isStarageCiti(from)){
             string countryF;
-            cout << "The city: " << from << "is ambigous in country\nPlease enter the Country:";
-            getline(cin, countryF);
+            cout << "The city: " << from << " is ambigous in country\nPlease enter the Country:";
+            cin >> countryF;
             for(auto i : dataForStrangeCities[countryF][from]) fromV.push_back(i);
         }else{
             for (const auto& i : cities[from]) fromV.push_back(i);
@@ -150,7 +150,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     if (isCityT) {
         if(isStarageCiti(to)){
             string countryT;
-            cout << "The city: " << from << "is ambigous in country\nPlease enter the Country:";
+            cout << "The city: " << to << " is ambigous in country\nPlease enter the Country:";
             getline(cin, countryT);
             for(auto i : dataForStrangeCities[countryT][from]) fromV.push_back(i);
         }else{

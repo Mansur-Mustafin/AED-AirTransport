@@ -68,17 +68,22 @@ void Menu::printAirport_flightN(const vector <string>& inputAirports) {
     int n_cities = 0;
 
     for(auto it = restCountries.begin(); it != restCountries.end(); it++){
-        cout << *it << endl;
 
-        for(auto city : countries[*it]){
-            cout << "|-----" << city << endl;
-            n_cities++;
-            for(auto air: cities[city]){
-                cout << "      |------" << air.getCode() << endl;
+        if (it.operator*().size() != 0) {
+
+            cout << *it << endl;
+
+
+
+            for(auto city : countries[*it]){
+                cout << "|-----" << city << endl;
+                n_cities++;
+                for(auto air: cities[city]){
+                    cout << "      |------" << air.getCode() << endl;
+                }
             }
-        }
-        cout << endl;
-    }
+            cout << endl;
+    }}
 
     cout << "Number of Airports: " << inputAirports.size() << endl;
     cout << "Number of countries: " << restCountries.size() << endl;
@@ -97,16 +102,17 @@ void Menu::printAirport(unordered_set<string> airports) {
     int city_n = 0;
 
     for (auto i : by_country) {
-        cout << i.first << endl;
-        city_n += i.second.size();
-        for (auto j : i.second) {
-            cout << " |-----" << j.first << endl;
-            for (auto c : j.second) {
-                cout << "         |-----" << c.getName()<< ": ("  << c.getCode() << ')' << endl;
+        if (i.first.size() != 0) {
+            cout << i.first << endl;
+            city_n += i.second.size();
+            for (auto j : i.second) {
+                cout << " |-----" << j.first << endl;
+                for (auto c : j.second) {
+                    cout << "         |-----" << c.getName()<< ": ("  << c.getCode() << ')' << endl;
             }
         }
         cout << endl;
-    }
+    }}
 
     cout << "Number of Airports: " << airports.size() << endl;
     cout << "Number of countries: " << by_country.size() << endl;

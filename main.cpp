@@ -18,21 +18,21 @@ int main() {
     //cout << g.isStarageCiti("Kazan");
 
 
-    vector <vector <pss> > qwe;
+    //vector <vector <pss> > qwe;
 
     //ss asd = g.getPathAirports("RDC", "CMP", {}, &qwe);
-    ss asd = g.getUltimatePath("London", "REC", {}, &qwe);
+    //ss asd = g.getUltimatePath("London", "REC", {}, &qwe);
     //ss asd = g.getPathByVectors({"KZN"}, {"LIS", "OPO"}, {}, &qwe);
     //for (int i = 0; i < asd.first.size(); i++)
       //cout << asd.first[i]  << "--(" << asd.second[i]<< ")-->" ;
 
-    cout<< endl << "------------------------------------------" << endl;
+   /* cout<< endl << "------------------------------------------" << endl;
 
     for (int i = 0; i < qwe.size(); i++) {
         for (int j = 0; j < qwe[i].size(); j++)
             cout << qwe[i][j].first << "--(" << qwe[i][j].second << ")-->";
         cout << endl;
-    }
+    }*/
 
 
 
@@ -54,7 +54,7 @@ int main() {
 
     // PERGUNTAR AQUI
 
-/*
+
     try {
         Menu menu;
         menu.main_menu();
@@ -62,7 +62,7 @@ int main() {
     catch (exception& e) {
         cout << e.what() << '\n';
     }
-*/
+
 
     return 0;
 
