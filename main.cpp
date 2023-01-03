@@ -9,6 +9,7 @@ using namespace std;
 
 int main() {
 
+    /*
     Graph g;
 
     auto begin = std::chrono::high_resolution_clock::now();
@@ -28,7 +29,7 @@ int main() {
 
 
     printf("Time measured: %.3f seconds.\n", elapsed.count() * 1e-9);
-
+*/
 
     //ofstream cout("output.txt");
     //set<string> t ;
@@ -63,8 +64,8 @@ int main() {
     // PERGUNTAR AQUI
 
     try {
-        //Menu menu;
-        //menu.main_menu();
+        Menu menu;
+        menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';
