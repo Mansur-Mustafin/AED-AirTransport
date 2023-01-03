@@ -22,9 +22,17 @@ using namespace std;
 typedef pair <vector <string>, vector<string> > ss;
 typedef pair <string, string> pss;
 
+#define um unordered_map
+
 class Graph {
 
 private:
+
+    vector <vector <pss> > Combine(vector <vector <pss> > p1, vector <vector <pss> > p2);
+
+    void Update(string v, um <string, int>& d, string& curComp, int dist, string start, queue <string>& q, um <string, vector <string> >& p, um <string, vector <string> >& pAir, string par, string parAir);
+
+    void getPath(string v, string to, vector <vector <pss> > cur, vector <vector <pss> >& ans);
 
     unordered_set<string> strangeCities;
     /// @brief Map with an airport as key and vector with all possible flights from it
@@ -48,6 +56,12 @@ private:
     int n_of_flights = 0;
 
     set <string> t;
+
+    um <string, string> used;
+
+    um <string, vector <string> > parent;
+
+    um <string, vector<string> > air;
 
 public:
     ///@brief Empty Constructor
@@ -183,6 +197,9 @@ public:
      * @return
      */
     int diameterBFS(string airport, set<string> Comp);
+
+    vector <vector <pss> > getPathByAirportsAirlines(string from, string to, set <string> Comp = {});
+
 };
 
 #endif // PROJECT_2_GRAPH_H

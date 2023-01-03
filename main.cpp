@@ -3,15 +3,38 @@
 #include "Code/Graph.h"
 #include "Code/Menu.h"
 #include <fstream>
+#include <chrono>
 
 using namespace std;
 
 int main() {
+
+    Graph g;
+
+    auto begin = std::chrono::high_resolution_clock::now();
+
+    vector <vector <pss> > qwe = g.getPathByAirportsAirlines("KZN", "CMP");
+
+    for (int i = 0; i < qwe.size(); i++) {
+        for (int j = 0; j < qwe[i].size(); j++)
+            cout << qwe[i][j].first << "--(" << qwe[i][j].second << ")-->";
+        cout << endl;
+    }
+
+
+    auto end = std::chrono::high_resolution_clock::now();
+
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+
+    printf("Time measured: %.3f seconds.\n", elapsed.count() * 1e-9);
+
+
     //ofstream cout("output.txt");
     //set<string> t ;
     //t.insert("KLM");
     /*
-    Graph g;
+
 
     //cout << g.isStarageCiti("Kazan");
 
@@ -40,8 +63,8 @@ int main() {
     // PERGUNTAR AQUI
 
     try {
-        Menu menu;
-        menu.main_menu();
+        //Menu menu;
+        //menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';

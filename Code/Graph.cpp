@@ -38,11 +38,12 @@ Graph::Graph() {
     while (getline(in, temp)) {
         Airport a(temp);
         string code = temp.substr(0, 3);
-        if(city2country.find(a.getCity()) != city2country.end()){
-            if(city2country[a.getCity()] != a.getCountry()){
+        if (city2country.find(a.getCity()) != city2country.end()) {
+            if (city2country[a.getCity()] != a.getCountry()) {
                 strangeCities.insert(a.getCity());
             }
-        }else{
+        }
+        else {
             city2country[a.getCity()] = a.getCountry();
         }
     }
@@ -55,10 +56,11 @@ Graph::Graph() {
         Airport a(temp);
         string code = temp.substr(0, 3);
 
-        if(strangeCities.find(a.getCity()) != strangeCities.end()){
+        if (strangeCities.find(a.getCity()) != strangeCities.end()) {
             airports[code] = a;
             dataForStrangeCities[a.getCountry()][a.getCity()].insert(code);
-        }else{
+        }
+        else {
             airports[code] = a;
             cities[a.getCity()].insert(code);
             countries[a.getCountry()].insert(a.getCity());
@@ -85,7 +87,7 @@ bool Graph::isCountry(const string& name) {
     return true;
 }
 
-int Graph::get_global_n_flight() { return n_of_flights;}
+int Graph::get_global_n_flight() { return n_of_flights; }
 
 unordered_map<string, Airline> Graph::getAirlines() { return airlines; }
 
@@ -109,11 +111,12 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     if (isCountryF) {
         for (const auto& city : countries[from]) {
 
-            if(isStarageCiti(city)){
+            if (isStarageCiti(city)) {
                 for (const auto& airport : dataForStrangeCities[from][city]) {
                     fromV.push_back(airport);
                 }
-            }else{
+            }
+            else {
                 for (const auto& airport : cities[city]) {
                     fromV.push_back(airport);
                 }
@@ -123,11 +126,12 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
 
     if (isCountryT) {
         for (const auto& city : countries[to]) {
-            if(isStarageCiti(city)){
+            if (isStarageCiti(city)) {
                 for (const auto& airport : dataForStrangeCities[from][city]) {
                     toV.push_back(airport);
                 }
-            }else{
+            }
+            else {
                 for (const auto& airport : cities[city]) {
                     toV.push_back(airport);
                 }
@@ -137,29 +141,31 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     }
 
     if (isCityF) {
-        if(isStarageCiti(from)){
+        if (isStarageCiti(from)) {
             string countryF1;
             string countryF;
             cout << "The Arrive city: " << from << " is ambigous in country\nPlease enter the Country:";
             cin >> countryF1;
             getline(cin, countryF);
-            countryF1 +=  countryF;
-            for(auto i : dataForStrangeCities[countryF1][from]) fromV.push_back(i);
-        }else{
+            countryF1 += countryF;
+            for (auto i : dataForStrangeCities[countryF1][from]) fromV.push_back(i);
+        }
+        else {
             for (const auto& i : cities[from]) fromV.push_back(i);
         }
     }
 
     if (isCityT) {
-        if(isStarageCiti(to)){
+        if (isStarageCiti(to)) {
             string countryT1;
             string countryT;
             cout << "The Destination city: " << to << " is ambigous in country\nPlease enter the Country:";
             cin >> countryT1;
             getline(cin, countryT);
             countryT1 += countryT;
-            for(auto i : dataForStrangeCities[countryT1][to]) toV.push_back(i);
-        }else{
+            for (auto i : dataForStrangeCities[countryT1][to]) toV.push_back(i);
+        }
+        else {
             for (const auto& i : cities[to]) toV.push_back(i);
         }
     }
@@ -259,12 +265,12 @@ ss Graph::getPathAirports(const string& from, const string& to, set <string> Com
     reverse(ansAir.begin(), ansAir.end());
     ansAir.push_back("No airline");
 
-    if (others != nullptr) 
+    if (others != nullptr)
         *others = fill(from, to, p, pAirlane, d[to]);
     return { ans, ansAir };
 }
 
-vector<string> Graph::targetAirports(const string& from, int num,  set <string> Comp) {
+vector<string> Graph::targetAirports(const string& from, int num, set <string> Comp) {
 
     Comp = Comp.empty() ? t : Comp;
 
@@ -314,9 +320,8 @@ ss Graph::getPathByVectors(vector <string> from, vector <string> to, set <string
                 *others = tempOthers;
                 ans = temp;
             }
-            // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             if (best == temp.first.size()) {
-                for(const auto& item : tempOthers){
+                for (const auto& item : tempOthers) {
                     others->push_back(item);
                 }
                 ans = temp;
@@ -391,7 +396,7 @@ void Graph::dfsArticulationP(const string& airport, unordered_map <string, int>&
     }
 }
 
-int Graph::diameterBFS(string airport, set<string> Comp){
+int Graph::diameterBFS(string airport, set<string> Comp) {
     int max = -1;
     unordered_map <string, bool> used;
     unordered_map <string, int> d;
@@ -406,12 +411,12 @@ int Graph::diameterBFS(string airport, set<string> Comp){
         for (auto i = 0; i < g[cur].size(); i++) {
             string target = g[cur][i].getAirport(), air = g[cur][i].getAirline();
             if (!used[target] && Comp.find(air) != Comp.end()) {
-                    q.push(target);
-                    d[target] = d[cur] + 1;
-                    if(d[target] > max){
-                        max = d[target];
-                    }
-                    used[target] = true;
+                q.push(target);
+                d[target] = d[cur] + 1;
+                if (d[target] > max) {
+                    max = d[target];
+                }
+                used[target] = true;
             }
         }
     }
@@ -419,14 +424,14 @@ int Graph::diameterBFS(string airport, set<string> Comp){
 }
 
 // for(auto i : airports){ ou nao?
-int Graph::getDiameter( set<string> Comp) {
+int Graph::getDiameter(set<string> Comp) {
 
     Comp = Comp.empty() ? t : Comp;
 
     int max = -1;
-    for(auto i : airports){
+    for (auto i : airports) {
         int temp = diameterBFS(i.first, Comp);
-        if(temp > max){
+        if (temp > max) {
             max = temp;
         }
     }
@@ -441,3 +446,108 @@ bool Graph::isStarageCiti(string name) {
     return not (strangeCities.find(name) == strangeCities.end());
 }
 
+vector <pss> Merge(vector <pss> p1, vector <pss> p2) {
+    vector <pss> ans = p1;
+    for (int i = 0; i < p2.size(); i++)
+        ans.push_back(p2[i]);
+    return ans;
+}
+
+vector <vector <pss> > Graph::Combine(vector <vector <pss> > p1, vector <vector <pss> > p2) {
+    vector < vector <pss> > ans;
+    if (p2.empty()) return p1;
+    for (int i = 0; i < p1.size(); i++)
+        for (int j = 0; j < p2.size(); j++)
+            ans.push_back(Merge(p1[i], p2[j]));
+    return ans;
+}
+
+void Graph::Update(string v, um <string, int>& d, string& curComp, int dist, string start, queue <string>& q, um <string, vector <string> >& p, um <string, vector <string> >& pAir, string par, string parAir) {
+
+    used[v] = curComp;
+
+    if (start != v) {
+        if (d.find(v) == d.end())
+            q.push(v);
+        parent[v].push_back(start);
+        air[v].push_back(curComp);
+        d[v] = dist;
+        p[v].push_back(par);
+        pAir[v].push_back(parAir);
+    }
+
+    for (auto i : g[v]) {
+        string step = i.getAirport();
+        if (curComp == i.getAirline() && (d.find(step) == d.end() || d[step] == dist) && used[step] != curComp) {
+            Update(step, d, curComp, dist, start, q, p, pAir, v, i.getAirline());
+        }
+    }
+
+}
+
+void Graph::getPath(string v, string to, vector <vector <pss> > cur, vector <vector <pss> >& ans) {
+    vector <vector <pss> > tempAns;
+
+    if (v == to) {
+        for (auto i : cur)
+            ans.push_back(i);
+        return;
+    }
+
+    for (int i = 0; i < parent[v].size(); i++) {
+        set <string> tempComp; tempComp.insert(air[v][i]);
+        vector <vector <pss> > tempOthers;
+
+        string zxc = parent[v][i];
+
+        getPathAirports(parent[v][i], v, tempComp, &tempOthers);
+
+        if (cur.size())
+            for (int j = 0; j < tempOthers.size(); j++)
+                tempOthers[j].pop_back();
+
+        tempAns = Combine(tempOthers, cur);
+
+        getPath(parent[v][i], to, tempAns, ans);
+
+    }
+
+}
+
+
+vector <vector <pss> > Graph::getPathByAirportsAirlines(string from, string to, set <string> Comp) {
+
+    if (Comp.empty())
+        Comp = t;
+
+    vector <vector <pss> > ans;
+    um <string, vector <string> > p, pAir;
+    um <string, int> d;
+
+    d[from] = 0;
+    queue <string> q;
+    q.push(from);
+
+    while (q.size()) {
+
+        string cur = q.front();
+        q.pop();
+
+        if (d.find(to) != d.end() && d[cur] + 1 > d[to]) break;
+
+        for (auto i : Comp)
+            Update(cur, d, i, d[cur] + 1, cur, q, p, pAir, "", "");
+
+    }
+
+    getPath(to, from, {}, ans);
+
+    parent.clear();
+    used.clear();
+    air.clear();
+    d.clear();
+
+
+    return ans;
+
+}
