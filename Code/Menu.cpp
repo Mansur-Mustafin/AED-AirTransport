@@ -185,11 +185,14 @@ void Menu::get_path_flight() {
     switch (choice) {
         case 1:
             cout << "Please enter the origin data:";
-            cin >> origin;
+            cin.ignore();
+            getline(cin, origin);
             cout << endl;
 
             cout << "Please enter destination data:";
-            cin >> dest;
+            getline(cin, dest);
+            cout << endl;
+
 
             output = g.getUltimatePath(origin, dest, airlines, &others);
             break;
@@ -199,9 +202,9 @@ void Menu::get_path_flight() {
             cout << "Please enter the origin coordinates:";
             cin >> lat;
             cout << endl;
-            cout << "Please enter destination country name:";
+            cout << "Please enter destination coordinates:";
             cin >> lon;
-            cout << endl << "Please enter max distance between points:";
+            cout << endl << "Please enter max distance to origin airport:";
             cin >> dist;
             cout << endl;
 
@@ -290,6 +293,95 @@ void Menu::get_path_flight() {
     } else {
         cout << "No path exists" << endl;
     }
+}
+
+void Menu::get_path_airline(){
+
+    string airline_choice;
+
+    set <string> airlines;
+
+    cout << "Do you want to use specific airlines? (y/n)" << endl;
+
+    cin >> airline_choice;
+
+    if (airline_choice == "Y" || airline_choice == "y") {
+        int n_airlines;
+
+        cout << "How many airlines do you want to use?" << endl;
+
+        cin >> n_airlines;
+
+        if (n_airlines == 0) {
+
+            cout << "No path exists" << endl << endl;
+
+            main_menu();
+        }
+
+        cout << endl;
+
+        for (int i = 0; i < n_airlines; i++) {
+            string al;
+
+            cout << i+1 << " - " << "Please enter an airline code:" << endl;
+
+            cin >> al;
+
+            cout << endl;
+
+            airlines.insert(al);
+        }
+    }
+
+    string origin, dest;
+
+    cout << "Please enter origin airport code: ";
+    cin >> origin;
+
+
+
+    cout << endl << "Please enter destination airport code: ";
+    cin >> dest;
+    cout << endl;
+
+
+    vector <vector <pss> > others = g.getPathByAirportsAirlines(origin, dest, airlines);
+
+    vector<pair<string, pair<int, double>>> airline_dis;
+
+
+
+    for (int i = 0; i < others.size(); i++) {
+        double distance = 0.0;
+        pair<string, pair<int, double>> pair;
+        list<string> airlines;
+        string x;
+        for (int j = 0; j < others[i].size(); j++) {
+            x += others[i][j].first;
+            if (j != others[i].size()-1) {
+                distance += g.getAirports()[others[i][j].first].getDistanceTo(g.getAirports()[others[i][j+1].first].getLatitude(), g.getAirports()[others[i][j+1].first].getLongitude());
+                x += "--(" + others[i][j].second + ")-->";
+                if (others[i][j].second != airlines.back()) {
+                    airlines.push_back(others[i][j].second);
+                }
+            }
+        }
+        pair.first = x;
+        pair.second.first = airlines.size()-1;
+        pair.second.second = distance;
+
+        airline_dis.push_back(pair);
+    }
+
+    std::sort(airline_dis.begin(), airline_dis.end(), cmp_distance);
+
+
+    for (auto i : airline_dis) {
+        cout << i.first << " | " << i.second.second << " Km's total distance | " << i.second.first << " airline changes" << endl;
+    }
+
+
 }
 
 
@@ -567,6 +659,7 @@ void Menu::main_menu() {
                 "|                   Path                      |                   Airports                  |\n"
                 "|=============================================|=============================================|\n"
                 "| Get path with lowest flight number     [11] | Get information from specific Airport  [21] |\n"
+                "| Get path with fewest airline change    [12] |                                             |\n"
                 "|                                             |                                             |\n"
                 "|=============================================|=============================================|\n"
                 "|                 Airlines                    |                   Network                   |\n"
@@ -596,6 +689,10 @@ void Menu::main_menu() {
             case 0: exit(0);
             case 11:
                 get_path_flight();
+                break;
+
+            case 12:
+                get_path_airline();
                 break;
 
             case 21:

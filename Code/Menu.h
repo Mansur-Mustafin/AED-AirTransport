@@ -16,6 +16,8 @@ void main_menu();
 
 void get_path_flight();
 
+void get_path_airline();
+
 void get_airport_info();
 
 void printAirport_flightN(const vector <string>& inputAirports);

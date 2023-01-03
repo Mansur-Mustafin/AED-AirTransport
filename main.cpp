@@ -11,7 +11,7 @@ int main() {
 
     Graph g;
 
-    auto begin = std::chrono::high_resolution_clock::now();
+    /*auto begin = std::chrono::high_resolution_clock::now();
 
     vector <vector <pss> > qwe = g.getPathByAirportsAirlines("KZN", "CMP");
 
@@ -33,6 +33,8 @@ int main() {
     //ofstream cout("output.txt");
     //set<string> t ;
     //t.insert("KLM");
+
+     */
     /*
 
 
@@ -63,8 +65,8 @@ int main() {
     // PERGUNTAR AQUI
 
     try {
-        //Menu menu;
-        //menu.main_menu();
+        Menu menu;
+        menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';
