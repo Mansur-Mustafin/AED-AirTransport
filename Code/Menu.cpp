@@ -658,7 +658,8 @@ void Menu::get_country_statistics() {
 
     cout << "Please enter country name: ";
 
-    cin >> country;
+    cin.ignore();
+    getline(cin, country);
 
     cout << endl;
 
