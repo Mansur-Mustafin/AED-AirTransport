@@ -20,6 +20,13 @@ bool cmp_distance(pair<string, pair<int, double>> p1, pair<string, pair<int, dou
     return p1.second.second < p2.second.second;
 }
 
+bool cmp_dis_airport(pair<string, pair<int, double>> p1, pair<string, pair<int, double>> p2) {
+    if (p1.second.first == p2.second.first) {
+        return p1.second.second < p2.second.second;
+    }
+    return p1.second.first < p2.second.first;
+}
+
 template <class T>
 T findFunc( T start, T end, const Airport& airport) {
     while(start != end){
@@ -356,30 +363,28 @@ void Menu::get_path_airline(){
     for (int i = 0; i < others.size(); i++) {
         double distance = 0.0;
         pair<string, pair<int, double>> pair;
-        list<string> airlines;
+        list<string> airports;
         string x;
         for (int j = 0; j < others[i].size(); j++) {
             x += others[i][j].first;
+            airports.push_back(x);
             if (j != others[i].size()-1) {
                 distance += g.getAirports()[others[i][j].first].getDistanceTo(g.getAirports()[others[i][j+1].first].getLatitude(), g.getAirports()[others[i][j+1].first].getLongitude());
                 x += "--(" + others[i][j].second + ")-->";
-                if (others[i][j].second != airlines.back()) {
-                    airlines.push_back(others[i][j].second);
-                }
             }
         }
         pair.first = x;
-        pair.second.first = airlines.size()-1;
+        pair.second.first = airports.size();
         pair.second.second = distance;
 
         airline_dis.push_back(pair);
     }
 
-    std::sort(airline_dis.begin(), airline_dis.end(), cmp_distance);
 
+    std::sort(airline_dis.begin(), airline_dis.end(), cmp_dis_airport);
 
     for (auto i : airline_dis) {
-        cout << i.first << " | " << i.second.second << " Km's total distance | " << i.second.first << " airline changes" << endl;
+        cout << i.first << " | " << i.second.second << " Km's total distance" << endl;
     }
 
 
