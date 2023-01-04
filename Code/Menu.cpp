@@ -88,7 +88,7 @@ void Menu::printAirport_flightN(const vector <string>& inputAirports) {
 
 }
 
-void Menu::printAirport(unordered_set<string> airports) {
+void Menu::printAirport(unordered_set<string> airports, string code) {
     unordered_map <string, unordered_map <string, vector<Airport>>> by_country;
 
     for (auto i : airports) {
@@ -111,6 +111,7 @@ void Menu::printAirport(unordered_set<string> airports) {
         cout << endl;
     }}
 
+    cout << "Number of flights: " << g.get_airline_flightN(code) << endl;
     cout << "Number of Airports: " << airports.size() << endl;
     cout << "Number of countries: " << by_country.size() << endl;
     cout << "Number of cities: " << city_n << endl;
@@ -503,7 +504,7 @@ void Menu::get_airline_info() {
             break;
 
         case 2:
-            printAirport(airline.getAirlineairports());
+            printAirport(airline.getAirlineairports(), airline_code);
             break;
 
         default:
@@ -651,6 +652,40 @@ void Menu::get_network_info() {
     }
 }
 
+void Menu::get_country_statistics() {
+
+    string country;
+
+    cout << "Please enter country name: ";
+
+    cin >> country;
+
+    cout << endl;
+
+    int airport_n = 0, flight_from = 0, flight_to = 0;
+
+    for (auto i : g.getAirports()) {
+        if (i.second.getCountry() == country) {
+            airport_n++;
+        }
+        flight_from += g.getNumberOfFlights(i.first);
+    }
+
+    for (auto i : g.getG()) {
+        for (auto j : i.second) {
+            if (g.getAirports()[j.getAirport()].getCountry() == country) {
+                flight_to++;
+            }
+        }
+    }
+
+    cout << "Number of cities: " << g.getCountries()[country].size() << endl;
+    cout << "Number of airports: " << airport_n << endl;
+    cout << "Number of flights originating in the country: " << flight_from << endl;
+    cout << "Number of flights landing in the country: " << flight_to << endl;
+
+}
+
 void Menu::main_menu() {
 
     while (true) {
@@ -665,6 +700,7 @@ void Menu::main_menu() {
                 "|                 Airlines                    |                   Network                   |\n"
                 "|=============================================|=============================================|\n"
                 "| Get Airline information                [31] | Get network info                       [41] |\n"
+                "|                                             | Get country statistics                 [42] |\n"
                 "|                                             |                                             |\n"
                 "|=============================================|=============================================|\n"
                 "|               Other operations              |                                              \n"
@@ -706,6 +742,10 @@ void Menu::main_menu() {
 
             case 41:
                 get_network_info();
+                break;
+
+            case 42:
+                get_country_statistics();
                 break;
 
             default: cout << "Invalid input" << endl;

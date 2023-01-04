@@ -551,3 +551,20 @@ vector <vector <pss> > Graph::getPathByAirportsAirlines(string from, string to, 
     return ans;
 
 }
+
+int Graph::get_airline_flightN(string code) {
+    int output = 0;
+
+    for (auto i : g) {
+        for (auto j : i.second) {
+
+            if (j.getAirline() == code) {
+                output++;
+            }
+        }
+    }
+
+    return output;
+}
+
+
