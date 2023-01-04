@@ -177,7 +177,7 @@ void Menu::get_path_flight() {
         cin.clear();
         cin.ignore(INT_MAX, '\n');
         cout << "Invalid input" << endl << endl;
-        get_path_flight();
+        main_menu();
     }
 
     string origin, dest;
@@ -271,7 +271,7 @@ void Menu::get_path_flight() {
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
                 cout << "Invalid input" << endl << endl;
-                get_path_flight();
+                main_menu();
             }
 
             switch (choice_sort) {
@@ -422,7 +422,7 @@ void Menu::get_airport_info() {
         cin.clear();
         cin.ignore(INT_MAX, '\n');
         cout << "Invalid input" << endl << endl;
-        get_airport_info();
+        main_menu();
     }
 
     Airport airport = g.getAirports()[code];
@@ -498,7 +498,7 @@ void Menu::get_airline_info() {
         cin.clear();
         cin.ignore(INT_MAX, '\n');
         cout << "Invalid input" << endl << endl;
-        get_airline_info();
+        main_menu();
     }
 
     switch (choice) {
@@ -553,7 +553,7 @@ void Menu::top_k_airports() {
         cin.clear();
         cin.ignore(INT_MAX, '\n');
         cout << "Invalid input" << endl << endl;
-        get_airline_info();
+        main_menu();
     }
 
     if (choice == 2) {
@@ -594,7 +594,7 @@ void Menu::get_network_info() {
         cin.clear();
         cin.ignore(INT_MAX, '\n');
         cout << "Invalid input" << endl << endl;
-        get_network_info();
+        main_menu();
     }
 
     if (choice == 2 || choice == 3) {
@@ -670,25 +670,16 @@ void Menu::get_country_statistics() {
 
     int airport_n = 0, flight_from = 0, flight_to = 0;
 
-    for (auto i : g.getAirports()) {
-        if (i.second.getCountry() == country) {
+    for (auto a : g.getAirports()) {
+        if (a.second.getCountry() == country) {
             airport_n++;
-        }
-        flight_from += g.getNumberOfFlights(i.first);
-    }
-
-    for (auto i : g.getG()) {
-        for (auto j : i.second) {
-            if (g.getAirports()[j.getAirport()].getCountry() == country) {
-                flight_to++;
-            }
+            flight_from += g.getNumberOfFlights(a.first);
         }
     }
 
     cout << "Number of cities: " << g.getCountries()[country].size() << endl;
     cout << "Number of airports: " << airport_n << endl;
     cout << "Number of flights originating in the country: " << flight_from << endl;
-    cout << "Number of flights landing in the country: " << flight_to << endl;
 
 }
 
