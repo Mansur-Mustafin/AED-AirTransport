@@ -200,6 +200,8 @@ public:
 
     vector <vector <pss> > getPathByAirportsAirlines(string from, string to, set <string> Comp = {});
 
+    int get_airline_flightN(string code);
+
 };
 
 #endif // PROJECT_2_GRAPH_H

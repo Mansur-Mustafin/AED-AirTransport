@@ -16,15 +16,19 @@ void main_menu();
 
 void get_path_flight();
 
+void get_path_airline();
+
 void get_airport_info();
 
 void printAirport_flightN(const vector <string>& inputAirports);
 
-void printAirport(unordered_set<string> airports);
+void printAirport(unordered_set<string> airports, string code);
 
 void get_airline_info();
 
 void get_articulation_points();
+
+void get_country_statistics();
 
 void get_network_info();
 
