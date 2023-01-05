@@ -547,7 +547,6 @@ vector <vector <pss> > Graph::getPathByAirportsAirlines(string from, string to, 
     air.clear();
     d.clear();
 
-
     return ans;
 
 }
