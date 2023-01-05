@@ -2,6 +2,7 @@
 // Created by ianbe on 21/12/2022.
 //
 
+#include <iomanip>
 #include "Menu.h"
 
 bool top_airports_flight(pair<Airport, pair<int, int>> p1, pair<Airport, pair<int, int>> p2) {
@@ -51,12 +52,44 @@ void Menu::printAirport_flightN(const vector <string>& inputAirports) {
         lstAirports.push_back(g.getAirports()[a]);
     }
 
-    lstAirports.sort([this](Airport a1, const Airport& a2) -> bool
-    {
-        if(g.getNumberOfFlights(a1.getCode()) > g.getNumberOfFlights(a2.getCode())) return true;
-        else if(g.getNumberOfFlights(a1.getCode()) < g.getNumberOfFlights(a2.getCode())) return false;
-        else return a1.getCountry() < a2.getCountry();
-    });
+    cout << "How would you like to sort the list?" << endl;
+
+    cout << "1 - Sort by more popularity" << endl;
+    cout << "2 - Sort by alphabetic order" << endl;
+
+    cout << "Please enter your choice:" << endl;
+
+    int choice_sort;
+    cin >> choice_sort;
+    cout << endl;
+
+    if (cin.fail() || cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input" << endl << endl;
+        main_menu();
+    }
+
+    switch (choice_sort) {
+        case 1:
+            lstAirports.sort([this](Airport a1, const Airport& a2) -> bool
+                             {
+                                 if(g.getNumberOfFlights(a1.getCode()) > g.getNumberOfFlights(a2.getCode())) return true;
+                                 else if(g.getNumberOfFlights(a1.getCode()) < g.getNumberOfFlights(a2.getCode())) return false;
+                                 else return a1.getCountry() < a2.getCountry();
+                             });
+            break;
+        case 2:
+            lstAirports.sort([this](Airport a1, const Airport& a2) -> bool{
+                if(a1.getCountry() < a2.getCountry()) return true;
+                else if(a1.getCountry() > a2.getCountry())return false;
+                else if(a1.getCity() < a2.getCity())return true;
+                else return false;
+            });
+            break;
+        default:
+            break;
+    }
 
 
     unordered_map<string, vector<string>> countries;
@@ -73,6 +106,8 @@ void Menu::printAirport_flightN(const vector <string>& inputAirports) {
     }
 
     int n_cities = 0;
+
+    cout  << "Different destinations:" << endl;
 
     for(auto it = restCountries.begin(); it != restCountries.end(); it++){
         cout << *it << endl;
@@ -433,15 +468,13 @@ void Menu::get_airport_info() {
         case 1:
             cout << "Airport name - " << airport.getName() << endl;
             cout << "Airport location - " << airport.getCity() << ", " << airport.getCountry() << endl;
-            cout << "Airport latitude - " << airport.getLatitude() << endl;
-            cout << "Airport longitude - " << airport.getLongitude() << endl;
+            cout << "(latitude, longitude) = (" << airport.getLatitude() << " ," << airport.getLongitude() << ")" << endl;
             break;
         case 2:
             cout << endl << "Flights:" << endl;
             for (auto i : a[code]) {
                 countries.insert(g.getAirports()[i.getAirport()].getCountry());
                 cities.insert(g.getAirports()[i.getAirport()].getCity());
-
                 cout << code << "-" << i.getAirport() << " operated by: " << g.getAirlines()[i.getAirline()].getName() << endl;
             }
             cout << endl << "Number of flights: " << a[code].size() << endl;
@@ -449,17 +482,17 @@ void Menu::get_airport_info() {
             cout << "Number of cities: " << cities.size() << endl;
             break;
         case 3:
-            cout << "Number of Airlines:" << g.getAirlinesFromAirport(code).size() << endl;
             cout << "Airlines:" << endl;
             for (auto i : g.getAirlinesFromAirport(code)) {
                 cout << i << " - " << g.getAirlines()[i].getName() << endl;
             }
+            cout << "Number of Airlines:" << g.getAirlinesFromAirport(code).size() << endl;
             break;
         case 4:
             cout << "Please enter max flight number:";
             cin >> flight_n;
 
-            cout << endl << "Different destinations:" << endl;
+            cout << endl;
 
             printAirport_flightN(g.targetAirports(code, flight_n));
             break;
@@ -521,7 +554,7 @@ void Menu::get_airline_info() {
 
 void Menu::top_k_airports() {
 
-    cout << "How many airports would you like to see?";
+    cout << "How many airports would you like to see? " ;
 
     int n;
     cin >> n;
@@ -564,8 +597,14 @@ void Menu::top_k_airports() {
         std::sort(vector_p.begin(), vector_p.end(), top_airports_flight);
     }
 
-    for (int i = 0; i < n; i++) {
-        cout << i+1 << " - "<< vector_p[i].first.getName() << " | " << vector_p[i].second.first << " flights | " << vector_p[i].second.second << " airlines" << endl;
+    for (int i = 1; i <= n; i++) {
+        if(i > 9){
+            cout << i;
+        }else{
+            cout << setfill(' ')  << left << setw(2) << i;
+        }
+
+         cout  << " - "<< setfill(' ')  << left << setw(35) << vector_p[i].first.getName() << " | " << vector_p[i].second.first << " flights | " << vector_p[i].second.second << " airlines" << endl;
     }
 
 
@@ -578,6 +617,7 @@ void Menu::get_network_info() {
 
     set <string> airlines;
 
+    int c = 0;
 
     cout << "What information do you want?" << endl;
 
@@ -640,13 +680,15 @@ void Menu::get_network_info() {
             cout << "Global number of flights: " << g.get_global_n_flight() << endl;
             break;
         case 2:
-            cout << "Number of Articulation points: " << g.getArticulationPoints().size() << endl;
 
             cout << endl << "Articulation Points:" << endl;
 
             for (auto i : g.getArticulationPoints(airlines)) {
+                c++;
                 cout << i << endl;
             }
+
+            cout << "Number of Articulation points: " << c << endl;
             break;
         case 3:
             cout << g.getDiameter(airlines) << " is the network diameter" << endl;
@@ -670,19 +712,43 @@ void Menu::get_country_statistics() {
 
     cout << endl;
 
-    int airport_n = 0, flight_from = 0, flight_to = 0;
+    int flight_from = 0;
 
+    /*
     for (auto a : g.getAirports()) {
         if (a.second.getCountry() == country) {
             airport_n++;
             flight_from += g.getNumberOfFlights(a.first);
         }
     }
+*/
 
-    cout << "Number of cities: " << g.getCountries()[country].size() << endl;
+    int airport_n = 0;
+    unordered_map <string, unordered_set<string> > countries = g.getCountries();
+    unordered_map <string, unordered_map <string, unordered_set<string> > > data = g.getDataStrangeCities();
+
+    for(const auto& city : countries[country]){
+        unordered_set<string> airports = g.getCities()[city];
+        airport_n += airports.size();
+        for(auto a : airports){
+            flight_from += g.getNumberOfFlights(a);
+        }
+    }
+
+    for(const auto& city: data[country]){
+        airport_n += city.second.size();
+        for(auto i : city.second){
+            flight_from += g.getNumberOfFlights(i);
+        }
+    }
+
+
+
+    int n_cuties = g.getCountries()[country].size() + g.getDataStrangeCities()[country].size();
+
+    cout << "Number of cities: " << n_cuties << endl;
     cout << "Number of airports: " << airport_n << endl;
     cout << "Number of flights originating in the country: " << flight_from << endl;
-
 }
 
 void Menu::main_menu() {
