@@ -433,6 +433,8 @@ void Menu::get_airport_info() {
         case 1:
             cout << "Airport name - " << airport.getName() << endl;
             cout << "Airport location - " << airport.getCity() << ", " << airport.getCountry() << endl;
+            cout << "Airport latitude - " << airport.getLatitude() << endl;
+            cout << "Airport longitude - " << airport.getLongitude() << endl;
             break;
         case 2:
             cout << endl << "Flights:" << endl;
