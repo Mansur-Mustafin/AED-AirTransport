@@ -19,9 +19,9 @@ int main() {
 
     for (int i = 0; i < others.size(); i++) {
         for(int j = 0; j < others[i].size(); j++){
-            cout << others[i][j].first << "--(" << others[i][j].second << ")-->";
+            //cout << others[i][j].first << "--(" << others[i][j].second << ")-->";
         }
-        cout << endl;
+        //cout << endl;
     }
 
 
@@ -60,7 +60,7 @@ int main() {
 
     try {
         Menu menu;
-        //menu.main_menu();
+        menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';
