@@ -320,7 +320,7 @@ ss Graph::getPathByVectors(vector <string> from, vector <string> to, set <string
                 *others = tempOthers;
                 ans = temp;
             }
-            if (best == temp.first.size()) {
+            else if (best == temp.first.size()) {
                 for (const auto& item : tempOthers) {
                     others->push_back(item);
                 }
