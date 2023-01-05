@@ -202,6 +202,14 @@ public:
 
     int get_airline_flightN(string code);
 
+    vector <string> Around(double lat, double lon, double r);
+
+    ss getPathByPoints(double lat1, double lon1, double lat2, double lon2, double r, double& dist);
+
+    ss Dijkstra(string start, vector <string> to, double& dist);
+
+    double Dist(string from, Target to);
+
 };
 
 #endif // PROJECT_2_GRAPH_H

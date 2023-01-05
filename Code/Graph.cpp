@@ -566,4 +566,107 @@ int Graph::get_airline_flightN(string code) {
     return output;
 }
 
+vector <string> Graph::Around(double lat, double lon, double r) {
+    vector <string> ans;
+    for (auto i : airports)
+        if (i.second.getDistanceTo(lat, lon) <= r)
+            ans.push_back(i.first);
+    return ans;
+}
+
+double Graph::Dist(string from, Target to) {
+    return airports[from].getDistanceTo(airports[to.getAirport()].getLatitude(), airports[to.getAirport()].getLongitude());
+}
+
+ss Graph::Dijkstra(string start, vector <string> to, double& dist) {
+
+    um <string, double> d;
+    um <string, string> p, air;
+    um <string, bool> used;
+
+    d[start] = 0;
+
+    while (true) {
+
+        int curD = -1;
+        string code;
+        for (auto i : d)
+            if (!used[i.first] && (curD == -1 || curD > i.second)) {
+                curD = i.second;
+                code = i.first;
+            }
+
+        used[code] = true;
+
+        for (auto i : g[code]) {
+            if (d.find(i.getAirport()) == d.end() || d[code] + Dist(code, i) < d[i.getAirport()]) {
+                d[i.getAirport()] = d[code] + Dist(code, i);
+                p[i.getAirport()] = code;
+                air[i.getAirport()] = i.getAirline();
+            }
+        }
+
+        bool flag = true;
+        for (auto i : to)
+            if (!used[i])
+                flag = false;
+
+        if (flag) break;
+
+    }
+
+    double minDist = -1;
+    string actualTo;
+
+
+    for (auto i : to)
+        if (minDist == -1 || d[i] > minDist) {
+            minDist = d[i];
+            actualTo = i;
+        }
+
+    dist = minDist;
+
+    string pos = actualTo;
+    vector <string> nodes, airlines;
+
+    while (pos != start) {
+        nodes.push_back(pos);
+        airlines.push_back(air[pos]);
+        pos = p[pos];
+    }
+
+    nodes.push_back(start);
+    reverse(nodes.begin(), nodes.end());
+
+    reverse(airlines.begin(), airlines.end());
+    airlines.push_back("no airline");
+
+    return { nodes, airlines };
+}
+
+ss Graph::getPathByPoints(double lat1, double lon1, double lat2, double lon2, double r, double& dist) {
+    vector <string> from = Around(lat1, lon1, r), to = Around(lat2, lon2, r);
+
+    ss ans, temp;
+    double best = -1;
+
+    for (auto i : from) {
+
+        double cur;
+        temp = Dijkstra(i, to, cur);
+
+        if (best == -1 || best > cur) {
+            best = cur;
+            ans = temp;
+        }
+
+    }
+
+    dist = best;
+
+    return ans;
+
+}
+
 

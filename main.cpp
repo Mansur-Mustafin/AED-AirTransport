@@ -11,6 +11,17 @@ int main() {
 
 
     Graph g;
+    double d;
+    ss ans = g.getPathByPoints(48.858460646662465, 2.2944919807354034, 40.68942019761322, -74.0444682077782 ,30, d);
+
+    for(auto i : ans.first){
+        cout << i << ' ';
+    }
+    cout << "distance: " << d << endl;
+
+
+
+    cout << g.getAirports()["LGA"].getDistanceTo(40.68942019761322, -74.0444682077782)<< endl;
 
     /*auto begin = std::chrono::high_resolution_clock::now();
 
@@ -63,8 +74,8 @@ int main() {
 
 
     try {
-        Menu menu;
-        menu.main_menu();
+        //Menu menu;
+        //menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';
