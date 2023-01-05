@@ -9,32 +9,29 @@ using namespace std;
 
 int main() {
 
+
     Graph g;
 
-    /*auto begin = std::chrono::high_resolution_clock::now();
+    vector < vector<pss> > others ;
 
-    vector <vector <pss> > qwe = g.getPathByAirportsAirlines("KZN", "CMP");
+    ss qwe = g.getUltimatePath("KZN", "REC", {}, &others);
 
-    for (int i = 0; i < qwe.size(); i++) {
-        for (int j = 0; j < qwe[i].size(); j++)
-            cout << qwe[i][j].first << "--(" << qwe[i][j].second << ")-->";
+
+    for (int i = 0; i < others.size(); i++) {
+        for(int j = 0; j < others[i].size(); j++){
+            cout << others[i][j].first << "--(" << others[i][j].second << ")-->";
+        }
         cout << endl;
     }
 
 
-    auto end = std::chrono::high_resolution_clock::now();
-
-    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-
-
-    printf("Time measured: %.3f seconds.\n", elapsed.count() * 1e-9);
 
 
     //ofstream cout("output.txt");
     //set<string> t ;
     //t.insert("KLM");
 
-     */
+
     /*
 
 
@@ -63,7 +60,7 @@ int main() {
 
     try {
         Menu menu;
-        menu.main_menu();
+        //menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';
