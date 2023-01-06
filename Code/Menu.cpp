@@ -256,7 +256,7 @@ void Menu::get_path_flight() {
                 airline_dis.push_back(pair);
             }
 
-            cout << "How would you like to sort the list?" << endl;
+            cout << endl << "How would you like to sort the list?" << endl;
 
             cout << "1 - Sort by airline change" << endl;
             cout << "2 - Sort by distance" << endl;
@@ -285,8 +285,26 @@ void Menu::get_path_flight() {
                     break;
             }
 
+            int n = (int) others.size();
+
+            if (n >= 20) {
+                cout << "Output is long. How many lines would you like to display?" << endl;
+                cout << "Enter 0 for all lines." << endl;
+
+                int lines;
+
+                cin >> lines;
+
+                if (lines != 0) n = lines;
+            }
+
+
+            int counter = 0;
+
             for (auto i : airline_dis) {
-                cout << i.first << " | " << i.second.second << " Km's total distance | " << i.second.first << " airline changes" << endl;
+                if(counter < n) cout << i.first << " | " << i.second.second << " Km's total distance | " << i.second.first << " airline changes" << endl;
+                else break;
+                counter++;
             }
 
 
@@ -383,8 +401,26 @@ void Menu::get_path_airline(){
 
     std::sort(airline_dis.begin(), airline_dis.end(), cmp_dis_airport);
 
+    int n = (int) airline_dis.size();
+
+    if (n >= 20) {
+        cout << "Output is long. How many lines would you like to display?" << endl;
+        cout << "Enter 0 for all lines." << endl;
+
+        int lines;
+
+        cin >> lines;
+
+        if (lines != 0) n = lines;
+    }
+
+
+    int counter = 0;
+
     for (auto i : airline_dis) {
-        cout << i.first << " | " << i.second.second << " Km's total distance" << endl;
+        if(counter < n) cout << i.first << " | " << i.second.second << " Km's total distance" << endl;
+        else break;
+        counter++;
     }
 
 

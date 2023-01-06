@@ -12,7 +12,7 @@ int main() {
 
     Graph g;
 
-    vector < vector<pss> > others ;
+    /*vector < vector<pss> > others ;
 
     ss qwe = g.getUltimatePath("KZN", "REC", {}, &others);
 
@@ -22,7 +22,7 @@ int main() {
             cout << others[i][j].first << "--(" << others[i][j].second << ")-->";
         }
         cout << endl;
-    }
+    }*/
 
 
 
@@ -60,7 +60,7 @@ int main() {
 
     try {
         Menu menu;
-        //menu.main_menu();
+        menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';
