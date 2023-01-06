@@ -11,7 +11,6 @@
 class Menu {
 public:
 
-
 void main_menu();
 
 void get_path_flight();
@@ -27,6 +26,8 @@ void printAirport(unordered_set<string> airports, string code);
 void get_airline_info();
 
 void get_articulation_points();
+
+void settings();
 
 void get_country_statistics();
 

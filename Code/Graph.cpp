@@ -145,7 +145,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
         if (isStarageCiti(from)) {
             string countryF1;
             string countryF;
-            cout << "The Arrive city: " << from << " is ambigous in country\nPlease enter the Country:";
+            cout << "The Arrive city: " << from << " is ambiguous in country\nPlease enter the Country:";
             cin >> countryF1;
             getline(cin, countryF);
             countryF1 += countryF;
@@ -160,7 +160,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
         if (isStarageCiti(to)) {
             string countryT1;
             string countryT;
-            cout << "The Destination city: " << to << " is ambigous in country\nPlease enter the Country:";
+            cout << "The Destination city: " << to << " is ambiguous in country\nPlease enter the Country:";
             cin >> countryT1;
             getline(cin, countryT);
             countryT1 += countryT;
@@ -677,4 +677,45 @@ ss Graph::getPathByPoints(double lat1, double lon1, double lat2, double lon2, do
     }
     dist = best;
     return ans;
+}
+
+void Graph::switchToInvalid(string a){
+    airports[a].toInvalid();
+}
+void Graph::switchToValid(string a){
+    airports[a].toValid();
+}
+
+void Graph::swithToInvalidCity(string city){
+    if (isStarageCiti(city)) {
+        string countryF1;
+        string countryF;
+        cout << "The city: " << city << " is ambiguous in country\nPlease enter the Country:";
+        cin >> countryF1;
+        getline(cin, countryF);
+        countryF1 += countryF;
+        for (auto i : dataForStrangeCities[countryF1][city]) airports[i].toInvalid();
+    }
+    else {
+        for (const auto& airport : cities[city]) {
+            airports[airport].toInvalid();
+        }
+    }
+}
+
+void Graph::swithToValidCity(string city){
+    if (isStarageCiti(city)) {
+        string countryF1;
+        string countryF;
+        cout << "The city: " << city << " is ambiguous in country\nPlease enter the Country:";
+        cin >> countryF1;
+        getline(cin, countryF);
+        countryF1 += countryF;
+        for (auto i : dataForStrangeCities[countryF1][city]) airports[i].toValid();
+    }
+    else {
+        for (const auto& airport : cities[city]) {
+            airports[airport].toValid();
+        }
+    }
 }

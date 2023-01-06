@@ -198,7 +198,7 @@ void Menu::get_path_flight() {
         }
     }
 
-    cout << "Wich kind of data do you have?" << endl;
+    cout << "Which kind of data do you have?" << endl;
     cout << "1 - City and/or country names or Airport code" << endl;
     cout << "2 - Coordinates " << endl;
 
@@ -385,6 +385,8 @@ void Menu::get_path_flight() {
 
 void Menu::get_path_airline(){
 
+
+
     string airline_choice;
 
     set <string> airlines;
@@ -489,6 +491,79 @@ void Menu::get_path_airline(){
 }
 
 
+void Menu::settings() {
+
+    cout << "Which setting would you like to change?" << endl;
+
+    cout << "1 - Lock place" << endl;
+    cout << "2 - Unlock place" << endl;
+
+    cout << "Please choose one:" << endl;
+
+    int settings_choice;
+
+    cin >> settings_choice;
+
+    if (cin.fail() || cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input" << endl << endl;
+        main_menu();
+    }
+
+    cout << "1 - City" << endl;
+    cout << "2 - Airport" << endl;
+
+    cout << "Please choose one:" << endl;
+
+    int block_choice;
+
+    cin >> block_choice;
+
+    cout << endl;
+
+    if (cin.fail() || cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input" << endl << endl;
+        main_menu();
+    }
+
+    cout << "How many places would you like to change?" << endl;
+
+    int n_places;
+
+    cin >> n_places;
+
+    if (block_choice == 1) {
+        for (int i = 0; i < n_places; i++) {
+            cout << "Please enter a city name: ";
+
+            string city_name;
+
+            cin.ignore();
+            getline(cin, city_name);
+
+            if (settings_choice == 1) g.swithToInvalidCity(city_name);
+            else g.swithToValidCity(city_name);
+        }
+    }else if (block_choice == 2) {
+        for (int i = 0; i < n_places; i++) {
+            cout << "Please enter a airport code: ";
+
+            string airport_code;
+
+            cin >> airport_code;
+
+            if (settings_choice == 1) g.switchToInvalid(airport_code);
+            else g.switchToValid(airport_code);
+        }
+    }else {
+        cout << "Invalid input";
+        main_menu();
+    }
+}
+
 
 void Menu::get_airport_info() {
 
@@ -581,7 +656,7 @@ void Menu::get_airline_info() {
         main_menu();
     }
 
-    cout << "Wich information do you want?" << endl;
+    cout << "Which information do you want?" << endl;
 
     cout << "1 - Get basic Airline info" << endl;
     cout << "2 - Get all Airports an airline operates" << endl;
@@ -602,7 +677,7 @@ void Menu::get_airline_info() {
     switch (choice) {
         case 1:
             cout << "Airline name: " << airline.getName() << endl;
-            cout << "Airline callsign: " << airline.getCallsign() << endl;
+            cout << "Airline call sign: " << airline.getCallsign() << endl;
             cout << "Airline country: " << airline.getCountry() << endl;
             break;
 
@@ -823,6 +898,7 @@ void Menu::main_menu() {
                 "|=============================================|=============================================|\n"
                 "| Get path with lowest flight number     [11] | Get information from specific Airport  [21] |\n"
                 "| Get path with fewest airline change    [12] |                                             |\n"
+                "| Change searching settings              [13] |                                             |\n"
                 "|                                             |                                             |\n"
                 "|=============================================|=============================================|\n"
                 "|                 Airlines                    |                   Network                   |\n"
@@ -857,6 +933,10 @@ void Menu::main_menu() {
 
             case 12:
                 get_path_airline();
+                break;
+
+            case 13:
+                settings();
                 break;
 
             case 21:

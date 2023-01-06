@@ -18,32 +18,32 @@ int main() {
 
 
 
-    Graph g;
+    /*Graph g;
 
-    /*vector < vector<pss> > others ;
+    vector < vector<pss> > others ;
 
 
     vector <vector <pss> > qwe;
     set<string> t;
 
-    ss qwe = g.getUltimatePath("KZN", "REC", {}, &others);
+    g.getAirports()["IST"].toInvalid();
 
 
-
-    g.getUltimatePath("PMI", "KIR", t, &qwe);
+    g.getUltimatePath("KZN", "REC", t, &qwe);
 
     for (int i = 0; i < qwe.size(); i++) {
         for (int j = 0; j < qwe[i].size(); j++)
             cout << qwe[i][j].first << "--(" << qwe[i][j].second << ")-->";
         cout << endl;
-    }*/
+    }
+
 
 
     //ofstream cout("output.txt");
     //set<string> t ;
     //t.insert("KLM");
 
-
+*/
     /*
 
 
