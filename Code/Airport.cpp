@@ -9,7 +9,7 @@
 
 //#define M_PI acos(-1)
 
-Airport::Airport() : name(""), code(""), city(""), country(""), latitude(0.0), longitude(0.0) {}
+Airport::Airport() : name(""), code(""), city(""), country(""), latitude(0.0), longitude(0.0), valid_bit(true) {}
 
 Airport::Airport(const string& in) {
 
@@ -27,6 +27,7 @@ Airport::Airport(const string& in) {
     latitude = stod(feel);
     getline(input, feel, ','); // city
     longitude = stod(feel);
+    valid_bit = true;
 
     /*
     vector <string> temp = Help::Split(in);
@@ -82,4 +83,16 @@ double Airport::getDistanceTo(double lat2, double lon2) const {
 ostream& operator<< (ostream& out, const Airport& s1){
     out << s1.code << ' ' << s1.name << ' ' << s1.city << ' ' << s1.country;
     return out;
+}
+
+bool Airport::isValid() {
+    return valid_bit;
+}
+
+void Airport::toInvalid() {
+    valid_bit = false;
+}
+
+void Airport::toValid() {
+    valid_bit = true;
 }

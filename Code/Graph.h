@@ -212,6 +212,48 @@ public:
     double Dist(string from, Target to);
 
     unordered_map <string, unordered_map <string, unordered_set<string> > > getDataStrangeCities() {return dataForStrangeCities;}
+
+    void switchToInvalid(string a){
+        airports[a].toInvalid();
+    }
+    void switchToValid(string a){
+        airports[a].toValid();
+    }
+
+    void swithToInvalidCity(string city){
+        if (isStarageCiti(city)) {
+            string countryF1;
+            string countryF;
+            cout << "The city: " << city << " is ambiguous in country\nPlease enter the Country:";
+            cin >> countryF1;
+            getline(cin, countryF);
+            countryF1 += countryF;
+            for (auto i : dataForStrangeCities[countryF1][city]) airports[i].toInvalid();
+        }
+        else {
+            for (const auto& airport : cities[city]) {
+                airports[airport].toInvalid();
+            }
+        }
+    }
+
+    void swithToValidCity(string city){
+        if (isStarageCiti(city)) {
+            string countryF1;
+            string countryF;
+            cout << "The city: " << city << " is ambiguous in country\nPlease enter the Country:";
+            cin >> countryF1;
+            getline(cin, countryF);
+            countryF1 += countryF;
+            for (auto i : dataForStrangeCities[countryF1][city]) airports[i].toValid();
+        }
+        else {
+            for (const auto& airport : cities[city]) {
+                airports[airport].toValid();
+            }
+        }
+    }
+
 };
 
 #endif // PROJECT_2_GRAPH_H

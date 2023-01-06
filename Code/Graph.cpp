@@ -237,7 +237,7 @@ ss Graph::getPathAirports(const string& from, const string& to, set <string> Com
 
         for (auto i = 0; i < g[cur].size(); i++) {
             string target = g[cur][i].getAirport(), air = g[cur][i].getAirline();
-            if ((!used[target] || d[cur] + 1 == d[target]) && Comp.find(air) != Comp.end()) {
+            if ((!used[target] || d[cur] + 1 == d[target]) && Comp.find(air) != Comp.end() && airports[target].isValid()) {
                 if (!used[target])
                     q.push(target);
                 d[target] = d[cur] + 1;
@@ -248,7 +248,7 @@ ss Graph::getPathAirports(const string& from, const string& to, set <string> Com
         }
     }
 
-    if (!used[to])
+    if (!used[to] || !airports[from].isValid() || !airports[to].isValid())
         return { {"No path exist"}, {} };
 
     string pass = to;
@@ -675,11 +675,6 @@ ss Graph::getPathByPoints(double lat1, double lon1, double lat2, double lon2, do
         }
 
     }
-
     dist = best;
-
     return ans;
-
 }
-
-

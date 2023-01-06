@@ -49,6 +49,11 @@ public:
     /// @brief gets airport longitude
     double getLongitude() const;
 
+    bool isValid();
+
+    void toInvalid();
+    void toValid();
+
     /**
      * @brief Gets distance to certain coordinate
      * @param lat2 -> Latitude
@@ -67,7 +72,7 @@ private:
     /// @brief Airport coordinate
     double latitude, longitude;
 
-
+    bool valid_bit;
 };
 
 

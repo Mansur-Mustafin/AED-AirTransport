@@ -17,25 +17,21 @@ bool cmpF(pair< vector<pss>, pair<int,int>> p1, pair< vector<pss>, pair<int,int>
 int main() {
 
 
+
     Graph g;
 
 
+    vector <vector <pss> > qwe;
+    set<string> t;
 
-    vector <pair< vector<pss>, pair<int,int>> > qwe = g.getPathByPointsNOfFlights(48.858460646662465, 2.2944919807354034,40.68942019761322, -74.0444682077782,30,30,{});
 
-    sort(qwe.begin(), qwe.end(), cmpF);
+    g.getUltimatePath("PMI", "KIR", t, &qwe);
 
     for (int i = 0; i < qwe.size(); i++) {
-        for(int j = 0; j < qwe[i].first.size(); j++){
-            cout << qwe[i].first[j].first << "--(" << qwe[i].first[j].second << ")-->";
-        }
-        cout << endl << "   ";
-        cout << "place1 to: " << qwe[i].first[0].first << "+/-" << qwe[i].second.first << "km; ";
-        cout << qwe[i].first[qwe[i].first.size() - 1].first << " to place 2 +/-" << qwe[i].second.second << "km;";
+        for (int j = 0; j < qwe[i].size(); j++)
+            cout << qwe[i][j].first << "--(" << qwe[i][j].second << ")-->";
         cout << endl;
     }
-
-
 
 
     //ofstream cout("output.txt");
@@ -48,7 +44,7 @@ int main() {
 
     //cout << g.isStarageCiti("Kazan");
 
-    vector <vector <pss> > qwe;
+
 
 
     //ss asd = g.getPathAirports("RDC", "CMP", {}, &qwe);
