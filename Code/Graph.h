@@ -21,6 +21,7 @@ using namespace std;
 
 typedef pair <vector <string>, vector<string> > ss;
 typedef pair <string, string> pss;
+typedef vector <pair <vector <string>, vector<string> > , pair<int,int>> vp;
 
 #define um unordered_map
 
@@ -88,7 +89,7 @@ public:
      * @param dist -> Distance between points
      * @return Vector with airport codes as strings
      */
-    vector <string> getPathByPoint(string from, double lat, double lon, double dist);  // FALTA AQUIIIIIIIIIIIIIIIIIIII
+    vector <pair< vector<pss>, pair<int,int>> > getPathByPointsNOfFlights(double lat1, double lon1, double lat2, double lon2, double dist, double dist2,set <string> Comp = {});  // FALTA AQUIIIIIIIIIIIIIIIIIIII
 
     /**
      * @brief Gets path with lowest flight number between two airports.
@@ -210,6 +211,7 @@ public:
 
     double Dist(string from, Target to);
 
+    unordered_map <string, unordered_map <string, unordered_set<string> > > getDataStrangeCities() {return dataForStrangeCities;}
 };
 
 #endif // PROJECT_2_GRAPH_H

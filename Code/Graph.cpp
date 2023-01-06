@@ -2,6 +2,7 @@
 // Created by musta on 20.12.2022.
 //
 
+#include <cmath>
 #include "Graph.h"
 #include "Flight.h"
 
@@ -332,15 +333,27 @@ ss Graph::getPathByVectors(vector <string> from, vector <string> to, set <string
     return ans;
 }
 
-vector<string> Graph::getPathByPoint(string from, double lat, double lon, double dist) /* FALTA ACABAR AQUIIIIIIIIIIIIIIIIIIIIIIII */ {
+vector <pair< vector<pss>, pair<int,int>> > Graph::getPathByPointsNOfFlights(double lat1, double lon1, double lat2, double lon2, double dist1, double dist2, set <string> Comp){
 
-    vector <string> toV;
-    for (const auto& e : airports) {
-        if (e.second.getDistanceTo(lat, lon) < dist) {
-            toV.push_back(e.first);
-        }
+    Comp = Comp.empty() ? t : Comp;
+    vector <string> fromV = Around(lat1, lon1, dist1);
+    vector <string> toV = Around(lat2, lon2, dist2);
+
+    vector < vector<pss>> others;
+    getPathByVectors(fromV, toV, Comp, &others); // vector<vector<pss>>
+
+    vector <pair< vector<pss>, pair<int,int>> > r;
+
+
+    for (int i = 0; i < others.size(); i++) {
+        int d1 = round(airports[others[i][0].first].getDistanceTo(48.858460646662465, 2.2944919807354034));
+        int d2 = round(airports[others[i][others[i].size() - 1].first].getDistanceTo(40.68942019761322, -74.0444682077782));
+        pair<int,int> p = make_pair(d1,d2);
+        pair< vector<pss>, pair<int,int>> vii = make_pair(others[i], p);
+        r.push_back(vii);
     }
-    return {};
+
+    return r;
 }
 
 unsigned int Graph::getNumberOfFlights(const std::string& Airport) {
