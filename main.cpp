@@ -20,9 +20,14 @@ int main() {
 
     Graph g;
 
+    /*vector < vector<pss> > others ;
+
 
     vector <vector <pss> > qwe;
     set<string> t;
+
+    ss qwe = g.getUltimatePath("KZN", "REC", {}, &others);
+
 
 
     g.getUltimatePath("PMI", "KIR", t, &qwe);
@@ -31,7 +36,7 @@ int main() {
         for (int j = 0; j < qwe[i].size(); j++)
             cout << qwe[i][j].first << "--(" << qwe[i][j].second << ")-->";
         cout << endl;
-    }
+    }*/
 
 
     //ofstream cout("output.txt");
@@ -67,7 +72,7 @@ int main() {
 
     try {
         Menu menu;
-        //menu.main_menu();
+        menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';

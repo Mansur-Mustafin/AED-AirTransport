@@ -217,11 +217,11 @@ void Menu::get_path_flight() {
 
     string origin, dest;
 
-    double lat, lon, dist;
+    double lat1, lon1, lat2, lon2, dist1, dist2;
 
     pair <vector <string>, vector<string> > output;
 
-    vector<string> output_c;
+    vector <pair< vector<pss>, pair<int,int>> > output_c;
 
     vector <vector<pair <string, string>>> others;
 
@@ -242,16 +242,43 @@ void Menu::get_path_flight() {
 
 
         case 2:
-            cout << "Please enter the origin coordinates:";
-            cin >> lat;
-            cout << endl;
-            cout << "Please enter destination coordinates:";
-            cin >> lon;
-            cout << endl << "Please enter max distance to origin airport:";
-            cin >> dist;
+            cout << "Please enter the origin latitude:";
+            cin >> lat1;
             cout << endl;
 
-            //output_c = g.getPathByPoint(lat, lon, dist, others);
+            cout << "Please enter origin longitude:";
+            cin >> lon1;
+            cout << endl;
+
+            cout << "Please enter the destination latitude:";
+            cin >> lat2;
+            cout << endl;
+
+            cout << "Please enter destination longitude:";
+            cin >> lon2;
+            cout << endl;
+
+            cout  << "Please enter max distance to origin airport:";
+            cin >> dist1;
+            cout << endl;
+
+            cout << "Please enter max distance to destination airport:";
+            cin >> dist2;
+            cout << endl;
+
+            output_c = g.getPathByPointsNOfFlights(lat1,lon1,lat2,lon2, dist1, dist2, airlines);
+
+            for (int i = 0; i < output_c.size(); i++) {
+                for(int j = 0; j < output_c[i].first.size(); j++){
+                    cout << output_c[i].first[j].first;
+                    if (j != output_c[i].first.size()-1) cout << "--(" << output_c[i].first[j].second << ")-->";
+                }
+                cout << endl << "   ";
+                cout << "Origin to: " << output_c[i].first[0].first << " +/- " << output_c[i].second.first << "Km; ";
+                cout << output_c[i].first[output_c[i].first.size() - 1].first << " to destination +/- " << output_c[i].second.second << "Km;";
+                cout << endl;
+            }
+
             break;
 
         default:
@@ -291,7 +318,7 @@ void Menu::get_path_flight() {
                 airline_dis.push_back(pair);
             }
 
-            cout << "How would you like to sort the list?" << endl;
+            cout << endl << "How would you like to sort the list?" << endl;
 
             cout << "1 - Sort by airline change" << endl;
             cout << "2 - Sort by distance" << endl;
@@ -320,8 +347,26 @@ void Menu::get_path_flight() {
                     break;
             }
 
+            int n = (int) others.size();
+
+            if (n >= 20) {
+                cout << "Output is long. How many lines would you like to display?" << endl;
+                cout << "Enter 0 for all lines." << endl;
+
+                int lines;
+
+                cin >> lines;
+
+                if (lines != 0) n = lines;
+            }
+
+
+            int counter = 0;
+
             for (auto i : airline_dis) {
-                cout << i.first << " | " << i.second.second << " Km's total distance | " << i.second.first << " airline changes" << endl;
+                if(counter < n) cout << i.first << " | " << i.second.second << "Km total distance | " << i.second.first << " airline changes" << endl;
+                else break;
+                counter++;
             }
 
 
@@ -418,8 +463,26 @@ void Menu::get_path_airline(){
 
     std::sort(airline_dis.begin(), airline_dis.end(), cmp_dis_airport);
 
+    int n = (int) airline_dis.size();
+
+    if (n >= 20) {
+        cout << "Output is long. How many lines would you like to display?" << endl;
+        cout << "Enter 0 for all lines." << endl;
+
+        int lines;
+
+        cin >> lines;
+
+        if (lines != 0) n = lines;
+    }
+
+
+    int counter = 0;
+
     for (auto i : airline_dis) {
-        cout << i.first << " | " << i.second.second << " Km's total distance" << endl;
+        if(counter < n) cout << i.first << " | " << i.second.second << "Km total distance" << endl;
+        else break;
+        counter++;
     }
 
 
