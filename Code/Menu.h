@@ -23,6 +23,9 @@ public:
     /// @brief Simple menu to get airport info
     void get_airport_info();
 
+    /// @brief Simple menu to get path with shortest distance between coordinates
+    void shortest_distance();
+
     /// @brief Prints all airports accessible from an origin airport
     void printAirport_flightN(const vector <string>& inputAirports);
 

@@ -12,14 +12,19 @@ using namespace std;
 
 int main() {
 
-    Graph g;
+    /*Graph g;
     double d;
-    ss ans = g.getPathByPoints(48.858460646662465, 2.2944919807354034, 48.858460646662465, 2.9 ,12, d);
+    ss output = g.getPathByPoints(48.858460646662465, 2.2944919807354034, 40.858460646662465, -74.04 ,30, d);
 
-    for(auto i : ans.first){
-        cout << i << ' ';
+    for (int i = 0; i < output.first.size(); i++) {
+        cout << output.first[i];
+        if (i != output.first.size()-1) {
+            cout << "--(" << output.second[i] << ")-->";
+        }
     }
-    cout << "distance: " << round(d) << endl;
+
+    cout << endl;
+    cout << "Total distance: " << d << "Km" << endl;*/
 
 
     /*Graph g;
@@ -76,7 +81,7 @@ int main() {
 
     try {
         Menu menu;
-        //menu.main_menu();
+        menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';
