@@ -28,16 +28,11 @@ bool cmp_dis_airport(pair<string, pair<int, double>> p1, pair<string, pair<int, 
     return p1.second.first < p2.second.first;
 }
 
-template <class T>
-T findFunc( T start, T end, const Airport& airport) {
-    while(start != end){
-        if(start->first == airport.getCountry()){
-            return start;
-        }
-        start++;
-    }
-    return end;
+bool cmpF(pair< vector<pss>, pair<int,int>> p1, pair< vector<pss>, pair<int,int>> p2){
+    return p1.second.first + p1.second.second < p2.second.first + p2.second.second;
 }
+
+
 
 void Push(vector<string> &v, string s){
     if(find(v.begin(), v.end(), s) == v.end()){
@@ -267,6 +262,8 @@ void Menu::get_path_flight() {
             cout << endl;
 
             output_c = g.getPathByPointsNOfFlights(lat1,lon1,lat2,lon2, dist1, dist2, airlines);
+
+            std::sort(output_c.begin(), output_c.end(), cmpF);
 
             for (int i = 0; i < output_c.size(); i++) {
                 for(int j = 0; j < output_c[i].first.size(); j++){
@@ -820,6 +817,7 @@ void Menu::get_network_info() {
         case 2:
 
             cout << endl << "Articulation Points:" << endl;
+
 
             for (auto i : g.getArticulationPoints(airlines)) {
                 c++;

@@ -346,8 +346,8 @@ vector <pair< vector<pss>, pair<int,int>> > Graph::getPathByPointsNOfFlights(dou
 
 
     for (int i = 0; i < others.size(); i++) {
-        int d1 = round(airports[others[i][0].first].getDistanceTo(48.858460646662465, 2.2944919807354034));
-        int d2 = round(airports[others[i][others[i].size() - 1].first].getDistanceTo(40.68942019761322, -74.0444682077782));
+        int d1 = round(airports[others[i][0].first].getDistanceTo(lat1,lon1));
+        int d2 = round(airports[others[i][others[i].size() - 1].first].getDistanceTo(lat2,lon2));
         pair<int,int> p = make_pair(d1,d2);
         pair< vector<pss>, pair<int,int>> vii = make_pair(others[i], p);
         r.push_back(vii);
@@ -378,6 +378,7 @@ list<string> Graph::getArticulationPoints(set <string> Comp) {
     list<string> res;
     for (const auto& a : g) {
         if (!used[a.first]) {
+            //cout << a.first << endl;
             dfsArticulationP(a.first, num, low, index, used, res, Comp);
         }
     }
@@ -601,11 +602,11 @@ ss Graph::Dijkstra(string start, vector <string> to, double& dist) {
 
     while (true) {
 
-        int curD = -1;
+        int minD = -1;
         string code;
         for (auto i : d)
-            if (!used[i.first] && (curD == -1 || curD > i.second)) {
-                curD = i.second;
+            if (!used[i.first] && (minD == -1 || minD > i.second)) {
+                minD = i.second;
                 code = i.first;
             }
 
@@ -615,9 +616,10 @@ ss Graph::Dijkstra(string start, vector <string> to, double& dist) {
             if (d.find(i.getAirport()) == d.end() || d[code] + Dist(code, i) < d[i.getAirport()]) {
                 d[i.getAirport()] = d[code] + Dist(code, i);
                 p[i.getAirport()] = code;
-                air[i.getAirport()] = i.getAirline();
+                air[i.getAirport()] = i.getAirline();  // air["��������� ��������"] = "������� � ��������� ��������"
             }
         }
+
 
         bool flag = true;
         for (auto i : to)
@@ -631,9 +633,8 @@ ss Graph::Dijkstra(string start, vector <string> to, double& dist) {
     double minDist = -1;
     string actualTo;
 
-
     for (auto i : to)
-        if (minDist == -1 || d[i] > minDist) {
+        if (minDist == -1 || d[i] < minDist) {
             minDist = d[i];
             actualTo = i;
         }
@@ -660,6 +661,10 @@ ss Graph::Dijkstra(string start, vector <string> to, double& dist) {
 
 ss Graph::getPathByPoints(double lat1, double lon1, double lat2, double lon2, double r, double& dist) {
     vector <string> from = Around(lat1, lon1, r), to = Around(lat2, lon2, r);
+
+    if(from.empty() || to.empty()){
+        return {};
+    }
 
     ss ans, temp;
     double best = -1;

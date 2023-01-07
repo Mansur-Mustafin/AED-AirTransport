@@ -98,6 +98,7 @@ public:
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return -> Vector with airport codes as strings
+     * O(n + m) n - number of airports, m - number of flights between airports
      */
     ss getPathAirports(const string& from, const string& to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -108,6 +109,7 @@ public:
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
+     * O(num1 * num2 * (n + m)) -
      */
     ss getUltimatePath(string from, string to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -118,6 +120,7 @@ public:
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
+     * O(num1 * num2 * (n + m))
      */
     ss getPathByVectors(vector <string> from, vector <string> to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -127,6 +130,7 @@ public:
      * @param num -> Max flight number
      * @param Comp -> Set of airline codes to use as strings
      * @return Vector of airport codes as strings
+     * O(n + m)
      */
     vector <string> targetAirports(const string& from, int num, set <string> Comp = {});   // todos aeroportos que podemos ir de um aeroporto para outro por n passos
 
@@ -199,16 +203,34 @@ public:
      */
     int diameterBFS(string airport, set<string> Comp);
 
+    /**
+     * O(number of all airlines * (n + m))
+     */
     vector <vector <pss> > getPathByAirportsAirlines(string from, string to, set <string> Comp = {});
 
     int get_airline_flightN(string code);
 
+    /**
+     O(n)
+    */
+
     vector <string> Around(double lat, double lon, double r);
+
+    /**
+     O((n^2 + m) * num1) num1 - from
+    */
 
     ss getPathByPoints(double lat1, double lon1, double lat2, double lon2, double r, double& dist);
 
+    /**
+     O(n^2 + m)
+    */
+
     ss Dijkstra(string start, vector <string> to, double& dist);
 
+    /**
+     O(1)
+    */
     double Dist(string from, Target to);
 
     unordered_map <string, unordered_map <string, unordered_set<string> > > getDataStrangeCities() {return dataForStrangeCities;}

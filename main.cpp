@@ -9,13 +9,17 @@
 using namespace std;
 
 
-bool cmpF(pair< vector<pss>, pair<int,int>> p1, pair< vector<pss>, pair<int,int>> p2){
-    return p1.second.first + p1.second.second < p2.second.first + p2.second.second;
-}
-
 
 int main() {
 
+    Graph g;
+    double d;
+    ss ans = g.getPathByPoints(48.858460646662465, 2.2944919807354034, 48.858460646662465, 2.9 ,12, d);
+
+    for(auto i : ans.first){
+        cout << i << ' ';
+    }
+    cout << "distance: " << round(d) << endl;
 
 
     /*Graph g;
@@ -72,7 +76,7 @@ int main() {
 
     try {
         Menu menu;
-        menu.main_menu();
+        //menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';
