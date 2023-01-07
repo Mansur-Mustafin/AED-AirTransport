@@ -112,7 +112,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     if (isCountryF) {
         for (const auto& city : countries[from]) {
 
-            if (isStarageCiti(city)) {
+            if (isStrangeCity(city)) {
                 for (const auto& airport : dataForStrangeCities[from][city]) {
                     fromV.push_back(airport);
                 }
@@ -127,7 +127,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
 
     if (isCountryT) {
         for (const auto& city : countries[to]) {
-            if (isStarageCiti(city)) {
+            if (isStrangeCity(city)) {
                 for (const auto& airport : dataForStrangeCities[from][city]) {
                     toV.push_back(airport);
                 }
@@ -142,7 +142,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     }
 
     if (isCityF) {
-        if (isStarageCiti(from)) {
+        if (isStrangeCity(from)) {
             string countryF1;
             string countryF;
             cout << "The Arrive city: " << from << " is ambiguous in country\nPlease enter the Country:";
@@ -157,7 +157,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     }
 
     if (isCityT) {
-        if (isStarageCiti(to)) {
+        if (isStrangeCity(to)) {
             string countryT1;
             string countryT;
             cout << "The Destination city: " << to << " is ambiguous in country\nPlease enter the Country:";
@@ -452,11 +452,11 @@ int Graph::getDiameter(set<string> Comp) {
     return max;
 }
 
-unordered_set<string> Graph::getStranfeSities() {
+unordered_set<string> Graph::getStrangeCities() {
     return strangeCities;
 }
 
-bool Graph::isStarageCiti(string name) {
+bool Graph::isStrangeCity(string name) {
     return not (strangeCities.find(name) == strangeCities.end());
 }
 
@@ -691,8 +691,8 @@ void Graph::switchToValid(string a){
     airports[a].toValid();
 }
 
-void Graph::swithToInvalidCity(string city){
-    if (isStarageCiti(city)) {
+void Graph::switchToInvalidCity(string city){
+    if (isStrangeCity(city)) {
         string countryF1;
         string countryF;
         cout << "The city: " << city << " is ambiguous in country\nPlease enter the Country:";
@@ -708,8 +708,8 @@ void Graph::swithToInvalidCity(string city){
     }
 }
 
-void Graph::swithToValidCity(string city){
-    if (isStarageCiti(city)) {
+void Graph::switchToValidCity(string city){
+    if (isStrangeCity(city)) {
         string countryF1;
         string countryF;
         cout << "The city: " << city << " is ambiguous in country\nPlease enter the Country:";

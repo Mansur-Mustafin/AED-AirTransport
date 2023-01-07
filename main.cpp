@@ -51,7 +51,7 @@ int main() {
     /*
 
 
-    //cout << g.isStarageCiti("Kazan");
+    //cout << g.isStrangeCity("Kazan");
 
 
 

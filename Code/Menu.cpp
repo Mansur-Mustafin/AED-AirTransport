@@ -541,8 +541,8 @@ void Menu::settings() {
             cin.ignore();
             getline(cin, city_name);
 
-            if (settings_choice == 1) g.swithToInvalidCity(city_name);
-            else g.swithToValidCity(city_name);
+            if (settings_choice == 1) g.switchToInvalidCity(city_name);
+            else g.switchToValidCity(city_name);
         }
     }else if (block_choice == 2) {
         for (int i = 0; i < n_places; i++) {

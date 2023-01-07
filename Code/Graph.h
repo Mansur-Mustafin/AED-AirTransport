@@ -33,9 +33,18 @@ private:
 
     void Update(string v, um <string, int>& d, string& curComp, int dist, string start, queue <string>& q, um <string, vector <string> >& p, um <string, vector <string> >& pAir, string par, string parAir);
 
+    /**
+     * @brief Gets path with lowest flight number between two Airports
+     * @param v -> Origin airport
+     * @param to -> Destination airport
+     * @param cur -> Current result (function is recursive)
+     * @param ans -> Pointer to final result
+     */
     void getPath(string v, string to, vector <vector <pss> > cur, vector <vector <pss> >& ans);
 
+    /// @brief Cities that have the same name in different countries
     unordered_set<string> strangeCities;
+
     /// @brief Map with an airport as key and vector with all possible flights from it
     unordered_map <string, vector<Target>> g;
     // ["asd"] = {"qwe", "sdf"}   g["any airport"].size() = количество вылетов из аэропорт
@@ -50,10 +59,14 @@ private:
     /// @brief Map with country name as key and the name of all its cities in an unordered_set
     unordered_map <string, unordered_set<string> > countries;
 
+    /// @brief Complete data for cities that have the same name in different countries
     unordered_map <string, unordered_map <string, unordered_set<string> > > dataForStrangeCities;
+
+
     /// @brief Map with airline code as key and it Airline object
     unordered_map<string, Airline> airlines;
 
+    /// @brief Total number of flights
     int n_of_flights = 0;
 
     set <string> t;
@@ -146,12 +159,20 @@ public:
     /// @brief Gets city list
     unordered_map <string, unordered_set<string> > getCities();
 
-    unordered_set<string> getStranfeSities();
+    /// @brief Gets cities that have the same name in different countries
+    unordered_set<string> getStrangeCities();
 
-    bool isStarageCiti(string name);
+    /**
+     * @brief Checks if a city is part of the strange cities group
+     * @param name -> City name
+     * @return bool value
+     */
+    bool isStrangeCity(string name);
+
     /// @brief Gets country list
     unordered_map <string, unordered_set<string> > getCountries();
 
+    /// @brief Gets the number of flights in the network
     int get_global_n_flight();
 
     /**
@@ -168,16 +189,7 @@ public:
      */
     unordered_set<string> getAirlinesFromAirport(const string& Airport);    // info Airport all companies
 
-    /**
-     * @brief
-     * @param airport ->
-     * @param num ->
-     * @param low ->
-     * @param index ->
-     * @param used ->
-     * @param res ->
-     * @param Comp ->
-     */
+    /// @brief Function to get articulation points via DFS
     void dfsArticulationP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, list<string>& res,const set <string>& Comp);
 
     /**
@@ -191,57 +203,100 @@ public:
     /**
      * @brief Gets the network diameter
      * @param Comp -> Set of airlines to compose the network
-     * @return Integer number
+     * @return Integer value
      */
     int getDiameter( set <string> Comp = {});
 
     /**
-     * @brief
-     * @param airport ->
-     * @param Comp ->
-     * @return
+     * @brief Gets the Network diameter using BFS
+     * @param airport -> Airport to start
+     * @param Comp -> Airlines to use in search
+     * @return Integer value
      */
     int diameterBFS(string airport, set<string> Comp);
 
     /**
+     * @brief Gets path between airports with fewest airline change in the way
+     * @param from -> Origin Airport
+     * @param to -> Destination Airport
+     * @param Comp -> Airlines to use
+     * @return Path
      * O(number of all airlines * (n + m))
      */
     vector <vector <pss> > getPathByAirportsAirlines(string from, string to, set <string> Comp = {});
 
+    /**
+     * @brief Gets flight number form a specific airline
+     * @param code -> Airline code
+     * @return Integer Value
+     */
     int get_airline_flightN(string code);
 
-    /**
-     O(n)
-    */
 
+    /**
+     * @brief Checks which airports are inside the radius of a certain coordinate
+     * @param lat -> Latitude
+     * @param lon -> Longitude
+     * @param r -> Radius
+     * @return Vector with airport codes
+     * O(n)
+     */
     vector <string> Around(double lat, double lon, double r);
 
     /**
-     O((n^2 + m) * num1) num1 - from
-    */
-
+     * @brief Gets shortest path between two points
+     * @param lat1 -> Origin Latitude
+     * @param lon1 -> Origin Longitude
+     * @param lat2 -> Destination Latitude
+     * @param lon2 -> Destination Longitude
+     * @param r -> Max radius
+     * @param dist -> Pointer to total path distance
+     * @return Shortest path
+     * O((n^2 + m) * num1) num1 - from
+     */
     ss getPathByPoints(double lat1, double lon1, double lat2, double lon2, double r, double& dist);
 
     /**
-     O(n^2 + m)
-    */
-
+     * @brief Djikstra algorithm
+     * O(n^2 + m)
+     */
     ss Dijkstra(string start, vector <string> to, double& dist);
 
     /**
-     O(1)
-    */
+     * @brief Gets the distance from an airport to its target
+     * @param from -> Airport code
+     * @param to -> Target
+     * @return Double value
+     * O(1)
+     */
     double Dist(string from, Target to);
 
+    /// @brief Gets data for the group of cities that have the same name in different countries
     unordered_map <string, unordered_map <string, unordered_set<string> > > getDataStrangeCities() {return dataForStrangeCities;}
 
+    /**
+     * @brief Locks an airport
+     * @param a -> Airport code
+     */
     void switchToInvalid(string a);
 
+    /**
+     * @brief Unlocks an airport
+     * @param a -> Airport code
+     */
     void switchToValid(string a);
 
-    void swithToInvalidCity(string city);
+    /**
+     * @brief Locks a city
+     * @param city -> City name
+     */
+    void switchToInvalidCity(string city);
 
-    void swithToValidCity(string city);
+    /**
+     * @brief Unlocks a city
+     * @param city -> City name
+     */
+    void switchToValidCity(string city);
 
 };
 
