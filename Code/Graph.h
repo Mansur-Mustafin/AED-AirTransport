@@ -31,7 +31,7 @@ private:
 
     /**
      * @brief Djikstra algorithm
-     * O(n^2 + m)
+     * O(N^2 + V)
      */
 
     ss Dijkstra(string start, vector <string> to, double& dist);
@@ -53,7 +53,7 @@ private:
      * @param lon -> Longitude
      * @param r -> Radius
      * @return Vector with airport codes
-     * O(n)
+     * O(N)
      */
     vector <string> Around(double lat, double lon, double r);
 
@@ -76,11 +76,9 @@ private:
 
     /// @brief Map with an airport as key and vector with all possible flights from it
     unordered_map <string, vector<Target>> g;
-    // ["asd"] = {"qwe", "sdf"}   g["any airport"].size() = количество вылетов из аэропорт
 
     /// @brief Map with airport code as key and its Airport object
     unordered_map <string, Airport> airports;
-    // g["any airport"]  for => set (airline)
 
     /// @brief Map with city name as key and the code of all its airports in an unordered_set
     unordered_map <string, unordered_set<string> > cities;
@@ -98,15 +96,12 @@ private:
     /// @brief Total number of flights
     int n_of_flights = 0;
 
+
     set <string> t;
-
     um <string, string> used;
-
     um <string, vector <string> > parent;
-
     um <string, vector<string> > air;
     um <string, int> tin, dp;
-
     int time;
     um <string, vector <string> > child;
     um <string, bool> visited;
@@ -138,7 +133,7 @@ public:
      * @param dist -> Distance between points
      * @return Vector with airport codes as strings
      */
-    vector <pair< vector<pss>, pair<int,int>> > getPathByPointsNOfFlights(double lat1, double lon1, double lat2, double lon2, double dist, double dist2,set <string> Comp = {});  // FALTA AQUIIIIIIIIIIIIIIIIIIII
+    vector <pair< vector<pss>, pair<int,int>> > getPathByPointsNOfFlights(double lat1, double lon1, double lat2, double lon2, double dist, double dist2,set <string> Comp = {});
 
     /**
      * @brief Gets path with lowest flight number between two airports.
@@ -147,7 +142,7 @@ public:
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return -> Vector with airport codes as strings
-     * O(n + v) n - number of airports, v - number of flights between airports
+     * O(E + V)  where: V - number of airports, E - number of flights between airports
      */
     ss getPathAirports(const string& from, const string& to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -158,7 +153,7 @@ public:
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
-     * O(num1 * num2 * (n + m))  num1 number of airports from, num2 number of airports to
+     * O(num1 * num2 * (E + V))  num1 number of airports from, num2 number of airports to
      */
     ss getUltimatePath(string from, string to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -169,7 +164,7 @@ public:
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
-     * O(num1 * num2 * (n + m)) num1 size of from, num2 size of to
+     * O(num1 * num2 * (V + E)) num1 size of from, num2 size of to
      */
     ss getPathByVectors(vector <string> from, vector <string> to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -179,9 +174,9 @@ public:
      * @param num -> Max flight number
      * @param Comp -> Set of airline codes to use as strings
      * @return Vector of airport codes as strings
-     * O(n + m)
+     * O(V + E)
      */
-    vector <string> targetAirports(const string& from, int num, set <string> Comp = {});   // todos aeroportos que podemos ir de um aeroporto para outro por n passos
+    vector <string> targetAirports(const string& from, int num, set <string> Comp = {});
 
     /// @brief Gets map with an airport as key and vector with all possible flights
     unordered_map <string, vector <Target> > getG();
@@ -231,7 +226,7 @@ public:
      * @brief Gets the network's articulation points
      * @param Comp -> Set of airlines to compose the network
      * @return List of articulation points(airport codes) as strings
-     * O(n * (n + m))
+     * O(V * (E + V))
      */
     vector<string> getArticulationPoints(set <string> Comp = {});
 
@@ -240,6 +235,7 @@ public:
      * @brief Gets the network diameter
      * @param Comp -> Set of airlines to compose the network
      * @return Integer value
+     * O(V * (V + E))
      */
     int getDiameter( set <string> Comp = {});
 
@@ -258,7 +254,7 @@ public:
      * @param to -> Destination Airport
      * @param Comp -> Airlines to use
      * @return Path
-     * O( num1 * (n + m)) num1 - number of all airlines
+     * O( num1 * (N + V)) where: num1 - number of all airlines
      */
     vector <vector <pss> > getPathByAirportsAirlines(string from, string to, set <string> Comp = {});
 
@@ -270,8 +266,6 @@ public:
     int get_airline_flightN(string code);
 
 
-
-
     /**
      * @brief Gets shortest path between two points
      * @param lat1 -> Origin Latitude
@@ -281,7 +275,7 @@ public:
      * @param r -> Max radius
      * @param dist -> Pointer to total path distance
      * @return Shortest path
-     * O((n^2 + m) * num1) num1 - from
+     * O((V^2 + N) * num1) where: num1 - from
      */
     ss getPathByPoints(double lat1, double lon1, double lat2, double lon2, double r, double& dist);
 
