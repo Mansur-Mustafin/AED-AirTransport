@@ -113,70 +113,70 @@ public:
 
     /**
      * @brief Checks if city is in city list
+     * * O(1)
      * @param name -> Name of the city
      * @return Bool value
-     * O(1)
      */
     bool isCity(const string& name);
 
     /**
      * @brief Checks if country is in country list
+     * * O(1)
      * @param name -> Name of the Country
      * @return Bool value
-     * O(1)
      */
     bool isCountry(const string& name);
 
     /**
      * @brief Gets path with lowest flight n between two coordinates
+     * * O(num1 * num2 * (V + E))
      * @param lat -> Latitude
      * @param lon -> Longitude
      * @param dist -> Distance between points
      * @return Vector with airport codes as strings
-     * O(num1 * num2 * (V + E))
      */
     vector <pair< vector<pss>, pair<int,int>> > getPathByPointsNOfFlights(double lat1, double lon1, double lat2, double lon2, double dist, double dist2,set <string> Comp = {});
 
     /**
      * @brief Gets path with lowest flight number between two airports.
+     * * O(E + V)  where: V - number of airports, E - number of flights between airports
      * @param from -> Origin airport
      * @param to -> Destination airport
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return -> Vector with airport codes as strings
-     * O(E + V)  where: V - number of airports, E - number of flights between airports
      */
     ss getPathAirports(const string& from, const string& to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
     /**
      * @brief Gets path with lowest flight number between places
+     * * O(num1 * num2 * (E + V))  num1 number of airports from, num2 number of airports to
      * @param from -> Origin reference(can be name, airport code, coordinate)
      * @param to -> Destination reference(can be name or airport code)
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
-     * O(num1 * num2 * (E + V))  num1 number of airports from, num2 number of airports to
      */
     ss getUltimatePath(string from, string to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
     /**
      * @brief Gets path with lowest flight number between airports
+     * * O(num1 * num2 * (V + E)) num1 size of from, num2 size of to
      * @param from -> Vector with origin airports
      * @param to -> Vector with destination airports
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
-     * O(num1 * num2 * (V + E)) num1 size of from, num2 size of to
      */
     ss getPathByVectors(vector <string> from, vector <string> to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
     /**
      * @brief Gets all airports you can go to with n flight number
+     * * O(V + E)
      * @param from -> Origin Airport
      * @param num -> Max flight number
      * @param Comp -> Set of airline codes to use as strings
      * @return Vector of airport codes as strings
-     * O(V + E)
      */
     vector <string> targetAirports(const string& from, int num, set <string> Comp = {});
 
@@ -197,9 +197,9 @@ public:
 
     /**
      * @brief Checks if a city is part of the strange cities group
+     * * O(1)
      * @param name -> City name
      * @return bool value
-     * O(1)
      */
     bool isStrangeCity(const string& name);
 
@@ -227,18 +227,18 @@ public:
 
     /**
      * @brief Gets the network's articulation points
+     * * O(V * (E + V))
      * @param Comp -> Set of airlines to compose the network
      * @return List of articulation points(airport codes) as strings
-     * O(V * (E + V))
      */
     vector<string> getArticulationPoints(set <string> Comp = {});
 
 
     /**
      * @brief Gets the network diameter
+     * * O(V * (V + E))
      * @param Comp -> Set of airlines to compose the network
      * @return Integer value
-     * O(V * (V + E))
      */
     int getDiameter( set <string> Comp = {});
 
@@ -252,11 +252,11 @@ public:
 
     /**
      * @brief Gets path between airports with fewest airline change in the way
+     * * O( num1 * (N + V)) where: num1 - number of all airlines
      * @param from -> Origin Airport
      * @param to -> Destination Airport
      * @param Comp -> Airlines to use
      * @return Path
-     * O( num1 * (N + V)) where: num1 - number of all airlines
      */
     vector <vector <pss> > getPathByAirportsAirlines(string from, string to, set <string> Comp = {});
 
@@ -270,6 +270,7 @@ public:
 
     /**
      * @brief Gets shortest path between two points
+     * * O((V^2 + N) * num1) where: num1 - from
      * @param lat1 -> Origin Latitude
      * @param lon1 -> Origin Longitude
      * @param lat2 -> Destination Latitude
@@ -277,7 +278,6 @@ public:
      * @param r -> Max radius
      * @param dist -> Pointer to total path distance
      * @return Shortest path
-     * O((V^2 + N) * num1) where: num1 - from
      */
     ss getPathByPoints(double lat1, double lon1, double lat2, double lon2, double r, double& dist);
 
