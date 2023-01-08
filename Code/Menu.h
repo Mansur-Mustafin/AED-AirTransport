@@ -11,29 +11,41 @@
 class Menu {
 public:
 
-void main_menu();
+    /// @brief Main menu function
+    void main_menu();
 
-void get_path_flight();
+    /// @brief Simple menu to get path with lowest flight number
+    void get_path_flight();
 
-void get_path_airline();
+    /// @brief Simple menu to get path with fewest airline change
+    void get_path_airline();
 
-void get_airport_info();
+    /// @brief Simple menu to get airport info
+    void get_airport_info();
 
-void printAirport_flightN(const vector <string>& inputAirports);
+    /// @brief Simple menu to get path with shortest distance between coordinates
+    void shortest_distance();
 
-void printAirport(unordered_set<string> airports, string code);
+    /// @brief Prints all airports accessible from an origin airport
+    void printAirport_flightN(const vector <string>& inputAirports);
 
-void get_airline_info();
+    /// @brief Prints all airports that a certain airline operates in
+    void printAirport(unordered_set<string> airports, string code);
 
-void get_articulation_points();
+    /// @brief Simple menu to get airline info
+    void get_airline_info();
 
-void settings();
+    /// @brief Simple menu to change searching settings
+    void settings();
 
-void get_country_statistics();
+    /// @brief Simple menu to get statistics from a certain country
+    void get_country_statistics();
 
-void get_network_info();
+    /// @brief Simple menu to get statistics from the entire network
+    void get_network_info();
 
-void top_k_airports();
+    /// @brief Gets top k airports according to user choice
+    void top_k_airports();
 
 private:
     Graph g;

@@ -8,14 +8,24 @@
 
 using namespace std;
 
-
-
 int main() {
 
-
-
-
     //cout << "distance: " << round(d) << endl;
+
+    /*Graph g;
+    double d;
+    ss output = g.getPathByPoints(48.858460646662465, 2.2944919807354034, 40.858460646662465, -74.04 ,30, d);
+
+    for (int i = 0; i < output.first.size(); i++) {
+        cout << output.first[i];
+        if (i != output.first.size()-1) {
+            cout << "--(" << output.second[i] << ")-->";
+        }
+    }
+
+    cout << endl;
+    cout << "Total distance: " << d << "Km" << endl;*/
+
 
 
     /*Graph g;
@@ -47,7 +57,7 @@ int main() {
     /*
 
 
-    //cout << g.isStarageCiti("Kazan");
+    //cout << g.isStrangeCity("Kazan");
 
 
 

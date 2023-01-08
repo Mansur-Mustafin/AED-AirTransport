@@ -49,9 +49,13 @@ public:
     /// @brief gets airport longitude
     double getLongitude() const;
 
+    /// @brief Check if airport can be accessed
     bool isValid();
 
+    /// @brief Lock the airport
     void toInvalid();
+
+    /// @brief Unlock the airport
     void toValid();
 
     /**
@@ -72,6 +76,7 @@ private:
     /// @brief Airport coordinate
     double latitude, longitude;
 
+    /// @brief Bool value to check if airport can be accessed or not
     bool valid_bit;
 };
 

@@ -279,6 +279,8 @@ void Menu::get_path_flight() {
                 cout << endl;
             }
 
+            main_menu();
+
             break;
 
         default:
@@ -385,8 +387,6 @@ void Menu::get_path_flight() {
 
 void Menu::get_path_airline(){
 
-
-
     string airline_choice;
 
     set <string> airlines;
@@ -490,6 +490,44 @@ void Menu::get_path_airline(){
 
 }
 
+void Menu::shortest_distance() {
+
+    double lat1, lon1, lat2, lon2, radius, distance;
+
+    cout << "Please enter the origin latitude:";
+    cin >> lat1;
+    cout << endl;
+
+    cout << "Please enter origin longitude:";
+    cin >> lon1;
+    cout << endl;
+
+    cout << "Please enter the destination latitude:";
+    cin >> lat2;
+    cout << endl;
+
+    cout << "Please enter destination longitude:";
+    cin >> lon2;
+    cout << endl;
+
+    cout  << "Please enter the radius to search airports:";
+    cin >> radius;
+    cout << endl;
+
+    ss output = g.getPathByPoints(lat1, lon1, lat2, lon2, radius, distance);
+
+    cout << "Your path is:" << endl;
+
+    for (int i = 0; i < output.first.size(); i++) {
+        cout << output.first[i];
+        if (i != output.first.size()-1) {
+            cout << "--(" << output.second[i] << ")-->";
+        }
+    }
+
+    cout << endl;
+    cout << "Total distance: " << distance << "Km" << endl;
+}
 
 void Menu::settings() {
 
@@ -544,8 +582,8 @@ void Menu::settings() {
             cin.ignore();
             getline(cin, city_name);
 
-            if (settings_choice == 1) g.swithToInvalidCity(city_name);
-            else g.swithToValidCity(city_name);
+            if (settings_choice == 1) g.switchToInvalidCity(city_name);
+            else g.switchToValidCity(city_name);
         }
     }else if (block_choice == 2) {
         for (int i = 0; i < n_places; i++) {
@@ -811,6 +849,8 @@ void Menu::get_network_info() {
         }
     }
 
+    vector<string> output;
+
     switch (choice) {
         case 1:
             cout << "Global number of Airports: " << g.getAirports().size() << endl;
@@ -819,15 +859,10 @@ void Menu::get_network_info() {
             break;
         case 2:
 
-            cout << endl << "Articulation Points:" << endl;
+            output = g.getArticulationPoints(airlines);
 
+            printAirport_flightN(output);
 
-            for (auto i : g.getArticulationPoints(airlines)) {
-                c++;
-                cout << i << endl;
-            }
-
-            cout << "Number of Articulation points: " << c << endl;
             break;
         case 3:
             cout << g.getDiameter(airlines) << " is the network diameter" << endl;
@@ -897,9 +932,10 @@ void Menu::main_menu() {
         cout << "|===========================================================================================|\n"
                 "|                   Path                      |                   Airports                  |\n"
                 "|=============================================|=============================================|\n"
-                "| Get path with lowest flight number     [11] | Get information from specific Airport  [21] |\n"
-                "| Get path with fewest airline change    [12] |                                             |\n"
-                "| Change searching settings              [13] |                                             |\n"
+                "| Path with lowest flight number         [11] | Get information from specific Airport  [21] |\n"
+                "| Path with fewest airline change        [12] |                                             |\n"
+                "| Shortest path(distance) between points [13] |                                             |\n"
+                "| Change searching settings              [14] |                                             |\n"
                 "|                                             |                                             |\n"
                 "|=============================================|=============================================|\n"
                 "|                 Airlines                    |                   Network                   |\n"
@@ -937,6 +973,10 @@ void Menu::main_menu() {
                 break;
 
             case 13:
+                shortest_distance();
+                break;
+
+            case 14:
                 settings();
                 break;
 

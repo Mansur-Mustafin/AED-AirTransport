@@ -112,7 +112,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     if (isCountryF) {
         for (const auto& city : countries[from]) {
 
-            if (isStarageCiti(city)) {
+            if (isStrangeCity(city)) {
                 for (const auto& airport : dataForStrangeCities[from][city]) {
                     fromV.push_back(airport);
                 }
@@ -127,7 +127,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
 
     if (isCountryT) {
         for (const auto& city : countries[to]) {
-            if (isStarageCiti(city)) {
+            if (isStrangeCity(city)) {
                 for (const auto& airport : dataForStrangeCities[from][city]) {
                     toV.push_back(airport);
                 }
@@ -142,7 +142,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     }
 
     if (isCityF) {
-        if (isStarageCiti(from)) {
+        if (isStrangeCity(from)) {
             string countryF1;
             string countryF;
             cout << "The Arrive city: " << from << " is ambiguous in country\nPlease enter the Country:";
@@ -157,7 +157,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
     }
 
     if (isCityT) {
-        if (isStarageCiti(to)) {
+        if (isStrangeCity(to)) {
             string countryT1;
             string countryT;
             cout << "The Destination city: " << to << " is ambiguous in country\nPlease enter the Country:";
@@ -369,49 +369,6 @@ unordered_set<string> Graph::getAirlinesFromAirport(const std::string& Airport) 
     return res;
 }
 
-void Graph::dfsArticulationP(const string& v, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& usedl, list<string>& res, const set <string>& Comp) {
-
-    bool a = false;
-    int children = 0;
-    num[v] = low[v] = index++; usedl[v] = true;
-
-    for (auto e : g[v]) {
-        string w = e.getAirport();
-        if (!usedl[w] && (Comp.find(e.getAirline()) != Comp.end())) {
-            dfsArticulationP(w, num, low, index, usedl, res, Comp);
-            low[v] = min(low[v], low[w]);
-            if (low[w] >= num[v] && num[v] != 1) {
-                a = true;
-            }
-            children++;
-        }
-        else {
-            low[v] = min(low[v], num[w]);
-        }
-    }
-    if ((num[v] == 1 && children > 1) || (num[v] > 1 && a)) {
-        res.push_back(v);
-    }
-}
-
-list<string> Graph::getArticulationPoints(set <string> Comp) {
-    Comp = Comp.empty() ? t : Comp;
-
-    unordered_map <string, bool> usedl;
-    unordered_map <string, int> num, low;
-    int index = 1;
-
-    list<string> res;
-    for (const auto& a : g) {
-        if (!usedl[a.first]) {
-            cout << a.first << endl;
-            dfsArticulationP(a.first, num, low, index, usedl, res, Comp);
-        }
-    }
-    cout << "--------------------------------------------------";
-    return res;
-}
-
 
 int Graph::diameterBFS(string airport, set<string> Comp) {
     int max = -1;
@@ -455,11 +412,11 @@ int Graph::getDiameter(set<string> Comp) {
     return max;
 }
 
-unordered_set<string> Graph::getStranfeSities() {
+unordered_set<string> Graph::getStrangeCities() {
     return strangeCities;
 }
 
-bool Graph::isStarageCiti(string name) {
+bool Graph::isStrangeCity(string name) {
     return not (strangeCities.find(name) == strangeCities.end());
 }
 
@@ -694,8 +651,8 @@ void Graph::switchToValid(string a){
     airports[a].toValid();
 }
 
-void Graph::swithToInvalidCity(string city){
-    if (isStarageCiti(city)) {
+void Graph::switchToInvalidCity(string city){
+    if (isStrangeCity(city)) {
         string countryF1;
         string countryF;
         cout << "The city: " << city << " is ambiguous in country\nPlease enter the Country:";
@@ -711,8 +668,8 @@ void Graph::swithToInvalidCity(string city){
     }
 }
 
-void Graph::swithToValidCity(string city){
-    if (isStarageCiti(city)) {
+void Graph::switchToValidCity(string city){
+    if (isStrangeCity(city)) {
         string countryF1;
         string countryF;
         cout << "The city: " << city << " is ambiguous in country\nPlease enter the Country:";
@@ -726,4 +683,56 @@ void Graph::swithToValidCity(string city){
             airports[airport].toValid();
         }
     }
+}
+
+
+void Graph::dfsArticulationP(string v, string root, vector <string>& ans, set <string> Comp,string p) {
+    used[v] = "", visited[v] = true;
+    tin[v] = dp[v] = time++;
+    for (auto i : g[v]) {
+        if(Comp.find(i.getAirline()) == Comp.end()) continue;
+        string to = i.getAirport();
+        if (to == p) continue;
+        if (used.find(to) != used.end())
+            dp[v] = min(dp[v], tin[to]);
+        else {
+            child[v].push_back(to);
+            dfsArticulationP(to, root, ans,  Comp,v);
+            dp[v] = min(dp[v], dp[to]);
+            if (d.find(v) == d.end() && v == root && child[v].size() > 1) {
+                ans.push_back(v);
+                d.insert(v);
+            }
+            if (d.find(v) == d.end() && v != root && dp[to] >= tin[v]) {
+                ans.push_back(v);
+                d.insert(v);
+            }
+        }
+    }
+}
+
+
+vector <string> Graph::getArticulationPoints(set <string> Comp) {
+
+    Comp = Comp.empty() ? t : Comp;
+
+    vector <string> ans;
+
+    for (auto i : airports) {
+        string qwe = i.first;
+        if (!visited[i.first]) {
+            time = 0;
+            dfsArticulationP(i.first, i.first, ans, Comp);
+            dp.clear(); tin.clear();
+            child.clear(); used.clear();
+        }
+    }
+
+    used.clear();
+    visited.clear();
+    d.clear();
+    time = 0;
+
+    return ans;
+
 }
