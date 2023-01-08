@@ -29,8 +29,33 @@ class Graph {
 
 private:
 
+    /**
+     * @brief Djikstra algorithm
+     * O(n^2 + m)
+     */
+
+    ss Dijkstra(string start, vector <string> to, double& dist);
+
+    /**
+     * @brief Gets the distance from an airport to its target
+     * @param from -> Airport code
+     * @param to -> Target
+     * @return Double value
+     * O(1)
+     */
+    double Dist(string from, Target to);
+
     vector <vector <pss> > Combine(vector <vector <pss> > p1, vector <vector <pss> > p2);
 
+    /**
+     * @brief Checks which airports are inside the radius of a certain coordinate
+     * @param lat -> Latitude
+     * @param lon -> Longitude
+     * @param r -> Radius
+     * @return Vector with airport codes
+     * O(n)
+     */
+    vector <string> Around(double lat, double lon, double r);
 
     /// @brief Function to get articulation points via DFS
     void dfsArticulationP(string v, string root, vector <string>& ans, set <string> Comp, string p = "");
@@ -245,15 +270,7 @@ public:
     int get_airline_flightN(string code);
 
 
-    /**
-     * @brief Checks which airports are inside the radius of a certain coordinate
-     * @param lat -> Latitude
-     * @param lon -> Longitude
-     * @param r -> Radius
-     * @return Vector with airport codes
-     * O(n)
-     */
-    vector <string> Around(double lat, double lon, double r);
+
 
     /**
      * @brief Gets shortest path between two points
@@ -268,22 +285,7 @@ public:
      */
     ss getPathByPoints(double lat1, double lon1, double lat2, double lon2, double r, double& dist);
 
-    /**
 
-     * @brief Djikstra algorithm
-     * O(n^2 + m)
-     */
-
-    ss Dijkstra(string start, vector <string> to, double& dist);
-
-    /**
-     * @brief Gets the distance from an airport to its target
-     * @param from -> Airport code
-     * @param to -> Target
-     * @return Double value
-     * O(1)
-     */
-    double Dist(string from, Target to);
 
     /// @brief Gets data for the group of cities that have the same name in different countries
     unordered_map <string, unordered_map <string, unordered_set<string> > > getDataStrangeCities() {return dataForStrangeCities;}
