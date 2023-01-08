@@ -47,6 +47,8 @@ public:
     /// @brief Gets top k airports according to user choice
     void top_k_airports();
 
+    void lock_unlock(int settings_choice);
+
 private:
     Graph g;
 };
