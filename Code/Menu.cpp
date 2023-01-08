@@ -529,26 +529,7 @@ void Menu::shortest_distance() {
     cout << "Total distance: " << distance << "Km" << endl;
 }
 
-void Menu::settings() {
-
-    cout << "Which setting would you like to change?" << endl;
-
-    cout << "1 - Lock place" << endl;
-    cout << "2 - Unlock place" << endl;
-
-    cout << "Please choose one:" << endl;
-
-    int settings_choice;
-
-    cin >> settings_choice;
-
-    if (cin.fail() || cin.peek() != '\n') {
-        cin.clear();
-        cin.ignore(INT_MAX, '\n');
-        cout << "Invalid input" << endl << endl;
-        main_menu();
-    }
-
+void Menu::lock_unlock(int settings_choice) {
     cout << "1 - City" << endl;
     cout << "2 - Airport" << endl;
 
@@ -600,6 +581,54 @@ void Menu::settings() {
         cout << "Invalid input";
         main_menu();
     }
+}
+
+void Menu::settings() {
+
+    cout << "Which setting would you like to change?" << endl;
+
+    cout << "1 - Lock place" << endl;
+    cout << "2 - Unlock place" << endl;
+    cout << "3 - Add flight" << endl;
+
+    cout << "Please choose one:" << endl;
+
+    int settings_choice;
+
+    cin >> settings_choice;
+
+    if (cin.fail() || cin.peek() != '\n') {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input" << endl << endl;
+        main_menu();
+    }
+
+    if (settings_choice == 1 || settings_choice == 2) {
+        lock_unlock(settings_choice);
+    }else if(settings_choice == 3) {
+        string origin, dest, airline;
+
+        cout << "Please enter the origin airport code: ";
+        cin >> origin;
+
+        cout << endl << "Please enter the destination airport code: ";
+        cin >> dest;
+
+        cout << endl << "Please enter the airline operating the flight: ";
+        cin >> airline;
+
+        bool flag = g.addFlight(origin, dest, airline);
+
+        if(flag) {
+            cout << endl << "Your flight has been added" << endl;
+        }else {
+            cout << endl << "This flight already exists" << endl;
+        }
+    }else {
+        cout << "Invalid Input" << endl;
+    }
+
 }
 
 
