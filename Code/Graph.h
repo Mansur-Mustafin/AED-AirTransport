@@ -33,7 +33,6 @@ private:
      * @brief Djikstra algorithm
      * O(N^2 + V)
      */
-
     ss Dijkstra(const string& start, const vector <string>& to, double& dist);
 
     /**
@@ -101,7 +100,7 @@ private:
     um <string, string> used;
     um <string, vector <string> > parent;
     um <string, vector<string> > air;
-    um <string, int> tin, dp;
+    um <string, int> num, low;
     int time;
     um <string, vector <string> > child;
     um <string, bool> visited;
@@ -308,6 +307,7 @@ public:
      */
     void switchToValidCity(const string& city);
 
+    bool addFlight(string orig, string dest, string airline);
 };
 
 #endif // PROJECT_2_GRAPH_H

@@ -679,22 +679,22 @@ void Graph::switchToValidCity(const string& city){
 
 void Graph::dfsArticulationP(string v, string root, vector <string>& ans, set <string> Comp,string p) {
     used[v] = "", visited[v] = true;
-    tin[v] = dp[v] = time++;
+    num[v] = low[v] = time++;
     for (auto i : g[v]) {
         if(Comp.find(i.getAirline()) == Comp.end()) continue;
         string to = i.getAirport();
         if (to == p) continue;
         if (used.find(to) != used.end())
-            dp[v] = min(dp[v], tin[to]);
+            low[v] = min(low[v], num[to]);
         else {
             child[v].push_back(to);
             dfsArticulationP(to, root, ans,  Comp,v);
-            dp[v] = min(dp[v], dp[to]);
+            low[v] = min(low[v], low[to]);
             if (d.find(v) == d.end() && v == root && child[v].size() > 1) {
                 ans.push_back(v);
                 d.insert(v);
             }
-            if (d.find(v) == d.end() && v != root && dp[to] >= tin[v]) {
+            if (d.find(v) == d.end() && v != root && low[to] >= num[v]) {
                 ans.push_back(v);
                 d.insert(v);
             }
@@ -714,7 +714,7 @@ vector <string> Graph::getArticulationPoints(set <string> Comp) {
         if (!visited[i.first]) {
             time = 0;
             dfsArticulationP(i.first, i.first, ans, Comp);
-            dp.clear(); tin.clear();
+            low.clear(); num.clear();
             child.clear(); used.clear();
         }
     }
@@ -727,3 +727,18 @@ vector <string> Graph::getArticulationPoints(set <string> Comp) {
     return ans;
 
 }
+
+bool Graph::addFlight(string orig, string dest, string airline) {
+    vector<Target> tmp = g[orig];
+
+    for(auto i : tmp){
+        if(i.getAirport() == dest and i.getAirline() == airline){
+            return false;
+        }
+    }
+
+    ofstream out;
+    out.open("flights.csv", ios_base::app);
+    out << orig << ',' << dest << ',' << airline << endl;
+}
+
