@@ -96,6 +96,7 @@ private:
     int n_of_flights = 0;
 
 
+
     set <string> t;
     um <string, string> used;
     um <string, vector <string> > parent;
@@ -122,6 +123,7 @@ public:
      * @brief Checks if country is in country list
      * @param name -> Name of the Country
      * @return Bool value
+     * O(1)
      */
     bool isCountry(const string& name);
 
@@ -131,6 +133,7 @@ public:
      * @param lon -> Longitude
      * @param dist -> Distance between points
      * @return Vector with airport codes as strings
+     * O((E + V) * )
      */
     vector <pair< vector<pss>, pair<int,int>> > getPathByPointsNOfFlights(double lat1, double lon1, double lat2, double lon2, double dist, double dist2,set <string> Comp = {});
 
