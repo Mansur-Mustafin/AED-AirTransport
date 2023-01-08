@@ -9,7 +9,7 @@
 Graph::Graph() {
     string temp;
 
-    unordered_map<string, string> city2country;
+    um<string, string> city2country;
 
 
     ifstream in("airlines.csv");
@@ -88,17 +88,17 @@ bool Graph::isCountry(const string& name) {
     return true;
 }
 
-int Graph::get_global_n_flight() { return n_of_flights; }
+int Graph::get_global_n_flight() const { return n_of_flights; }
 
-unordered_map<string, Airline> Graph::getAirlines() { return airlines; }
+um<string, Airline> Graph::getAirlines() { return airlines; }
 
-unordered_map<string, vector<Target>> Graph::getG() { return g; }
+um<string, vector<Target>> Graph::getG() { return g; }
 
-unordered_map<string, Airport> Graph::getAirports() { return airports; }
+um<string, Airport> Graph::getAirports() { return airports; }
 
-unordered_map<string, unordered_set<string>> Graph::getCities() { return cities; }
+um<string, unordered_set<string>> Graph::getCities() { return cities; }
 
-unordered_map<string, unordered_set<string>> Graph::getCountries() { return countries; }
+um<string, unordered_set<string>> Graph::getCountries() { return countries; }
 
 ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < vector<pss> >* others) {
     Comp = Comp.empty() ? t : Comp;
@@ -184,7 +184,7 @@ ss Graph::getUltimatePath(string from, string to, set <string> Comp, vector < ve
 
 }
 
-vector <vector <pss> > fill(const string& from, const string& to, unordered_map <string, vector <string> >& p, unordered_map <string, vector <string> >& pAir, int d) {
+vector <vector <pss> > fill(const string& from, const string& to, um <string, vector <string> >& p, um <string, vector <string> >& pAir, int d) {
 
     vector <vector <string> > ans = { {to} }, ansAir = { {"No airport"} };
 
@@ -222,9 +222,9 @@ ss Graph::getPathAirports(const string& from, const string& to, set <string> Com
 
     Comp = Comp.empty() ? t : Comp;
 
-    unordered_map <string, bool> used;
-    unordered_map <string, vector <string > > p, pAirlane;
-    unordered_map <string, int> d;
+    um <string, bool> used;
+    um <string, vector <string > > p, pAirlane;
+    um <string, int> d;
     queue <string> q;
     q.push(from);
     d[q.front()] = 0;
@@ -276,7 +276,7 @@ vector<string> Graph::targetAirports(const string& from, int num, set <string> C
     Comp = Comp.empty() ? t : Comp;
 
     unordered_set <string> t;
-    unordered_map <string, bool> used;
+    um <string, bool> used;
     queue <pair <string, int> > q;
     q.push({ from, 0 });
 
@@ -372,8 +372,8 @@ unordered_set<string> Graph::getAirlinesFromAirport(const std::string& Airport) 
 
 int Graph::diameterBFS(string airport, set<string> Comp) {
     int max = -1;
-    unordered_map <string, bool> used;
-    unordered_map <string, int> d;
+    um <string, bool> used;
+    um <string, int> d;
     queue <string> q;
     q.push(airport);
     d[airport] = 0;
@@ -394,16 +394,16 @@ int Graph::diameterBFS(string airport, set<string> Comp) {
             }
         }
     }
-    return max; // temos que verificar se for -1???????????????????
+    return max;
 }
 
-// for(auto i : airports){ ou nao?
+
 int Graph::getDiameter(set<string> Comp) {
 
     Comp = Comp.empty() ? t : Comp;
 
     int max = -1;
-    for (auto i : airports) {
+    for (const auto& i : airports) {
         int temp = diameterBFS(i.first, Comp);
         if (temp > max) {
             max = temp;
@@ -416,7 +416,7 @@ unordered_set<string> Graph::getStrangeCities() {
     return strangeCities;
 }
 
-bool Graph::isStrangeCity(string name) {
+bool Graph::isStrangeCity(const string& name) {
     return not (strangeCities.find(name) == strangeCities.end());
 }
 
@@ -459,7 +459,7 @@ void Graph::Update(string v, um <string, int>& d, string& curComp, int dist, str
 
 }
 
-void Graph::getPath(string v, string to, vector <vector <pss> > cur, vector <vector <pss> >& ans) {
+void Graph::getPath(const string& v, const string& to, const vector <vector <pss> >& cur, vector <vector <pss> >& ans) {
     vector <vector <pss> > tempAns;
 
     if (v == to) {
@@ -481,18 +481,14 @@ void Graph::getPath(string v, string to, vector <vector <pss> > cur, vector <vec
                 tempOthers[j].pop_back();
 
         tempAns = Combine(tempOthers, cur);
-
         getPath(parent[v][i], to, tempAns, ans);
-
     }
-
 }
 
 
 vector <vector <pss> > Graph::getPathByAirportsAirlines(string from, string to, set <string> Comp) {
 
-    if (Comp.empty())
-        Comp = t;
+    Comp = Comp.empty() ? t : Comp;
 
     vector <vector <pss> > ans;
     um <string, vector <string> > p, pAir;
@@ -502,16 +498,15 @@ vector <vector <pss> > Graph::getPathByAirportsAirlines(string from, string to, 
     queue <string> q;
     q.push(from);
 
-    while (q.size()) {
-
+    while (!q.empty()) {
         string cur = q.front();
         q.pop();
 
         if (d.find(to) != d.end() && d[cur] + 1 > d[to]) break;
 
-        for (auto i : Comp)
+        for (auto i : Comp){
             Update(cur, d, i, d[cur] + 1, cur, q, p, pAir, "", "");
-
+        }
     }
 
     getPath(to, from, {}, ans);
@@ -525,18 +520,15 @@ vector <vector <pss> > Graph::getPathByAirportsAirlines(string from, string to, 
 
 }
 
-int Graph::get_airline_flightN(string code) {
+int Graph::get_airline_flightN(const string& code) {
     int output = 0;
-
-    for (auto i : g) {
+    for (const auto& i : g) {
         for (auto j : i.second) {
-
             if (j.getAirline() == code) {
                 output++;
             }
         }
     }
-
     return output;
 }
 
@@ -548,11 +540,11 @@ vector <string> Graph::Around(double lat, double lon, double r) {
     return ans;
 }
 
-double Graph::Dist(string from, Target to) {
+double Graph::Dist(const string& from, Target to) {
     return airports[from].getDistanceTo(airports[to.getAirport()].getLatitude(), airports[to.getAirport()].getLongitude());
 }
 
-ss Graph::Dijkstra(string start, vector <string> to, double& dist) {
+ss Graph::Dijkstra(const string& start, const vector <string>& to, double& dist) {
 
     um <string, double> d;
     um <string, string> p, air;
@@ -576,13 +568,12 @@ ss Graph::Dijkstra(string start, vector <string> to, double& dist) {
             if (d.find(i.getAirport()) == d.end() || d[code] + Dist(code, i) < d[i.getAirport()]) {
                 d[i.getAirport()] = d[code] + Dist(code, i);
                 p[i.getAirport()] = code;
-                air[i.getAirport()] = i.getAirline();  // air["��������� ��������"] = "������� � ��������� ��������"
+                air[i.getAirport()] = i.getAirline();
             }
         }
 
-
         bool flag = true;
-        for (auto i : to)
+        for (const auto& i : to)
             if (!used[i])
                 flag = false;
 
@@ -602,21 +593,21 @@ ss Graph::Dijkstra(string start, vector <string> to, double& dist) {
     dist = minDist;
 
     string pos = actualTo;
-    vector <string> nodes, airlines;
+    vector <string> nodes, r_airlines;
 
     while (pos != start) {
         nodes.push_back(pos);
-        airlines.push_back(air[pos]);
+        r_airlines.push_back(air[pos]);
         pos = p[pos];
     }
 
     nodes.push_back(start);
     reverse(nodes.begin(), nodes.end());
 
-    reverse(airlines.begin(), airlines.end());
-    airlines.push_back("no airline");
+    reverse(r_airlines.begin(), r_airlines.end());
+    r_airlines.push_back("no airline");
 
-    return { nodes, airlines };
+    return { nodes, r_airlines };
 }
 
 ss Graph::getPathByPoints(double lat1, double lon1, double lat2, double lon2, double r, double& dist) {
@@ -629,7 +620,7 @@ ss Graph::getPathByPoints(double lat1, double lon1, double lat2, double lon2, do
     ss ans, temp;
     double best = -1;
 
-    for (auto i : from) {
+    for (const auto& i : from) {
 
         double cur;
         temp = Dijkstra(i, to, cur);
@@ -651,7 +642,7 @@ void Graph::switchToValid(string a){
     airports[a].toValid();
 }
 
-void Graph::switchToInvalidCity(string city){
+void Graph::switchToInvalidCity(const string& city){
     if (isStrangeCity(city)) {
         string countryF1;
         string countryF;
@@ -668,7 +659,7 @@ void Graph::switchToInvalidCity(string city){
     }
 }
 
-void Graph::switchToValidCity(string city){
+void Graph::switchToValidCity(const string& city){
     if (isStrangeCity(city)) {
         string countryF1;
         string countryF;

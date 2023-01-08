@@ -34,7 +34,7 @@ private:
      * O(N^2 + V)
      */
 
-    ss Dijkstra(string start, vector <string> to, double& dist);
+    ss Dijkstra(const string& start, const vector <string>& to, double& dist);
 
     /**
      * @brief Gets the distance from an airport to its target
@@ -43,9 +43,9 @@ private:
      * @return Double value
      * O(1)
      */
-    double Dist(string from, Target to);
+    double Dist(const string& from, Target to);
 
-    vector <vector <pss> > Combine(vector <vector <pss> > p1, vector <vector <pss> > p2);
+    static vector <vector <pss> > Combine(vector <vector <pss> > p1, vector <vector <pss> > p2);
 
     /**
      * @brief Checks which airports are inside the radius of a certain coordinate
@@ -69,29 +69,29 @@ private:
      * @param cur -> Current result (function is recursive)
      * @param ans -> Pointer to final result
      */
-    void getPath(string v, string to, vector <vector <pss> > cur, vector <vector <pss> >& ans);
+    void getPath(const string& v, const string& to, const vector <vector <pss> >& cur, vector <vector <pss> >& ans);
 
     /// @brief Cities that have the same name in different countries
     unordered_set<string> strangeCities;
 
     /// @brief Map with an airport as key and vector with all possible flights from it
-    unordered_map <string, vector<Target>> g;
+    um <string, vector<Target>> g;
 
     /// @brief Map with airport code as key and its Airport object
-    unordered_map <string, Airport> airports;
+    um <string, Airport> airports;
 
     /// @brief Map with city name as key and the code of all its airports in an unordered_set
-    unordered_map <string, unordered_set<string> > cities;
+    um <string, unordered_set<string> > cities;
 
     /// @brief Map with country name as key and the name of all its cities in an unordered_set
-    unordered_map <string, unordered_set<string> > countries;
+    um <string, unordered_set<string> > countries;
 
     /// @brief Complete data for cities that have the same name in different countries
-    unordered_map <string, unordered_map <string, unordered_set<string> > > dataForStrangeCities;
+    um <string, um <string, unordered_set<string> > > dataForStrangeCities;
 
 
     /// @brief Map with airline code as key and it Airline object
-    unordered_map<string, Airline> airlines;
+    um<string, Airline> airlines;
 
     /// @brief Total number of flights
     int n_of_flights = 0;
@@ -179,16 +179,16 @@ public:
     vector <string> targetAirports(const string& from, int num, set <string> Comp = {});
 
     /// @brief Gets map with an airport as key and vector with all possible flights
-    unordered_map <string, vector <Target> > getG();
+    um <string, vector <Target> > getG();
 
     /// @brief Gets airport list
-    unordered_map <string, Airport> getAirports();
+    um <string, Airport> getAirports();
 
     /// @brief Gets airline list
-    unordered_map<string, Airline> getAirlines();
+    um<string, Airline> getAirlines();
 
     /// @brief Gets city list
-    unordered_map <string, unordered_set<string> > getCities();
+    um <string, unordered_set<string> > getCities();
 
     /// @brief Gets cities that have the same name in different countries
     unordered_set<string> getStrangeCities();
@@ -198,27 +198,27 @@ public:
      * @param name -> City name
      * @return bool value
      */
-    bool isStrangeCity(string name);
+    bool isStrangeCity(const string& name);
 
     /// @brief Gets country list
-    unordered_map <string, unordered_set<string> > getCountries();
+    um <string, unordered_set<string> > getCountries();
 
     /// @brief Gets the number of flights in the network
-    int get_global_n_flight();
+    int get_global_n_flight() const;
 
     /**
      * @brief Gets number of flights in an airport
      * @param Airport -> Airport code
      * @return Number of flights in the Airport
      */
-    unsigned getNumberOfFlights(const string& Airport);      // info about Airport number of flights
+    unsigned getNumberOfFlights(const string& Airport);
 
     /**
      * @brief Gets all airlines operating in given airport
      * @param Airport -> Airport code
      * @return Set of airlines as strings
      */
-    unordered_set<string> getAirlinesFromAirport(const string& Airport);    // info Airport all companies
+    unordered_set<string> getAirlinesFromAirport(const string& Airport);
 
 
 
@@ -263,7 +263,7 @@ public:
      * @param code -> Airline code
      * @return Integer Value
      */
-    int get_airline_flightN(string code);
+    int get_airline_flightN(const string& code);
 
 
     /**
@@ -282,7 +282,7 @@ public:
 
 
     /// @brief Gets data for the group of cities that have the same name in different countries
-    unordered_map <string, unordered_map <string, unordered_set<string> > > getDataStrangeCities() {return dataForStrangeCities;}
+    um <string, um <string, unordered_set<string> > > getDataStrangeCities() {return dataForStrangeCities;}
 
     /**
      * @brief Locks an airport
@@ -300,13 +300,13 @@ public:
      * @brief Locks a city
      * @param city -> City name
      */
-    void switchToInvalidCity(string city);
+    void switchToInvalidCity(const string& city);
 
     /**
      * @brief Unlocks a city
      * @param city -> City name
      */
-    void switchToValidCity(string city);
+    void switchToValidCity(const string& city);
 
 };
 
