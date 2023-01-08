@@ -133,7 +133,7 @@ public:
      * @param lon -> Longitude
      * @param dist -> Distance between points
      * @return Vector with airport codes as strings
-     * O((E + V) * )
+     * O(num1 * num2 * (V + E))
      */
     vector <pair< vector<pss>, pair<int,int>> > getPathByPointsNOfFlights(double lat1, double lon1, double lat2, double lon2, double dist, double dist2,set <string> Comp = {});
 
@@ -199,6 +199,7 @@ public:
      * @brief Checks if a city is part of the strange cities group
      * @param name -> City name
      * @return bool value
+     * O(1)
      */
     bool isStrangeCity(const string& name);
 
@@ -250,7 +251,6 @@ public:
     int diameterBFS(string airport, set<string> Comp);
 
     /**
-
      * @brief Gets path between airports with fewest airline change in the way
      * @param from -> Origin Airport
      * @param to -> Destination Airport
