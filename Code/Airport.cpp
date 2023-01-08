@@ -29,11 +29,6 @@ Airport::Airport(const string& in) {
     longitude = stod(feel);
     valid_bit = true;
 
-    /*
-    vector <string> temp = Help::Split(in);
-    name = temp[0], city = temp[1], country = temp[2];
-    latitude = temp[3], longitude = temp[4];
-     */
 }
 
 string Airport::getName() const {

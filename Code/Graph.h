@@ -310,6 +310,13 @@ public:
      */
     void switchToValidCity(const string& city);
 
+    /**
+     * @brief Adds a flight to the network
+     * @param orig -> Origin airport code
+     * @param dest -> Destination airport code
+     * @param airline -> Airline code
+     * @return bool value (false if the flight already exists)
+     */
     bool addFlight(string orig, string dest, string airline);
 };
 

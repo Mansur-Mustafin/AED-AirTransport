@@ -917,15 +917,6 @@ void Menu::get_country_statistics() {
 
     int flight_from = 0;
 
-    /*
-    for (auto a : g.getAirports()) {
-        if (a.second.getCountry() == country) {
-            airport_n++;
-            flight_from += g.getNumberOfFlights(a.first);
-        }
-    }
-*/
-
     int airport_n = 0;
     unordered_map <string, unordered_set<string> > countries = g.getCountries();
     unordered_map <string, unordered_map <string, unordered_set<string> > > data = g.getDataStrangeCities();
