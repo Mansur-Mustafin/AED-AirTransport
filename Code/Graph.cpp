@@ -737,6 +737,9 @@ bool Graph::addFlight(string orig, string dest, string airline) {
         }
     }
 
+
+    n_of_flights++;
+    airlines[airline].addAirport(dest);
     g[orig].push_back(Target(dest, airline));
     ofstream out;
     out.open("flights.csv", ios_base::app);
