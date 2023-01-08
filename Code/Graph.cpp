@@ -369,13 +369,13 @@ unordered_set<string> Graph::getAirlinesFromAirport(const std::string& Airport) 
     return res;
 }
 
-list<string> Graph::getArticulationPoints(set <string> Comp) {
+vector<string> Graph::getArticulationPoints(set <string> Comp) {
     Comp = Comp.empty() ? t : Comp;
 
     unordered_map <string, bool> used;
     unordered_map <string, int> num, low;
     int index = 1;
-    list<string> res;
+    vector<string> res;
     for (const auto& a : g) {
         if (!used[a.first]) {
             //cout << a.first << endl;
@@ -385,7 +385,7 @@ list<string> Graph::getArticulationPoints(set <string> Comp) {
     return res;
 }
 
-void Graph::dfsArticulationP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& used, list<string>& res, const set <string>& Comp) {
+void Graph::dfsArticulationP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& used, vector<string>& res, const set <string>& Comp) {
 
     bool a = false;
     int children = 0;

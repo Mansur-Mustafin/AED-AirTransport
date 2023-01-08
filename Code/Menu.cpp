@@ -846,6 +846,8 @@ void Menu::get_network_info() {
         }
     }
 
+    vector<string> output;
+
     switch (choice) {
         case 1:
             cout << "Global number of Airports: " << g.getAirports().size() << endl;
@@ -854,15 +856,10 @@ void Menu::get_network_info() {
             break;
         case 2:
 
-            cout << endl << "Articulation Points:" << endl;
+            output = g.getArticulationPoints(airlines);
 
+            printAirport_flightN(output);
 
-            for (auto i : g.getArticulationPoints(airlines)) {
-                c++;
-                cout << i << endl;
-            }
-
-            cout << "Number of Articulation points: " << c << endl;
             break;
         case 3:
             cout << g.getDiameter(airlines) << " is the network diameter" << endl;

@@ -190,14 +190,14 @@ public:
     unordered_set<string> getAirlinesFromAirport(const string& Airport);    // info Airport all companies
 
     /// @brief Function to get articulation points via DFS
-    void dfsArticulationP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, list<string>& res,const set <string>& Comp);
+    void dfsArticulationP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map<string, bool>& used, vector<string>& res,const set <string>& Comp);
 
     /**
      * @brief Gets the network's articulation points
      * @param Comp -> Set of airlines to compose the network
      * @return List of articulation points(airport codes) as strings
      */
-    list<string> getArticulationPoints(set <string> Comp = {});
+    vector<string> getArticulationPoints(set <string> Comp = {});
 
 
     /**
