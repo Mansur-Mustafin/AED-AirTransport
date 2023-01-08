@@ -72,6 +72,7 @@ public:
      * @brief Checks if city is in city list
      * @param name -> Name of the city
      * @return Bool value
+     * O(1)
      */
     bool isCity(const string& name);
 
@@ -98,7 +99,7 @@ public:
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return -> Vector with airport codes as strings
-     * O(n + m) n - number of airports, m - number of flights between airports
+     * O(n + v) n - number of airports, v - number of flights between airports
      */
     ss getPathAirports(const string& from, const string& to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -109,7 +110,7 @@ public:
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
-     * O(num1 * num2 * (n + m)) -
+     * O(num1 * num2 * (n + m))  num1 number of airports from, num2 number of airports to
      */
     ss getUltimatePath(string from, string to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -120,7 +121,7 @@ public:
      * @param Comp -> Airline companies to use
      * @param others -> Pointer to empty list vector that stores all other options with same flight number
      * @return Vector with airports names as strings
-     * O(num1 * num2 * (n + m))
+     * O(num1 * num2 * (n + m)) num1 size of from, num2 size of to
      */
     ss getPathByVectors(vector <string> from, vector <string> to, set <string> Comp = {}, vector <vector <pss> >* others = nullptr);
 
@@ -204,7 +205,7 @@ public:
     int diameterBFS(string airport, set<string> Comp);
 
     /**
-     * O(number of all airlines * (n + m))
+     * O( num1 * (n + m)) num1 - number of all airlines
      */
     vector <vector <pss> > getPathByAirportsAirlines(string from, string to, set <string> Comp = {});
 
@@ -225,7 +226,6 @@ public:
     /**
      O(n^2 + m)
     */
-
     ss Dijkstra(string start, vector <string> to, double& dist);
 
     /**

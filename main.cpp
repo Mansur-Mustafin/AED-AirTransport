@@ -12,14 +12,10 @@ using namespace std;
 
 int main() {
 
-    Graph g;
-    double d;
-    ss ans = g.getPathByPoints(48.858460646662465, 2.2944919807354034, 48.858460646662465, 2.9 ,12, d);
 
-    for(auto i : ans.first){
-        cout << i << ' ';
-    }
-    cout << "distance: " << round(d) << endl;
+
+
+    //cout << "distance: " << round(d) << endl;
 
 
     /*Graph g;
@@ -76,7 +72,7 @@ int main() {
 
     try {
         Menu menu;
-        //menu.main_menu();
+        menu.main_menu();
     }
     catch (exception& e) {
         cout << e.what() << '\n';

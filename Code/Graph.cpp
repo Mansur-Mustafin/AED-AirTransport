@@ -369,46 +369,49 @@ unordered_set<string> Graph::getAirlinesFromAirport(const std::string& Airport) 
     return res;
 }
 
-list<string> Graph::getArticulationPoints(set <string> Comp) {
-    Comp = Comp.empty() ? t : Comp;
-
-    unordered_map <string, bool> used;
-    unordered_map <string, int> num, low;
-    int index = 1;
-    list<string> res;
-    for (const auto& a : g) {
-        if (!used[a.first]) {
-            //cout << a.first << endl;
-            dfsArticulationP(a.first, num, low, index, used, res, Comp);
-        }
-    }
-    return res;
-}
-
-void Graph::dfsArticulationP(const string& airport, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& used, list<string>& res, const set <string>& Comp) {
+void Graph::dfsArticulationP(const string& v, unordered_map <string, int>& num, unordered_map <string, int>& low, int& index, unordered_map <string, bool>& usedl, list<string>& res, const set <string>& Comp) {
 
     bool a = false;
     int children = 0;
-    num[airport] = low[airport] = index++; used[airport] = true;
+    num[v] = low[v] = index++; usedl[v] = true;
 
-    for (auto e : g[airport]) {
-        string w = e.getAirport(), air = e.getAirline();
-        if (!used[w] && Comp.find(air) != Comp.end()) {
-            children++;
-            dfsArticulationP(w, num, low, index, used, res, Comp);
-            low[airport] = min(low[airport], low[w]);
-            if (low[w] >= num[airport] && num[airport] > 1) {
+    for (auto e : g[v]) {
+        string w = e.getAirport();
+        if (!usedl[w] && (Comp.find(e.getAirline()) != Comp.end())) {
+            dfsArticulationP(w, num, low, index, usedl, res, Comp);
+            low[v] = min(low[v], low[w]);
+            if (low[w] >= num[v] && num[v] != 1) {
                 a = true;
             }
+            children++;
         }
         else {
-            low[airport] = min(low[airport], num[w]);
+            low[v] = min(low[v], num[w]);
         }
     }
-    if ((num[airport] == 1 && children > 1) || (num[airport] > 1 && a)) {
-        res.push_back(airport);
+    if ((num[v] == 1 && children > 1) || (num[v] > 1 && a)) {
+        res.push_back(v);
     }
 }
+
+list<string> Graph::getArticulationPoints(set <string> Comp) {
+    Comp = Comp.empty() ? t : Comp;
+
+    unordered_map <string, bool> usedl;
+    unordered_map <string, int> num, low;
+    int index = 1;
+
+    list<string> res;
+    for (const auto& a : g) {
+        if (!usedl[a.first]) {
+            cout << a.first << endl;
+            dfsArticulationP(a.first, num, low, index, usedl, res, Comp);
+        }
+    }
+    cout << "--------------------------------------------------";
+    return res;
+}
+
 
 int Graph::diameterBFS(string airport, set<string> Comp) {
     int max = -1;

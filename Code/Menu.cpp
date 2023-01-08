@@ -89,6 +89,7 @@ void Menu::printAirport_flightN(const vector <string>& inputAirports) {
 
     unordered_map<string, vector<string>> countries;
     unordered_map<string, list<Airport>> cities;
+
     list<string> restCountries;
 
 
@@ -102,6 +103,7 @@ void Menu::printAirport_flightN(const vector <string>& inputAirports) {
 
     int n_cities = 0;
 
+
     cout  << "Different destinations:" << endl;
 
     for(auto it = restCountries.begin(); it != restCountries.end(); it++){
@@ -111,12 +113,13 @@ void Menu::printAirport_flightN(const vector <string>& inputAirports) {
             cout << "|-----" << city << endl;
             n_cities++;
             for(auto air: cities[city]){
-                cout << "      |------" << air.getCode() << endl;
+                if(air.getCountry() == (*it)){
+                    cout << "      |------" << air.getCode() << endl;
+                }
             }
         }
         cout << endl;
     }
-
 
 
     cout << "Number of Airports: " << inputAirports.size() << endl;
